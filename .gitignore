@@ -1,0 +1,19 @@
+# Eclipse metadata
+.project
+.classpath
+.settings/
+
+# Build folders
+bin/
+build/
+WebContent/WEB-INF/classes/
+
+# IDE/editor
+*.log
+*.swp
+.idea/
+*.iml
+
+# OS files
+Thumbs.db
+.DS_Store
