@@ -32,7 +32,7 @@
     <h2>Novità in Vetrina</h2>
     <div class="grid">
       <div class="card">
-        <img src="images/MagliaJuventus.jpg" alt="Maglia Juventus 2025" />
+        <img src="images/MagliettaJuventus.jpg" alt="Maglia Juventus 2025" />
         <h3>Juventus 2025</h3>
         <p>€89,99</p>
       </div>
