@@ -22,7 +22,7 @@ body {
 
 .image-section {
   width: 50%;
-  background: url('images/runner.jpg') no-repeat center center;
+  background: url('../images/runner.jpg') no-repeat center center;
 }
 
 .form-section {

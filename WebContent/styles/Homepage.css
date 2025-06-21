@@ -35,7 +35,7 @@ nav a {
 .hero {
   text-align: center;
   padding: 4rem 2rem;
-  background: url('images/giocatore.jpg') center/cover no-repeat;
+  background: url('../images/calciatore.jpg') center/cover no-repeat;
   color: white;
 }
 

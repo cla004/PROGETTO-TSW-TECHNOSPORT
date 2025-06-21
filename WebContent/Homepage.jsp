@@ -6,7 +6,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>CalcioShop - Maglie da Calcio</title>
-  <link rel="stylesheet" href="index.css" />
+  <link rel="stylesheet" href="styles/Homepage.css" />
 </head>
 <body>
   <header>
