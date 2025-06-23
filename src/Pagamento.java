@@ -1,13 +1,13 @@
 package tecnosport;
 
 public class Pagamento{
-    private int id_recensione;
+    private Recensione id_recensione;
     private String metodo;
     private String stato_pagamento;
     private int id_pagamento;
   
 
-    public Pagamento(int id_recensione, String metodo, String stato_pagamento, int id_pagamento) {
+    public Pagamento(Recensione id_recensione, String metodo, String stato_pagamento, int id_pagamento) {
         this.id_recensione = id_recensione;
         this.metodo = metodo;
         this.stato_pagamento = stato_pagamento;
@@ -17,13 +17,13 @@ public class Pagamento{
   
 
     // Getters e Setters
-    public int getId_recensione() { 
+    public Recensione getId_recensione() { 
     	
     	return id_recensione; 
     	
     	}
     
-    public void setId_recensione(int id_recensione) { 
+    public void setId_recensione(Recensione id_recensione) { 
     	
     	this.id_recensione = id_recensione;
     	

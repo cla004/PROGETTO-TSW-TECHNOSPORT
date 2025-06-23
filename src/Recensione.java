@@ -1,17 +1,21 @@
 package tecnosport;
 
+import java.util.Date;
+
 public class Recensione{
     private int id_recensione;
     private String commento;
     private String valutazione;
-    private int data_recensione;
+    private Date data_recensione;
+    private Utente id_utente;
   
 
-    public Prodotti(int id_recensione, String commento, String valutazione, int data_recensione) {
+    public Prodotti(int id_recensione, String commento, String valutazione, Date data_recensione,Utente id_utente) {
         this.id_recensione = id_recensione;
         this.commento = commento;
         this.valutazione = valutazione;
         this.data_recensione = data_recensione;
+        this.id_utente = id_utente;
     }
 
   
@@ -51,7 +55,7 @@ public class Recensione{
     	
     	}
 
-    public int data_recensione() { 
+    public Date data_recensione() { 
     	
     	return data_recensione; 
     	
@@ -61,5 +65,17 @@ public class Recensione{
     	this.data_recensione = data_recensione;
     	
     	}
+    
+ public int getId_utente () { 
+    	
+    	return id_utente; 
+    	
+    	}
+    public void setId_utente(Utente id_utente ) {
+    	
+    	this.id_utente = id_utente;
+    	
+    	}
+
 
 }

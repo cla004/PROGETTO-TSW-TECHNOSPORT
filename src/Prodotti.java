@@ -6,7 +6,7 @@ public class Prodotti {
     private String immagini url;
     private double prezzo;
     private String descrizione;
-    private String quantità_disponibili
+    private String quantità_disponibili;
 
     public Prodotti(int id prodotto, String nome, String immagini url, double prezzo,String descrizione,String quantità_disponibili) {
         this.id = id_prodotto;

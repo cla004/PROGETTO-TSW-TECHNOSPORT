@@ -5,7 +5,7 @@ public class Taglia{
     private String etichetta;
   
 
-    public Pagamento(int id_taglia, String etichetta) {
+    public Taglia(int id_taglia, String etichetta) {
         this.id_taglia = id_taglia;
         this.etichetta = etichetta;
        

@@ -1,40 +1,70 @@
-package tecnosport;
-
-public class Dettaglio_Ordine{
-    private int id_dettaglio;
+public class Dettaglio_Ordine {
+    private int id;
+    private Ordine Id_ordine;
+    private Prodotto id_prodotto;
     private double quantità;
-  
-
-    public Pagamento(int id_dettaglio, double quantità) {
-        this.id_dettaglio = id_dettaglio;
+    private double prezzo;
+    
+    public Dettaglio_Ordine(int id , Ordine id_ordine, , Prodotto id_prodotto,double quantità,double prezzo) {
+    	this.id = id;
+        this.id_ordine = id_ordine;
+        this.id_prodotto = id_prodotto;
         this.quantità = quantità;
-       
+        this.prezzo = prezzo;
     }
 
-  
-
-    // Getters e Setters
-    public int getid_dettaglio() { 
+    public int getId() { 
     	
-    	return id_dettaglio; 
+    	return id; 
     	
     	}
-    
-    public void setid_dettaglio(int id_dettaglio) { 
+    public void setId(int id) { 
     	
-    	this.id_dettaglio = id_dettaglio;
+    	this.id = id; 
     	
     	}
 
-    public double getquantità() { 
+    public Ordine getId_ordine() {
     	
-    	return quantità; 
+    	return id_ordine; 
     	
     	}
-    public void setquantità(double quantità) { 
+    public void setId_ordine(Ordine id_ordine) {
     	
-    	this.quantità = qauntità; 
+    	this.id_ordine = id_ordine;
     	
     	}
 
+    public Prodotto getId_prodotto() { 
+    	
+    	return id_prodotto; 
+    	
+    	}
+    public void setId_prodotto(Prodotto Id_prodotto) { 
+    	
+    	this.id_prodotto = id_prodotto; 
+    	
+    	}
+
+    public int getQuantità() {
+    	
+    	return quantità;
+    	
+    	}
+    public void setQuantità(int quantità) {
+    	
+    	this.quantità = quantità; 
+    	
+    	}
+
+    public double getPrezzo() {
+    	
+    	return prezzo;
+    	
+    	}
+    public void setPrezzo(double prezzo) { 
+    	
+    	this.prezzo = prezzo; 
+    	
+    	}
 }

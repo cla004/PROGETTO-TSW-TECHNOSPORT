@@ -5,7 +5,7 @@ public class Categoria{
     private int id_categoria;
   
 
-    public Pagamento(String nome_recensione, int id_categoria) {
+    public Categoria(String nome_recensione, int id_categoria) {
         this.nome_recensione = nome_recensione;
         this.id_categoria = id_categoria;
        
