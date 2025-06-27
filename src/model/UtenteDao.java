@@ -7,7 +7,7 @@ import model.Utente;
 public class UtenteDAO {
 
     public void inserisciUtente(Utente utente) {
-        String sql = "INSERT INTO utenti (nome, email, password) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO utenti (nome, email, password,cognome) VALUES (?, ?, ?)";
 
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -15,6 +15,7 @@ public class UtenteDAO {
             stmt.setString(1, utente.getNome());
             stmt.setString(2, utente.getEmail());
             stmt.setString(3, utente.getPassword());
+            stmt.setString(4, utente.getCognome());
 
             stmt.executeUpdate();
 
@@ -39,6 +40,7 @@ public class UtenteDAO {
                 utente.setNome(rs.getString("nome"));
                 utente.setEmail(rs.getString("email"));
                 utente.setPassword(rs.getString("password"));
+                utente.setCognome(rs.getString("cognome"));
             }
 
         } catch (SQLException e) {
@@ -62,6 +64,7 @@ public class UtenteDAO {
                 utente.setNome(rs.getString("nome"));
                 utente.setEmail(rs.getString("email"));
                 utente.setPassword(rs.getString("password"));
+                utente.setCognome(rs.getString("cognome"));
                 lista.add(utente);
             }
 
@@ -73,7 +76,7 @@ public class UtenteDAO {
     }
 
     public void aggiornaUtente(Utente utente) {
-        String sql = "UPDATE utenti SET nome = ?, email = ?, password = ? WHERE id = ?";
+        String sql = "UPDATE utenti SET nome = ?, email = ?, password = ?,cognoeme = ? WHERE id = ?";
 
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -82,6 +85,7 @@ public class UtenteDAO {
             stmt.setString(2, utente.getEmail());
             stmt.setString(3, utente.getPassword());
             stmt.setInt(4, utente.getId());
+            stmt.setInt(5, utente.getCognome);
 
             stmt.executeUpdate();
 
