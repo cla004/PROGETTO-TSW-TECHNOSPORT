@@ -1,4 +1,4 @@
-package tecnosport;
+package model;
 
 public class Pagamento{
     private Recensione id_recensione;

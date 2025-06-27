@@ -1,4 +1,4 @@
-package tecnosport;
+package model;
 
 public class Utente {
     private String name;

@@ -1,4 +1,4 @@
-package tecnosport;
+package model;
 
 public class Prodotto_taglia{
     private Prodotto id_prodotto;

@@ -1,3 +1,4 @@
+import model;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -102,4 +103,31 @@ public class UtenteDAO {
             e.printStackTrace();
         }
     }
+    
+    public boolean emailEsiste(String email) {
+        String sql = "SELECT 1 FROM utenti WHERE email = ?";
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, email);
+            ResultSet rs = stmt.executeQuery();
+            return rs.next();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean passwordEsiste(String password) {
+        String sql = "SELECT 1 FROM utenti WHERE password = ?";
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, password);
+            ResultSet rs = stmt.executeQuery();
+            return rs.next();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
 }

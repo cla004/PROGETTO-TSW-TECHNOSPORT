@@ -1,4 +1,4 @@
-package tecnosport;
+package model;
 
 public class Categoria{
     private String nome_recensione;

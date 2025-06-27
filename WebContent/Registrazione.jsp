@@ -1,3 +1,6 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
 <html lang="it">
 <head>
@@ -9,11 +12,14 @@
 <body>
     <div class="background-container">
         <div class="form-container">
-            <form class="registration-form" action="#" method="POST">
+            <form class="registration-form" action="/registrazione" method="POST">
                 <h2>Registrati</h2>
 
                 <label for="name">Nome</label>
                 <input type="text" id="name" name="name" required>
+                
+                <label for ="cognome">Cognome</label>
+                <input type ="text" id ="cognome" cognome ="cognome" required>
 
                 <label for="email">Email</label>
                 <input type="email" id="email" name="email" required>

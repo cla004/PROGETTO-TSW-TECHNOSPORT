@@ -1,3 +1,5 @@
+import model;
+
 public class Dettaglio_Ordine {
     private int id;
     private Ordine Id_ordine;

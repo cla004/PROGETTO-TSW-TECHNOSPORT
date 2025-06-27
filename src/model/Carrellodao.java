@@ -1,4 +1,4 @@
-package dao
+package model;
 
 import com.example.model.Carrello;
 import com.example.model.Utente;

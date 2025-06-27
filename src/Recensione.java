@@ -1,4 +1,4 @@
-package tecnosport;
+package model;
 
 import java.util.Date;
 

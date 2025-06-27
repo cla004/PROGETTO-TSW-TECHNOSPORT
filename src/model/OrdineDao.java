@@ -1,4 +1,4 @@
-package dao;
+package model;
 
 import model.Ordine;
 import java.sql.*;
