@@ -21,8 +21,9 @@ body {
 }
 
 .image-section {
-  width: 50%;
+  width: 20%;
   background: url('../images/runner.jpg') no-repeat center center;
+  background-size: cover;
 }
 
 .form-section {
@@ -79,6 +80,10 @@ button {
   color: white;
   border: none;
   border-radius: 8px;
+  cursor: pointer;
+}
+button:hover {
+    background-color: #00796b;
 }
 
 .signup {
@@ -88,5 +93,5 @@ button {
 
 .signup a {
   color: #0056b3;
-  text-decoration: none;
+  text-decoration: none;
 }

@@ -62,3 +62,21 @@ body {
 .registration-form button:hover {
     background-color: #218838;
 }
+.login-link {
+    text-align: center;
+    margin-top: 15px;
+}
+.login-link a {
+    color: #007bff;
+    text-decoration: none;
+}
+.login-link a:hover {
+    text-decoration: underline;
+}
+.error-message {
+    color: red;
+    font-size: 0.9em;
+    margin-top: 4px;
+    display: block;
+    height: 16px; /* spazio riservato per evitare che il layout si sposti */
+}

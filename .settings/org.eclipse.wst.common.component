@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
-    <wb-module deploy-name="Progetto-Tsw-Tecnosport">
+    <wb-module deploy-name="Progetto-Tsw-TecnoSport">
         <wb-resource deploy-path="/" source-path="/WebContent" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
-        <property name="context-root" value="Progetto-Tsw-Tecnosport"/>
-        <property name="java-output-path" value="/Progetto-Tsw-Tecnosport/build/classes"/>
+        <property name="context-root" value="Progetto-Tsw-TecnoSport"/>
+        <property name="java-output-path" value="/Progetto-Tsw-TecnoSport/build/classes"/>
     </wb-module>
 </project-modules>
