@@ -16,8 +16,6 @@
       <h2>Accedi al tuo account</h2>
       <p>Scopri le offerte esclusive riservate agli iscritti!</p>
       <form action="${pageContext.request.contextPath}/login" method="POST">
-      <input type="text" placeholder="${pageContext.request.contextPath}" value="${pageContext.request.contextPath}"></input>
-      <input type="text" placeholder="${pageContext.request.contextPath}/login" value="${pageContext.request.contextPath}/login"></input>
         <% String loginError = (String) request.getAttribute("loginError");
            if (loginError != null && !loginError.isEmpty()) { %>
             <p style="color: red; text-align: center; margin-bottom: 15px;"><%= loginError %></p>

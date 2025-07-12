@@ -124,4 +124,30 @@ public class UtenteDao {
         String inputHash = PasswordHashing.toHash(passwordInput);
         return inputHash.equals(storedHash);
     }
+    
+    public Utente cercaUtenteByEmail(String email) {
+        String sql = "SELECT * FROM users WHERE email = ?";
+        Utente utente = null;
+
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, email);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                utente = new Utente();
+                utente.setId(rs.getInt("id"));
+                utente.setNome(rs.getString("name"));
+                utente.setEmail(rs.getString("email"));
+                utente.setPassword(rs.getString("password"));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return utente;
+    }
+
 }

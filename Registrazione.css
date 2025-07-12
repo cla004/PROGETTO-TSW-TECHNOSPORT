@@ -10,7 +10,8 @@ body {
 .background-container {
     width: 100%;
     height: 100vh;
-    background: url('../images/Sfondo.jpg') no-repeat center center;
+    background: url('../Images/Sfondo.jpg') no-repeat center center;
+
     background-size: cover;
     display: flex;
     justify-content: flex-end;
@@ -75,8 +76,8 @@ body {
 }
 .error-message {
     color: red;
-    font-size: 0.9em;
-    margin-top: 4px;
-    display: block;
-    height: 16px; /* spazio riservato per evitare che il layout si sposti */
+     font-size: 14px;
+  min-height: 18px;
+  position: relative;
+  left: -10px;
 }

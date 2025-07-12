@@ -22,7 +22,7 @@ body {
 
 .image-section {
   width: 20%;
-  background: url('../images/runner.jpg') no-repeat center center;
+  background: url('../Images/runner.jpg') no-repeat center center;
   background-size: cover;
 }
 
