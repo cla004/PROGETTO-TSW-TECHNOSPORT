@@ -5,6 +5,14 @@ public class Taglia{
     private String etichetta;
   
 
+
+    public Taglia() {
+    	
+    	// costruttore di default senza parametri
+    }
+
+
+
     public Taglia(int id_taglia, String etichetta) {
         this.id_taglia = id_taglia;
         this.etichetta = etichetta;
@@ -26,15 +34,12 @@ public class Taglia{
     	
     	}
 
-    public String getid_etichetta() { 
-    	
-    	return id_etichetta; 
-    	
-    	}
-    public void setid_etichetta(String id_etichetta) { 
-    	
-    	this.id_etichetta = id_etichetta; 
-    	
-    	}
+    public String getEtichetta() { 
+        return etichetta; 
+    }
+
+    public void setEtichetta(String etichetta) { 
+        this.etichetta = etichetta; 
+    }
 
 }

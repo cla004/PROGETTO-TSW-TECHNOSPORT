@@ -1,80 +1,91 @@
-
 package model;
 
 import java.sql.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+
 import model.Pagamento;
+import model.Recensione;
 
-public class PagamentoDAO {
-    public void inserisciPagamento(Pagamento p) {
-        String sql = "INSERT INTO pagamenti (utente_id, importo, metodo, data) VALUES (?, ?, ?, ?)";
-        try (Connection conn = DBConnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setInt(1, p.getUtenteId());
-            stmt.setDouble(2, p.getImporto());
-            stmt.setString(3, p.getMetodo());
-            stmt.setDate(4, new java.sql.Date(p.getData().getTime()));
+public class PagamentoDao {
+    private Connection conn;
+
+    public PagamentoDao(Connection conn) {
+        this.conn = conn;
+    }
+
+    // Inserisce un nuovo pagamento
+    public void inserisciPagamento(Pagamento pagamento) throws SQLException {
+        String sql = "INSERT INTO pagamento (id_recensione, metodo, stato_pagamento) VALUES (?, ?, ?)";
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, pagamento.getId_recensione().getId());
+            stmt.setString(2, pagamento.getMetodo());
+            stmt.setString(3, pagamento.getStato_pagamento());
             stmt.executeUpdate();
-        } catch (SQLException e) { e.printStackTrace(); }
+        }
     }
 
-    public Pagamento cercaPagamentoById(int id) {
-        String sql = "SELECT * FROM pagamenti WHERE id = ?";
-        Pagamento p = null;
-        try (Connection conn = DBConnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setInt(1, id);
-            ResultSet rs = stmt.executeQuery();
-            if (rs.next()) {
-                p = new Pagamento();
-                p.setId(rs.getInt("id"));
-                p.setUtenteId(rs.getInt("utente_id"));
-                p.setImporto(rs.getDouble("importo"));
-                p.setMetodo(rs.getString("metodo"));
-                p.setData(rs.getDate("data"));
+    // Ottiene un pagamento per ID
+    public Pagamento getPagamentoById(int idPagamento) throws SQLException {
+        String sql = "SELECT * FROM pagamento WHERE id_pagamento = ?";
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, idPagamento);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    RecensioneDao recensioneDAO = new RecensioneDao(conn);
+                    Recensione recensione = recensioneDAO.getRecensioneById(rs.getInt("id_recensione"));
+                    String metodo = rs.getString("metodo");
+                    String stato = rs.getString("stato_pagamento");
+
+                    return new Pagamento(recensione, metodo, stato, idPagamento);
+                }
             }
-        } catch (SQLException e) { e.printStackTrace(); }
-        return p;
+        }
+        return null;
     }
 
-    public List<Pagamento> listaPagamenti() {
+    // Aggiorna un pagamento
+    public void aggiornaPagamento(Pagamento pagamento) throws SQLException {
+        String sql = "UPDATE pagamento SET id_recensione = ?, metodo = ?, stato_pagamento = ? WHERE id_pagamento = ?";
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, pagamento.getId_recensione().getId());
+            stmt.setString(2, pagamento.getMetodo());
+            stmt.setString(3, pagamento.getStato_pagamento());
+            stmt.setInt(4, pagamento.id_pagamento());
+            stmt.executeUpdate();
+        }
+    }
+
+    // Elimina un pagamento
+    public void eliminaPagamento(int idPagamento) throws SQLException {
+        String sql = "DELETE FROM pagamento WHERE id_pagamento = ?";
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, idPagamento);
+            stmt.executeUpdate();
+        }
+    }
+
+
+    // Recupera tutti i pagamenti
+    public List<Pagamento> getTuttiIPagamenti() throws SQLException {
         List<Pagamento> lista = new ArrayList<>();
-        String sql = "SELECT * FROM pagamenti";
-        try (Connection conn = DBConnection.getConnection();
-             Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery(sql)) {
+        String sql = "SELECT * FROM pagamento";
+        try (PreparedStatement stmt = conn.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
+
+            RecensioneDao recensioneDAO = new RecensioneDao(conn);
+
             while (rs.next()) {
-                Pagamento p = new Pagamento();
-                p.setId(rs.getInt("id"));
-                p.setUtenteId(rs.getInt("utente_id"));
-                p.setImporto(rs.getDouble("importo"));
-                p.setMetodo(rs.getString("metodo"));
-                p.setData(rs.getDate("data"));
-                lista.add(p);
+                int id = rs.getInt("id_pagamento");
+                Recensione recensione = recensioneDAO.getRecensioneById(rs.getInt("id_recensione"));
+                String metodo = rs.getString("metodo");
+                String stato = rs.getString("stato_pagamento");
+
+                Pagamento pagamento = new Pagamento(recensione, metodo, stato, id);
+                lista.add(pagamento);
             }
-        } catch (SQLException e) { e.printStackTrace(); }
+        }
         return lista;
     }
-
-    public void aggiornaPagamento(Pagamento p) {
-        String sql = "UPDATE pagamenti SET utente_id = ?, importo = ?, metodo = ?, data = ? WHERE id = ?";
-        try (Connection conn = DBConnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setInt(1, p.getUtenteId());
-            stmt.setDouble(2, p.getImporto());
-            stmt.setString(3, p.getMetodo());
-            stmt.setDate(4, new java.sql.Date(p.getData().getTime()));
-            stmt.setInt(5, p.getId());
-            stmt.executeUpdate();
-        } catch (SQLException e) { e.printStackTrace(); }
-    }
-
-    public void eliminaPagamento(int id) {
-        String sql = "DELETE FROM pagamenti WHERE id = ?";
-        try (Connection conn = DBConnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setInt(1, id);
-            stmt.executeUpdate();
-        } catch (SQLException e) { e.printStackTrace(); }
-    }
 }
+

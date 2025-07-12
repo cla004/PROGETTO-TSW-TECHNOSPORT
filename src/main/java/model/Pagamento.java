@@ -56,10 +56,9 @@ public class Pagamento{
     	return id_pagamento; 
     	
     	}
-    public void setid_pagamento(int id_pagamento ) {
-    	
-    	this.id_pagamento = id_pagamento;
-    	
-    	}
+    public void setId_pagamento(int id_pagamento) {
+        this.id_pagamento = id_pagamento;
+    }
+
 
 }

@@ -1,27 +1,28 @@
 package model;
 
-import com.example.model.Carrello;
-import com.example.model.Utente;
-import com.example.model.Prodotto;
+import model.Carrello;
+import model.Utente;
+import model.Prodotti;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CarrelloDAO {
+public class CarrelloDao {
     private final Connection connection;
+	private Carrello item;
 
-    public CarrelloDAO(Connection connection) {
+    public CarrelloDao(Connection connection) {
         this.connection = connection;
     }
 
     // Inserisci un nuovo elemento nel carrello
-    public void insert(CartItem item) throws SQLException {
+    public void insert(Carrello item) throws SQLException {
         String sql = "INSERT INTO cart_items (user_id, product_id, quantity) VALUES (?, ?, ?)";
         try (PreparedStatement stmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-            stmt.setInt(1, item.getUser().getId());
-            stmt.setInt(2, item.getProduct().getId());
-            stmt.setInt(3, item.getQuantity());
+            stmt.setInt(1, item.getUtente().getId());
+            stmt.setInt(2, item.getProdotto().getId_prodotto());
+            stmt.setInt(3, item.getQuantit√†());
 
             stmt.executeUpdate();
 
@@ -33,11 +34,12 @@ public class CarrelloDAO {
         }
     }
 
-    // Aggiorna quantit‡ di un elemento carrello
-    public void update(CartItem item) throws SQLException {
-        String sql = "UPDATE cart_items SET quantity = ? WHERE id = ?";
+    // Aggiorna quantit√† di un elemento carrello
+    public void update(Carrello item) throws SQLException {
+ 
+		String sql = "UPDATE cart_items SET quantity = ? WHERE id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setInt(1, item.getQuantity());
+            stmt.setInt(1, item.getQuantit√†());
             stmt.setInt(2, item.getId());
             stmt.executeUpdate();
         }
@@ -53,8 +55,8 @@ public class CarrelloDAO {
     }
 
     // Trova tutti gli elementi del carrello di un utente
-    public List<CartItem> findByUser(User user) throws SQLException {
-        List<CartItem> items = new ArrayList<>();
+    public List<Carrello> findByUser(Utente user) throws SQLException {
+        List<Carrello> items = new ArrayList<>();
         String sql = "SELECT ci.id, ci.quantity, p.id AS pid, p.name, p.price " +
                      "FROM cart_items ci " +
                      "JOIN products p ON ci.product_id = p.id " +
@@ -65,17 +67,17 @@ public class CarrelloDAO {
 
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
-                    CartItem item = new CartItem();
+                    Carrello item = new Carrello();
                     item.setId(rs.getInt("id"));
-                    item.setQuantity(rs.getInt("quantity"));
-                    item.setUser(user);
+                    item.setQuantit√†(rs.getInt("quantity"));
+                    item.setUtente(user);
 
-                    Product product = new Product();
+                    Prodotti product = new Prodotti();
                     product.setId(rs.getInt("pid"));
-                    product.setName(rs.getString("name"));
-                    product.setPrice(rs.getBigDecimal("price"));
+                    product.setNome(rs.getString("name"));
+                    product.setPrezzo(rs.getDouble("price"));
 
-                    item.setProduct(product);
+                    item.setProdotto(product);
 
                     items.add(item);
                 }
@@ -85,7 +87,7 @@ public class CarrelloDAO {
     }
 
     // Trova elemento carrello per id
-    public CartItem findById(int id) throws SQLException {
+    public Carrello findById(int id) throws SQLException {
         String sql = "SELECT ci.id, ci.quantity, u.id AS uid, u.name AS uname, p.id AS pid, p.name AS pname, p.price " +
                      "FROM cart_items ci " +
                      "JOIN users u ON ci.user_id = u.id " +
@@ -97,25 +99,25 @@ public class CarrelloDAO {
 
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
-                    CartItem item = new CartItem();
+                    Carrello item = new Carrello();
                     item.setId(rs.getInt("id"));
-                    item.setQuantity(rs.getInt("quantity"));
+                    item.setQuantit√†(rs.getInt("quantity"));
 
-                    User user = new User();
+                    Utente user = new Utente();
                     user.setId(rs.getInt("uid"));
-                    user.setName(rs.getString("uname"));
-                    item.setUser(user);
+                    user.setNome(rs.getString("uname"));
+                    item.setUtente(user);
 
-                    Product product = new Product();
+                    Prodotti product = new Prodotti();
                     product.setId(rs.getInt("pid"));
-                    product.setName(rs.getString("pname"));
-                    product.setPrice(rs.getBigDecimal("price"));
-                    item.setProduct(product);
+                    product.setNome(rs.getString("pname"));
+                    product.setPrezzo(rs.getDouble("price"));
+                    item.setProdotto(product);
 
                     return item;
                 }
             }
         }
-        return null; // non†trovato
-††††}
+    return null; // non trovato
+    }
 }

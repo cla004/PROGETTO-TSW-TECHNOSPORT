@@ -1,16 +1,21 @@
 
 package model;
 
-public class Dettaglio_Ordine {
+public class DettaglioOrdine {
     private int id;
     private Ordine Id_ordine;
-    private Prodotto id_prodotto;
-    private double quantità;
+    private Prodotti id_prodotto;
+    private int quantità;
     private double prezzo;
     
-    public Dettaglio_Ordine(int id , Ordine id_ordine , Prodotto id_prodotto,double quantità,double prezzo) {
+    public DettaglioOrdine() {
+    	
+    	//Costruttore senza argomenti 
+    }
+    
+    public DettaglioOrdine(int id , Ordine Id_ordine , Prodotti id_prodotto, int quantità,double prezzo) {
     	this.id = id;
-        this.id_ordine = id_ordine;
+        this.Id_ordine = Id_ordine;
         this.id_prodotto = id_prodotto;
         this.quantità = quantità;
         this.prezzo = prezzo;
@@ -29,25 +34,24 @@ public class Dettaglio_Ordine {
 
     public Ordine getId_ordine() {
     	
-    	return id_ordine; 
+    	return Id_ordine; 
     	
     	}
-    public void setId_ordine(Ordine id_ordine) {
+    public void setId_ordine(Ordine Id_ordine) {
     	
-    	this.id_ordine = id_ordine;
+    	this.Id_ordine = Id_ordine;
     	
     	}
 
-    public Prodotto getId_prodotto() { 
+    public Prodotti getId_prodotto() { 
     	
     	return id_prodotto; 
     	
     	}
-    public void setId_prodotto(Prodotto Id_prodotto) { 
-    	
-    	this.id_prodotto = id_prodotto; 
-    	
-    	}
+    public void setId_prodotto(Prodotti id_prodotto) {
+        this.id_prodotto = id_prodotto;
+    }
+
 
     public int getQuantità() {
     	
@@ -65,9 +69,8 @@ public class Dettaglio_Ordine {
     	return prezzo;
     	
     	}
-    public void setPrezzo(double prezzo) { 
-    	
-    	this.prezzo = prezzo; 
-    	
-    	}
+    public void setPrezzo(double prezzo) {
+        this.prezzo = prezzo;
+    }
+
 }

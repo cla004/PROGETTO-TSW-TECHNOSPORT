@@ -1,88 +1,92 @@
 package model;
 
-import model.Ordine;
 import java.sql.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
-public class OrdineDAO {
+import model.Ordine;
+import model.Utente;
 
-    public void inserisciOrdine(Ordine ordine) {
-        String sql = "INSERT INTO ordini (user_id, totale, stato) VALUES (?, ?, ?)";
-        try (Connection conn = DBConnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setInt(1, ordine.getUser_Id());
+public class OrdineDao {
+    private Connection conn;
+
+    public OrdineDao(Connection conn) {
+        this.conn = conn;
+    }
+
+    // Inserisce un ordine nel database
+    public void inserisciOrdine(Ordine ordine) throws SQLException {
+        String sql = "INSERT INTO ordine (user_id, totale, stato, data) VALUES (?, ?, ?, ?)";
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, ordine.getUser_Id().getId());
             stmt.setDouble(2, ordine.getTotale());
             stmt.setString(3, ordine.getStato());
+            stmt.setDate(4, new java.sql.Date(ordine.getData().getTime()));
             stmt.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
     }
 
-    public Ordine cercaOrdineById(int id) {
-        String sql = "SELECT * FROM ordini WHERE id = ?";
-        Ordine ordine = null;
-        try (Connection conn = DBConnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+    // Recupera un ordine tramite ID
+    public Ordine getOrdineById(int id) throws SQLException {
+        String sql = "SELECT * FROM ordine WHERE id = ?";
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, id);
-            ResultSet rs = stmt.executeQuery();
-            if (rs.next()) {
-                ordine = new Ordine(
-                    rs.getInt("id"),
-                    rs.getInt("user_id"),
-                    rs.getDouble("totale"),
-                    rs.getString("stato")
-                );
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    UtenteDao utenteDAO = new UtenteDao();
+                    Utente utente = utenteDAO.cercaUtenteById(rs.getInt("user_id"));
+
+                    double totale = rs.getDouble("totale");
+                    String stato = rs.getString("stato");
+                    Date data = rs.getDate("data");
+
+                    return new Ordine(id, utente, totale, stato, data);
+                }
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
-        return ordine;
+        return null;
     }
 
-    public List<Ordine> listaOrdini() {
-        List<Ordine> ordini = new ArrayList<>();
-        String sql = "SELECT * FROM ordini";
-        try (Connection conn = DBConnection.getConnection();
-             Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery(sql)) {
-            while (rs.next()) {
-                Ordine ordine = new Ordine(
-                    rs.getInt("id"),
-                    rs.getInt("user_id"),
-                    rs.getDouble("totale"),
-                    rs.getString("stato")
-                );
-                ordini.add(ordine);
+    // Recupera tutti gli ordini di un utente
+    public List<Ordine> getOrdiniByUtente(int Id) throws SQLException {
+        List<Ordine> lista = new ArrayList<>();
+        String sql = "SELECT * FROM ordine WHERE user_id = ?";
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, Id);
+            try (ResultSet rs = stmt.executeQuery()) {
+                UtenteDao utentedao = new UtenteDao();
+                Utente utente = utentedao.cercaUtenteById(Id);
+
+                while (rs.next()) {
+                    int id = rs.getInt("id");
+                    double totale = rs.getDouble("totale");
+                    String stato = rs.getString("stato");
+                    Date data = rs.getDate("data");
+
+                    Ordine ordine = new Ordine(id, utente, totale, stato, data);
+                    lista.add(ordine);
+                }
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
-        return ordini;
+        return lista;
     }
-    
-    public void aggiornaOrdine(Ordine ordine) {
-        String sql = "UPDATE ordini SET user_id = ?, totale = ?, stato = ? WHERE id = ?";
-        try (Connection conn = DBConnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setInt(1, ordine.getUser_Id());
-            stmt.setDouble(2, ordine.getTotale());
-            stmt.setString(3, ordine.getStato());
-            stmt.setInt(4, ordine.getId());
+
+    // Aggiorna lo stato di un ordine
+    public void aggiornaStatoOrdine(int idOrdine, String nuovoStato) throws SQLException {
+        String sql = "UPDATE ordine SET stato = ? WHERE id = ?";
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, nuovoStato);
+            stmt.setInt(2, idOrdine);
             stmt.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
     }
 
-    public void eliminaOrdine(int id) {
-        String sql = "DELETE FROM ordini WHERE id = ?";
-        try (Connection conn = DBConnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+ // Elimina un ordine
+    public void eliminaOrdine(int id) throws SQLException {
+        String sql = "DELETE FROM ordine WHERE id = ?";
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, id);
             stmt.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
+        }
+    }
+}

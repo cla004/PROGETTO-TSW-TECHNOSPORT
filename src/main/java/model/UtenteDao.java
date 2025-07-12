@@ -4,7 +4,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UtenteDAO {
+public class UtenteDao {
 
     public void inserisciUtente(Utente utente) {
         String sql = "INSERT INTO users (name, email, password) VALUES (?, ?, ?)";
@@ -36,7 +36,7 @@ public class UtenteDAO {
             if (rs.next()) {
                 utente = new Utente();
                 utente.setId(rs.getInt("id"));
-                utente.setName(rs.getString("name"));
+                utente.setNome(rs.getString("name"));
                 utente.setEmail(rs.getString("email"));
                 utente.setPassword(rs.getString("password"));
             }
@@ -59,7 +59,7 @@ public class UtenteDAO {
             while (rs.next()) {
                 Utente utente = new Utente();
                 utente.setId(rs.getInt("id"));
-                utente.setName(rs.getString("name"));
+                utente.setNome(rs.getString("name"));
                 utente.setEmail(rs.getString("email"));
                 utente.setPassword(rs.getString("password"));
                 lista.add(utente);
@@ -78,7 +78,7 @@ public class UtenteDAO {
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            stmt.setString(1, utente.getName());
+            stmt.setString(1, utente.getNome());
             stmt.setString(2, utente.getEmail());
             stmt.setString(3, utente.getPassword());
             stmt.setInt(4, utente.getId());
@@ -123,5 +123,5 @@ public class UtenteDAO {
     public boolean verify(String passwordInput, String storedHash) {
         String inputHash = PasswordHashing.toHash(passwordInput);
         return inputHash.equals(storedHash);
-    }
+    }
 }

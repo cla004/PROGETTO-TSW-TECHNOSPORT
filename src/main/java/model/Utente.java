@@ -16,7 +16,7 @@ public class Utente implements Serializable {
     public Utente() {
     }
 
-    public Utente(String id,String nome, String cognome, String email, String password) {
+    public Utente(int id,String nome, String cognome, String email, String password) {
     	this.id=id;        
     	this.nome = nome;
         this.cognome = cognome;
@@ -72,7 +72,8 @@ public class Utente implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
-    }
+    }
+
 
 
 }

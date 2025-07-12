@@ -6,11 +6,10 @@ import java.sql.SQLException;
 
 public class DBConnection {
 
-    // Configura le tue credenziali del database
-    // IMPORTANTISSIMO: Cambia "tecnosport", "root", "Milan" con i tuoi valori reali
+    
     private static final String URL = "jdbc:mysql://localhost:3306/eccomerce";
-    private static final String USER = "root"; // Il tuo username del database
-    private static final String PASSWORD = "Milan"; // La tua password del database
+    private static final String USER = "root"; // Username del database
+    private static final String PASSWORD = "Milan"; // La  password del database
 
     public static Connection getConnection() throws SQLException {
         try {
@@ -29,6 +28,6 @@ public class DBConnection {
             } catch (SQLException e) {
                 System.err.println("Errore durante la chiusura della connessione al database: " + e.getMessage());
             }
-        }
-    }
+        }
+    }
 }

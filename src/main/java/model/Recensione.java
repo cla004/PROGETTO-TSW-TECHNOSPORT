@@ -10,7 +10,7 @@ public class Recensione{
     private Utente id_utente;
   
 
-    public Prodotti(int id_recensione, String commento, String valutazione, Date data_recensione,Utente id_utente) {
+    public Recensione(int id_recensione, String commento, String valutazione, Date data_recensione,Utente id_utente) {
         this.id_recensione = id_recensione;
         this.commento = commento;
         this.valutazione = valutazione;
@@ -40,7 +40,7 @@ public class Recensione{
     	}
     public void setCommento(String commento) { 
     	
-    	this.nome = nome; 
+    	this.commento = commento; 
     	
     	}
 
@@ -60,13 +60,13 @@ public class Recensione{
     	return data_recensione; 
     	
     	}
-    public void setData_recensione(int data_recensione ) {
+    public void setData_recensione(Date data_recensione ) {
     	
     	this.data_recensione = data_recensione;
     	
     	}
     
- public int getId_utente () { 
+ public Utente getId_utente () { 
     	
     	return id_utente; 
     	
@@ -74,8 +74,12 @@ public class Recensione{
     public void setId_utente(Utente id_utente ) {
     	
     	this.id_utente = id_utente;
-    	
-    	}
+    	
+    	}
 
+
+    public int getId() {
+        return id_utente.getId();
+    }
 
 }

@@ -9,7 +9,7 @@ public class TagliaDAO {
         String sql = "INSERT INTO taglie (nome) VALUES (?)";
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setString(1, t.getNome());
+            stmt.setString(1, t.getEtichetta());
             stmt.executeUpdate();
         } catch (SQLException e) { e.printStackTrace(); }
     }
@@ -23,8 +23,8 @@ public class TagliaDAO {
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
                 t = new Taglia();
-                t.setId(rs.getInt("id"));
-                t.setNome(rs.getString("nome"));
+                t.setid_taglia(rs.getInt("id"));
+                t.setEtichetta(rs.getString("nome"));
             }
         } catch (SQLException e) { e.printStackTrace(); }
         return t;
@@ -38,8 +38,8 @@ public class TagliaDAO {
              ResultSet rs = stmt.executeQuery(sql)) {
             while (rs.next()) {
                 Taglia t = new Taglia();
-                t.setId(rs.getInt("id"));
-                t.setNome(rs.getString("nome"));
+                t.setid_taglia(rs.getInt("id"));
+                t.setEtichetta(rs.getString("nome"));
                 lista.add(t);
             }
         } catch (SQLException e) { e.printStackTrace(); }
@@ -50,8 +50,8 @@ public class TagliaDAO {
         String sql = "UPDATE taglie SET nome = ? WHERE id = ?";
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setString(1, t.getNome());
-            stmt.setInt(2, t.getId());
+            stmt.setString(1, t.getEtichetta());
+            stmt.setInt(2, t.getid_taglia());
             stmt.executeUpdate();
         } catch (SQLException e) { e.printStackTrace(); }
     }
@@ -62,6 +62,8 @@ public class TagliaDAO {
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, id);
             stmt.executeUpdate();
-        } catch (SQLException e) { e.printStackTrace(); }
-    }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

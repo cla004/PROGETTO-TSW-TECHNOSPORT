@@ -1,20 +1,28 @@
+
+
 package model;
-
 import java.sql.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 import model.DettaglioOrdine;
+import model.Ordine;
+import model.Prodotti;
+import model.DBConnection; 
 
-public class DettaglioOrdineDAO {
+public class DettaglioOrdineDao{
+
     public void inserisciDettaglio(DettaglioOrdine d) {
         String sql = "INSERT INTO dettagli_ordine (ordine_id, prodotto_id, quantita, prezzo_unitario) VALUES (?, ?, ?, ?)";
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setInt(1, d.getOrdineId());
-            stmt.setInt(2, d.getProdottoId());
-            stmt.setInt(3, d.getQuantita());
-            stmt.setDouble(4, d.getPrezzoUnitario());
+            stmt.setInt(1, d.getId_ordine().getId());
+            stmt.setInt(2, d.getId_prodotto().getId_prodotto());
+            stmt.setInt(3, d.getQuantità());
+            stmt.setDouble(4, d.getPrezzo());
             stmt.executeUpdate();
-        } catch (SQLException e) { e.printStackTrace(); }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public DettaglioOrdine cercaDettaglioById(int id) {
@@ -27,12 +35,21 @@ public class DettaglioOrdineDAO {
             if (rs.next()) {
                 d = new DettaglioOrdine();
                 d.setId(rs.getInt("id"));
-                d.setOrdineId(rs.getInt("ordine_id"));
-                d.setProdottoId(rs.getInt("prodotto_id"));
-                d.setQuantita(rs.getInt("quantita"));
-                d.setPrezzoUnitario(rs.getDouble("prezzo_unitario"));
+
+                Ordine ordine = new Ordine();
+                ordine.setId(rs.getInt("ordine_id"));
+                d.setId_ordine(ordine);
+
+                Prodotti prodotto = new Prodotti();
+                prodotto.setId(rs.getInt("prodotto_id"));
+                d.setId_prodotto(prodotto);
+
+                d.setQuantità(rs.getInt("quantita"));
+                d.setPrezzo(rs.getDouble("prezzo_unitario"));
             }
-        } catch (SQLException e) { e.printStackTrace(); }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return d;
     }
 
@@ -45,13 +62,23 @@ public class DettaglioOrdineDAO {
             while (rs.next()) {
                 DettaglioOrdine d = new DettaglioOrdine();
                 d.setId(rs.getInt("id"));
-                d.setOrdineId(rs.getInt("ordine_id"));
-                d.setProdottoId(rs.getInt("prodotto_id"));
-                d.setQuantita(rs.getInt("quantita"));
-                d.setPrezzoUnitario(rs.getDouble("prezzo_unitario"));
+
+                Ordine ordine = new Ordine();
+                ordine.setId(rs.getInt("ordine_id"));
+                d.setId_ordine(ordine);
+
+                Prodotti prodotto = new Prodotti();
+                prodotto.setId(rs.getInt("prodotto_id"));
+                d.setId_prodotto(prodotto);
+
+                d.setQuantità(rs.getInt("quantita"));
+                d.setPrezzo(rs.getDouble("prezzo_unitario"));
+
                 lista.add(d);
             }
-        } catch (SQLException e) { e.printStackTrace(); }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return lista;
     }
 
@@ -59,13 +86,15 @@ public class DettaglioOrdineDAO {
         String sql = "UPDATE dettagli_ordine SET ordine_id = ?, prodotto_id = ?, quantita = ?, prezzo_unitario = ? WHERE id = ?";
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setInt(1, d.getOrdineId());
-            stmt.setInt(2, d.getProdottoId());
-            stmt.setInt(3, d.getQuantita());
-            stmt.setDouble(4, d.getPrezzoUnitario());
+            stmt.setInt(1, d.getId_ordine().getId());
+            stmt.setInt(2, d.getId_prodotto().getId_prodotto());
+            stmt.setInt(3, d.getQuantità());
+            stmt.setDouble(4, d.getPrezzo());
             stmt.setInt(5, d.getId());
             stmt.executeUpdate();
-        } catch (SQLException e) { e.printStackTrace(); }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public void eliminaDettaglio(int id) {
@@ -74,6 +103,8 @@ public class DettaglioOrdineDAO {
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, id);
             stmt.executeUpdate();
-        } catch (SQLException e) { e.printStackTrace(); }
-    }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

@@ -18,7 +18,12 @@ public class Ordine {
     }
    
 
-    public int getId() {
+    public Ordine() {
+		// costruttore senza argomenti 
+	}
+
+
+	public int getId() {
     	
     	return id;
     	
@@ -50,7 +55,7 @@ public class Ordine {
     
     public void setTotale(double totale) { 
     	
-    	this.total = totale; 
+    	this.totale = totale; 
     	
     	}
 
@@ -62,18 +67,17 @@ public class Ordine {
     
     public void setStato(String stato) {
     	
-    	this.status = stato; 
+    	this.stato = stato; 
     	
     	}
- public String getData() {
+ public Date getData() {
     	
     	return data; 
     	
     	}
     
-    public void setData(int stato) {
-    	
-    	this.data = data; 
-    	
-    	}
+ public void setData(Date data) {
+	    this.data = data;
+	}
+
 }
