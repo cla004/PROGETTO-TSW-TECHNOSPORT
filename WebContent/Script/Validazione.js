@@ -48,8 +48,7 @@ document.addEventListener("DOMContentLoaded", function() {
             return;
         }
 
-        // Se vuoi fare un controllo AJAX finale puoi farlo qui (non incluso)
-        // Altrimenti lascia inviare normalmente i dati al server
+
     });
 
     // Funzione che valida che il nome non sia vuoto

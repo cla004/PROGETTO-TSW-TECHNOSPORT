@@ -7,7 +7,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>CalcioShop - Maglie da Calcio</title>
-  <link rel="stylesheet" href="styles/Homepage.css"/>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/styles/Homepage.css"/>
+
 </head>
 <body>
   <header>
@@ -33,17 +34,17 @@
     <h2>Novità in Vetrina</h2>
     <div class="grid">
       <div class="card">
-        <img src="images/MagliettaJuventus.jpg" alt="Maglia Juventus 2025" />
+        <img src="Images/MagliettaJuventus.jpg" alt="Maglia Juventus 2025" />
         <h3>Juventus 2025</h3>
         <p>€89,99</p>
       </div>
       <div class="card">
-        <img src="images/MagliaMilan.jpg" alt="Maglia Milan 2025" />
+        <img src="Images/MagliaMilan.jpg" alt="Maglia Milan 2025" />
         <h3>Milan 2025</h3>
         <p>€89,99</p>
       </div>
       <div class="card">
-        <img src="images/MagliaItalia.jpg" alt="Maglia Italia Euro 2024" />
+        <img src="Images/MagliaItalia.jpg" alt="Maglia Italia Euro 2024" />
         <h3>Italia Euro 2024</h3>
         <p>€94,99</p>
       </div>
