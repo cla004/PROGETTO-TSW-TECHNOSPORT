@@ -1,6 +1,7 @@
 package model;
 
 import model.Prodotti;
+
 import java.sql.*;
 import java.util.*;
 
@@ -87,4 +88,20 @@ public class ProdottiDao {
             e.printStackTrace();
         }
     }
+    
+    public byte[] getPhotoById(int id) throws SQLException {
+        String sql = "SELECT immagine FROM prodotti WHERE id = ?";
+        try (Connection conn =DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setInt(1, id);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getBytes("immagine"); // restituisce il BLOB come array di byte
+                }
+            }
+        }
+        return null;
+    }   
+    
 }

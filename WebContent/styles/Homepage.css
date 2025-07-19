@@ -1,3 +1,4 @@
+/* ---- BASE E NAVBAR -------------------------------------------------- */
 body {
   margin: 0;
   font-family: Arial, sans-serif;
@@ -7,90 +8,238 @@ body {
 
 header {
   background-color: #fff;
-  padding: 1rem 2rem;
+  padding: 1em 2em;
+  border-bottom: 1px solid #ccc;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
 .logo {
-  font-size: 1.5rem;
+  font-size: 1.8em;
   font-weight: bold;
-  color: #0a3d62;
+  color: navy;
 }
 
 nav ul {
   list-style: none;
+  padding: 0;
+  margin: 0;
   display: flex;
-  gap: 1rem;
+  gap: 1em;
+}
+
+nav li {
+  margin: 0;
 }
 
 nav a {
   text-decoration: none;
-  color: #0a3d62;
+  color: navy;
   font-weight: bold;
 }
 
+nav a:hover {
+  color: #27ae60;
+}
+
+/* ---- HERO ----------------------------------------------------------- */
 .hero {
-  text-align: center;
-  padding: 4rem 2rem;
-background: url('../Images/calciatore.jpg') center/cover no-repeat;
+  background-image: url('../Images/calciatori.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
   color: white;
+  text-align: center;
+  padding: 6em 1em 4em;
 }
 
 .hero h1 {
-  font-size: 2.5rem;
-  margin-bottom: 0.5rem;
+  margin: 0;
+  font-size: 2.5em;
+  text-shadow: 1px 1px 4px #000;
 }
 
 .hero p {
-  font-size: 1.2rem;
+  margin-top: 1em;
+  font-size: 1.4em;
+  line-height: 1.5em;
+  text-shadow: 1px 1px 3px #000;
 }
 
-.cta {
+.hero a.cta {
   display: inline-block;
-  margin-top: 1rem;
-  padding: 0.75rem 1.5rem;
-  background-color: #27ae60;
+  margin-top: 2em;
+  padding: 0.8em 2em;
+  background-color: #e74c3c;
   color: white;
   text-decoration: none;
-  border-radius: 5px;
+  border-radius: 0.3em;
 }
 
-.prodotti {
-  padding: 2rem;
+.hero a.cta:hover {
+  background-color: #c0392b;
+}
+
+/* ---- SEZIONI GENERALI ---------------------------------------------- */
+section {
   background-color: #fff;
+  padding: 2em 1em;
   text-align: center;
 }
 
-.prodotti h2 {
-  margin-bottom: 1.5rem;
-  color: #0a3d62;
+h2 {
+  color: navy;
+  font-size: 1.6em;
+  margin-bottom: 1em;
 }
 
+p {
+  font-size: 1em;
+  line-height: 1.5em;
+  margin-bottom: 1em;
+}
+
+/* ---- GRIGLIA -------------------------------------------------------- */
 .grid {
-  display: grid;
-  gap: 1.5rem;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.5em;
+  margin-top: 1em;
 }
 
+.grid img {
+  width: 90%;
+  height: auto;
+  margin: 0.5em;
+}
+
+/* ---- CARD ----------------------------------------------------------- */
 .card {
-  background: #f9f9f9;
-  padding: 1rem;
-  border-radius: 10px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  width: 220px;
+  padding: 1em;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 0.5em;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  text-align: center;
 }
 
 .card img {
   width: 100%;
-  height: auto;
-  border-radius: 8px;
+  border-radius: 0.5em;
 }
 
+.card h3 {
+  font-size: 1.1em;
+  margin: 0.5em 0;
+  color: #222;
+}
+
+.card p {
+  font-weight: normal;
+  margin: 0.5em 0;
+  color: #444;
+}
+
+.card p strong {
+  color: #27ae60;
+}
+
+/* ---- OFFERTE -------------------------------------------------------- */
+.offerte .card p del {
+  color: gray;
+}
+
+.offerte .card p strong {
+  color: #e74c3c;
+}
+
+/* ---- CATEGORIE ------------------------------------------------------ */
+.categorie a {
+  display: inline-block;
+  padding: 0.5em 1em;
+  margin: 0.5em;
+  text-decoration: none;
+  color: navy;
+  background-color: #e6f7ff;
+  border: 1px solid #b2ebf2;
+  border-radius: 0.3em;
+}
+
+.categorie a:hover {
+  background-color: #d0f0ff;
+}
+
+/* ---- NEWSLETTER ----------------------------------------------------- */
+.newsletter p {
+  font-style: italic;
+  color: #555;
+}
+
+.newsletter input[type="email"] {
+  padding: 0.6em;
+  width: 220px;
+  border: 1px solid #ccc;
+  border-radius: 0.3em;
+}
+
+.newsletter button {
+  padding: 0.6em 1.2em;
+  margin-left: 0.5em;
+  border: none;
+  background-color: #27ae60;
+  color: #fff;
+  font-weight: bold;
+  border-radius: 0.3em;
+  cursor: pointer;
+}
+
+.newsletter button:hover {
+  background-color: #1e874f;
+}
+
+/* ---- FAQ ------------------------------------------------------------ */
+.faq p {
+  max-width: 600px;
+  margin: 1em auto;
+  text-align: left;
+  line-height: 1.5em;
+}
+
+.faq strong {
+  color: #0a3d62;
+}
+
+/* ---- CHI SIAMO ------------------------------------------------------ */
+.chi-siamo {
+  background-color: #f5f5f5;
+}
+
+.chi-siamo p {
+  max-width: 700px;
+  margin: 0 auto;
+  line-height: 1.6em;
+  color: #333;
+}
+
+/* ---- TESTIMONIANZE -------------------------------------------------- */
+.testimonianze blockquote {
+  font-style: italic;
+  margin: 1.2em auto;
+  padding: 0.5em 1em;
+  max-width: 600px;
+  border-left: 4px solid #27ae60;
+  background-color: #f9f9f9;
+  color: #444;
+}
+
+/* ---- FOOTER --------------------------------------------------------- */
 footer {
+  background-color: navy;
+  color: white;
   text-align: center;
-  padding: 1rem;
-  background: #0a3d62;
-  color: white;
+  padding: 2em;
+  font-size: 0.9em;
 }

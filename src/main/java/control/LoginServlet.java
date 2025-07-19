@@ -13,75 +13,72 @@ import java.io.IOException;
 @WebServlet("/login")
 public class LoginServlet extends HttpServlet {
 
-    public void doGet(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.getRequestDispatcher("Login.jsp").forward(request, response);
     }
 
-    public void doPost(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
-    	 response.setContentType("application/json");
-    	    response.setCharacterEncoding("UTF-8");
-    	    
-    	    
-    	  
-    	
-    	UtenteDao utenteDao = new UtenteDao();
+    public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+
+        UtenteDao utenteDao = new UtenteDao();
         String email = request.getParameter("email");
         String password = request.getParameter("password");
-        
+
         boolean isAjax = "XMLHttpRequest".equals(request.getHeader("X-Requested-With"));
 
-        if (isAjax) {
         // === Controllo AJAX: solo email ===
-        if (email != null) {
+        if (isAjax && email != null && password == null) {
             boolean emailEsiste = utenteDao.emailEsiste(email);
-            response.setContentType("application/json");
             response.getWriter().write("{ \"valido\": " + emailEsiste + " }");
             return;
         }
-        }
-        
-        if(isAjax) {
-        // === Controllo AJAX: password
-        if (password != null) {
+
+        // === Controllo AJAX: password ===
+        if (isAjax && password != null) {
             Utente utente = utenteDao.cercaUtenteByEmail(email);
             boolean passwordValida = utente != null && utenteDao.verify(password, utente.getPassword());
-
-            response.setContentType("application/json");
             response.getWriter().write("{ \"valido\": " + passwordValida + " }");
             return;
         }
-        }
 
+        // === Controllo campi vuoti ===
         if (email == null || email.trim().isEmpty() || password == null || password.trim().isEmpty()) {
             request.setAttribute("loginError", "Inserisci email e password.");
             request.getRequestDispatcher("Login.jsp").forward(request, response);
             return;
         }
 
-
-        // Controlla se l'email esiste
+        // === Controllo esistenza email ===
         if (!utenteDao.emailEsiste(email)) {
-        
             request.setAttribute("loginError", "Email non registrata.");
-                    
             request.getRequestDispatcher("Login.jsp").forward(request, response);
             return;
         }
 
-        // Recupera utente tramite email
+        // === Recupera utente ===
         Utente utente = utenteDao.cercaUtenteByEmail(email);
 
-        // Verifica la password con il metodo verify (che fa hashing)
+        // === Verifica password ===
         if (utente == null || !utenteDao.verify(password, utente.getPassword())) {
             request.setAttribute("loginError", "Credenziali non valide. Riprova.");
             request.getRequestDispatcher("Login.jsp").forward(request, response);
             return;
         }
 
-        // Login riuscito
+        // === Login riuscito ===
         HttpSession session = request.getSession();
         session.setAttribute("loggedInUser", utente);
-        session.setMaxInactiveInterval(30 * 60);
-        response.sendRedirect(request.getContextPath() + "/Homepage.jsp");
+        session.setMaxInactiveInterval(30 * 60); // 30 minuti
+
+        // === Controllo se è admin (in base all'email) 
+        // Se è un admin viene indirizzato  nella dashboard dell'admin 
+        if ("admin@calcioshop.it".equalsIgnoreCase(utente.getEmail())) {
+            session.setAttribute("isAdmin", true);
+            response.sendRedirect(request.getContextPath() + "/adminDashboard.jsp");
+        } else {
+            session.setAttribute("isAdmin", false);
+            response.sendRedirect(request.getContextPath() + "/Homepage.jsp");
+        }
     }
 }

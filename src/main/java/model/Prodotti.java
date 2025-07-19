@@ -3,7 +3,8 @@ package model;
 public class Prodotti {
     private int id_prodotto;
     private String nome;
-    private String immagini_url;
+ // Rappresenta l'immagine del prodotto in formato binario (BLOB del database)
+    private byte[] immagine;
     private double prezzo;
     private String descrizione;
     private String quantità_disponibili;
@@ -12,16 +13,17 @@ public class Prodotti {
     public Prodotti() {
     	// costruttore di default senza argomenti
     }
+    //Costruttore con argomenti (attributi della classe Prodotti usando la parola chiave this)
 
-    public Prodotti(int id_prodotto, String nome, String immagini_url, double prezzo, String descrizione, String quanità_disponibili, int id_categoria) {
-        this.nome = nome;
-        this.immagini_url = immagini_url;
-        this.prezzo = prezzo;
-        this.descrizione = descrizione;
-        this.quantità_disponibili = quantità_disponibili;
-        this.id_categoria=id_categoria;
-      
-    }
+    public Prodotti(int id_prodotto, String nome, byte[] immagine, double prezzo, String descrizione, String quantità_disponibili, int id_categoria) {
+this.id_prodotto = id_prodotto;
+this.nome = nome;
+this.immagine = immagine;
+this.prezzo = prezzo;
+this.descrizione = descrizione;
+this.quantità_disponibili = quantità_disponibili;
+this.id_categoria = id_categoria;
+}
 
   
 

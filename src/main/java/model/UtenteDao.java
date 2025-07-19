@@ -125,6 +125,10 @@ public class UtenteDao {
         return inputHash.equals(storedHash);
     }
     
+    public String hashPassword(String plainPassword) {
+        return PasswordHashing.toHash(plainPassword);
+    }
+    
     public Utente cercaUtenteByEmail(String email) {
         String sql = "SELECT * FROM users WHERE email = ?";
         Utente utente = null;
