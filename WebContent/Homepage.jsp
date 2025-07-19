@@ -121,8 +121,7 @@
     </div>
   </section>
 
-  <footer>
-    <p>&copy; 2025 CalcioShop - Tutti i diritti riservati</p>
-  </footer>
+<jsp:include page="${pageContext.request.contextPath}/footer.jsp" />
+
 </body>
 </html>

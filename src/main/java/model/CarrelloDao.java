@@ -73,7 +73,7 @@ public class CarrelloDao {
                     item.setUtente(user);
 
                     Prodotti product = new Prodotti();
-                    product.setId(rs.getInt("pid"));
+                    product.setId_prodotto(rs.getInt("pid"));
                     product.setNome(rs.getString("name"));
                     product.setPrezzo(rs.getDouble("price"));
 
@@ -109,7 +109,7 @@ public class CarrelloDao {
                     item.setUtente(user);
 
                     Prodotti product = new Prodotti();
-                    product.setId(rs.getInt("pid"));
+                    product.setId_prodotto(rs.getInt("pid"));
                     product.setNome(rs.getString("pname"));
                     product.setPrezzo(rs.getDouble("price"));
                     item.setProdotto(product);

@@ -1,15 +1,16 @@
 package model;
 
 public class Categoria{
-    private String nome_recensione;
+    private String nome_categoria;
     private int id_categoria;
+   
   public Categoria() {
 	  
 	  // costruttore di default senza argomenti 
   }
 
     public Categoria(String nome_recensione, int id_categoria) {
-        this.nome_recensione = nome_recensione;
+        this.nome_categoria= nome_recensione;
         this.id_categoria = id_categoria;
        
     }
@@ -19,13 +20,13 @@ public class Categoria{
     // Getters e Setters
     public String getnome_recensione() { 
     	
-    	return nome_recensione; 
+    	return nome_categoria; 
     	
     	}
     
-    public void setnome_recensione(String nome_recensione) { 
+    public void setnome_recensione(String nome_categoria) { 
     	
-    	this.nome_recensione = nome_recensione;
+    	this.nome_categoria = nome_categoria;
     	
     	}
 

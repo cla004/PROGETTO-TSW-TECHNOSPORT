@@ -41,7 +41,7 @@ public class DettaglioOrdineDao{
                 d.setId_ordine(ordine);
 
                 Prodotti prodotto = new Prodotti();
-                prodotto.setId(rs.getInt("prodotto_id"));
+                prodotto.setId_prodotto(rs.getInt("prodotto_id"));
                 d.setId_prodotto(prodotto);
 
                 d.setQuantità(rs.getInt("quantita"));
@@ -68,7 +68,7 @@ public class DettaglioOrdineDao{
                 d.setId_ordine(ordine);
 
                 Prodotti prodotto = new Prodotti();
-                prodotto.setId(rs.getInt("prodotto_id"));
+                prodotto.setId_prodotto(rs.getInt("prodotto_id"));
                 d.setId_prodotto(prodotto);
 
                 d.setQuantità(rs.getInt("quantita"));

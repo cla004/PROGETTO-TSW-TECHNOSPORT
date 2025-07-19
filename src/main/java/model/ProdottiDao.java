@@ -30,7 +30,7 @@ public class ProdottiDao {
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
                 p = new Prodotti();
-                p.setId(rs.getInt("id"));
+                p.setId_prodotto(rs.getInt("id"));
                 p.setNome(rs.getString("nome"));
                 p.setDescrizione(rs.getString("descrizione"));
                 p.setPrezzo(rs.getDouble("prezzo"));
@@ -50,7 +50,7 @@ public class ProdottiDao {
              ResultSet rs = stmt.executeQuery(sql)) {
             while (rs.next()) {
                 Prodotti p = new Prodotti();
-                p.setId(rs.getInt("id"));
+                p.setId_prodotto(rs.getInt("id"));
                 p.setNome(rs.getString("nome"));
                 p.setDescrizione(rs.getString("descrizione"));
                 p.setPrezzo(rs.getDouble("prezzo"));
@@ -104,4 +104,18 @@ public class ProdottiDao {
         return null;
     }   
     
+    public String getNomeCategoriaById(int idCategoria) throws SQLException {
+        String sql = "SELECT nome_categoria FROM categorie WHERE id_categoria = ?";
+        try (Connection conn =DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, idCategoria);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getString("nome_categoria");
+                }
+            }
+        }
+        return "null";
+    
+}
 }
