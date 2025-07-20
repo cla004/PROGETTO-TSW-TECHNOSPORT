@@ -22,7 +22,7 @@ public class CarrelloDao {
         try (PreparedStatement stmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             stmt.setInt(1, item.getUtente().getId());
             stmt.setInt(2, item.getProdotto().getId_prodotto());
-            stmt.setInt(3, item.getQuantità());
+            stmt.setInt(3, item.getQuantita());
 
             stmt.executeUpdate();
 
@@ -39,7 +39,7 @@ public class CarrelloDao {
  
 		String sql = "UPDATE cart_items SET quantity = ? WHERE id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setInt(1, item.getQuantità());
+            stmt.setInt(1, item.getQuantita());
             stmt.setInt(2, item.getId());
             stmt.executeUpdate();
         }
@@ -69,7 +69,7 @@ public class CarrelloDao {
                 while (rs.next()) {
                     Carrello item = new Carrello();
                     item.setId(rs.getInt("id"));
-                    item.setQuantità(rs.getInt("quantity"));
+                    item.setQuantita(rs.getInt("quantity"));
                     item.setUtente(user);
 
                     Prodotti product = new Prodotti();
@@ -101,7 +101,7 @@ public class CarrelloDao {
                 if (rs.next()) {
                     Carrello item = new Carrello();
                     item.setId(rs.getInt("id"));
-                    item.setQuantità(rs.getInt("quantity"));
+                    item.setQuantita(rs.getInt("quantity"));
 
                     Utente user = new Utente();
                     user.setId(rs.getInt("uid"));

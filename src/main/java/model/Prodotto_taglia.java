@@ -5,13 +5,13 @@ import model.Prodotti;
 public class Prodotto_taglia{
     private int id_prodotto;
     private int id_taglia;
-    private double quantità_disponibili;
+    private double quantita_disponibili;
   
 
-    public Prodotto_taglia(int id_prodotto, int id_taglia,double quantità_disponibili) {
+    public Prodotto_taglia(int id_prodotto, int id_taglia,double quantita_disponibili) {
         this.id_prodotto = id_prodotto;
         this.id_taglia = id_taglia;
-        this.quantità_disponibili = quantità_disponibili;
+        this.quantita_disponibili = quantita_disponibili;
        
     }
 
@@ -39,14 +39,14 @@ public class Prodotto_taglia{
     	
     	}
     
-  public double getquantità_disponibili() { 
+  public double getQuantita_disponibili() { 
     	
-    	return quantità_disponibili; 
+    	return quantita_disponibili; 
     	
     	}
   
-  public void setQuantità_disponibili(double quantità_disponibili) { 
+  public void setQuantita_disponibili(double quantita_disponibili) { 
 	    // assegno il valore passato al campo della classe
-	    this.quantità_disponibili = quantità_disponibili;
+	    this.quantita_disponibili = quantita_disponibili;
 	}
 }

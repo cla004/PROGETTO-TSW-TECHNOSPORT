@@ -5,7 +5,7 @@ public class DettaglioOrdine {
     private int id;
     private Ordine Id_ordine;
     private Prodotti id_prodotto;
-    private int quantità;
+    private int quantita;
     private double prezzo;
     
     public DettaglioOrdine() {
@@ -13,11 +13,11 @@ public class DettaglioOrdine {
     	//Costruttore senza argomenti 
     }
     
-    public DettaglioOrdine(int id , Ordine Id_ordine , Prodotti id_prodotto, int quantità,double prezzo) {
+    public DettaglioOrdine(int id , Ordine Id_ordine , Prodotti id_prodotto, int quantita,double prezzo) {
     	this.id = id;
         this.Id_ordine = Id_ordine;
         this.id_prodotto = id_prodotto;
-        this.quantità = quantità;
+        this.quantita = quantita;
         this.prezzo = prezzo;
     }
 
@@ -53,14 +53,14 @@ public class DettaglioOrdine {
     }
 
 
-    public int getQuantità() {
+    public int getQuantita() {
     	
-    	return quantità;
+    	return quantita;
     	
     	}
-    public void setQuantità(int quantità) {
+    public void setQuantita(int quantita) {
     	
-    	this.quantità = quantità; 
+    	this.quantita = quantita; 
     	
     	}
 

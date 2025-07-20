@@ -1,4 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%
+    // Controllo se l'utente è loggato
+    String username = (String) session.getAttribute("username");
+    Boolean isAdmin = (Boolean) session.getAttribute("isAdmin");
+    boolean isLoggedIn = (username != null);
+%>
 <!DOCTYPE html>
 <html lang="it">
 <head>
@@ -21,6 +27,22 @@
         <li><a href="#nazionali">Nazionali</a></li>
         <li><a href="#allenamento">Allenamento</a></li>
         <li><a href="carrello.jsp">🛒 Carrello</a></li>
+        
+        <!-- Login/Registrazione/Logout sempre visibili -->
+        <% if (!isLoggedIn) { %>
+          <li><a href="Login.jsp">🔐 Login</a></li>
+          <li><a href="Registrazione.jsp">📝 Registrati</a></li>
+        <% } else { %>
+          <li><a href="LogoutServlet">🚪 Logout</a></li>
+        <% } %>
+        
+        <!-- Messaggio di benvenuto quando sei loggato -->
+        <% if (isLoggedIn) { %>
+          <li><span style="color: #2ecc71; font-weight: bold;">👋 Benvenuto, <%= username %>!</span></li>
+          <% if (isAdmin != null && isAdmin) { %>
+            <li><a href="adminDashboard.jsp">⚙️ Admin</a></li>
+          <% } %>
+        <% } %>
       </ul>
     </nav>
   </header>
@@ -40,6 +62,11 @@
           <h3>Maglia Club <%= i %></h3>
           <p>Edizione 2025 | Materiale tecnico</p>
           <p><strong>€79,99</strong></p>
+          <form action="carrello" method="post">
+            <input type="hidden" name="action" value="aggiungi">
+            <input type="hidden" name="prodottoId" value="<%= i %>">
+            <button type="submit" style="background: #28a745; color: white; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer;">🛒 Aggiungi al carrello</button>
+          </form>
         </div>
       <% } %>
     </div>
@@ -55,6 +82,11 @@
           <h3>Nike Phantom <%= i %></h3>
           <p>Suola FG - Tomaia in microfibra</p>
           <p><strong>€109,99</strong></p>
+          <form action="carrello" method="post">
+            <input type="hidden" name="action" value="aggiungi">
+            <input type="hidden" name="prodottoId" value="<%= i %>">
+            <button type="submit" style="background: #28a745; color: white; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer;">🛒 Aggiungi al carrello</button>
+          </form>
         </div>
       <% } %>
     </div>
@@ -64,12 +96,17 @@
   <section id="tute">
     <h2>Tute da allenamento</h2>
     <div class="grid">
-      <% for (int i = 1; i <= 15; i++) { %>
+      <% for (int i = 1; i <=15; i++) { %>
         <div class="card">
           <img src="Images/tuta<%= i %>.jpg" alt="Tuta <%= i %>">
           <h3>Tuta Adidas <%= i %></h3>
           <p>Giacca + pantalone in tessuto tecnico</p>
           <p><strong>€69,99</strong></p>
+          <form action="carrello" method="post">
+            <input type="hidden" name="action" value="aggiungi">
+            <input type="hidden" name="prodottoId" value="<%= i%>">
+            <button type="submit" style="background: #28a745; color: white; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer;">🛒 Aggiungi al carrello</button>
+          </form>
         </div>
       <% } %>
     </div>
@@ -79,12 +116,17 @@
   <section id="accessori">
     <h2>Accessori da campo</h2>
     <div class="grid">
-      <% for (int i = 1; i <= 15; i++) { %>
+      <% for (int i =1; i <=15; i++) { %>
         <div class="card">
           <img src="Images/accessorio<%= i %>.jpg" alt="Accessorio <%= i %>">
           <h3>Accessorio Sport <%= i %></h3>
           <p>Pallone, borraccia, parastinchi ecc.</p>
           <p><strong>da €9,99</strong></p>
+          <form action="carrello" method="post">
+            <input type="hidden" name="action" value="aggiungi">
+            <input type="hidden" name="prodottoId" value="<%= i + 47 %>">
+            <button type="submit" style="background: #28a745; color: white; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer;">🛒 Aggiungi al carrello</button>
+          </form>
         </div>
       <% } %>
     </div>
@@ -101,6 +143,11 @@
           <h3>Maglia <%= nazioni[i % nazioni.length] %> <%= 2024 + i %></h3>
           <p>Ufficiale | Pro Edition</p>
           <p><strong>€94,99</strong></p>
+          <form action="carrello" method="post">
+            <input type="hidden" name="action" value="aggiungi">
+            <input type="hidden" name="prodottoId" value="<%= i + 63 %>">
+            <button type="submit" style="background: #28a745; color: white; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer;">🛒 Aggiungi al carrello</button>
+          </form>
         </div>
       <% } %>
     </div>
@@ -116,12 +163,17 @@
           <h3>Kit allenamento <%= i %></h3>
           <p>Top, shorts, felpe e accessori training</p>
           <p><strong>da €29,99</strong></p>
+          <form action="carrello" method="post">
+            <input type="hidden" name="action" value="aggiungi">
+            <input type="hidden" name="prodottoId" value="<%= i + 78 %>">
+            <button type="submit" style="background: #28a745; color: white; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer;">🛒 Aggiungi al carrello</button>
+          </form>
         </div>
       <% } %>
     </div>
   </section>
 
-<jsp:include page="${pageContext.request.contextPath}/footer.jsp" />
+<jsp:include page="footer.jsp" />
 
 </body>
 </html>

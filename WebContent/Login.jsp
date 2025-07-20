@@ -23,7 +23,7 @@
       <h1>TECHNO<span>SPORT</span></h1>
       <h2>Accedi al tuo account</h2>
       <p>Scopri le offerte esclusive riservate agli iscritti!</p>
-
+      
   <form id="loginForm" action="${pageContext.request.contextPath}/login" method="post">
 
         <input type="text" id="email" name="email" placeholder="Email" required>

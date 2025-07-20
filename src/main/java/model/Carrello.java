@@ -2,7 +2,7 @@ package model;
 
 public class Carrello {
     private int id;
-    private int quantità;
+    private int quantita;
     private Utente id_utente;    
     private Prodotti prodotto; 
 
@@ -12,9 +12,9 @@ public class Carrello {
     }
 
     
-    public Carrello(int id, int quantità, Utente id_utente, Prodotti prodotto) {
+    public Carrello(int id, int quantita, Utente id_utente, Prodotti prodotto) {
         this.id = id;
-        this.quantità = quantità;
+        this.quantita = quantita;
         this.id_utente = id_utente;
         this.prodotto = prodotto;
     }
@@ -28,12 +28,12 @@ public class Carrello {
         this.id = id;
     }
 
-    public int getQuantità() {
-        return quantità;
+    public int getQuantita() {
+        return quantita;
     }
 
-    public void setQuantità(int quantità) {
-        this.quantità = quantità;
+    public void setQuantita(int quantita) {
+        this.quantita = quantita;
     }
 
     public Utente getUtente() {

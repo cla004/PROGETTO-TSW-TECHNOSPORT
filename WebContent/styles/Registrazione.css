@@ -5,6 +5,90 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+}/* Mobile */
+@media (max-width: 767px) {
+  .background-container {
+    height: 100vh; /* tutto lo schermo */
+    background-position: center center;
+    background-size: cover;
+    justify-content: center;  /* centra contenuti orizzontalmente */
+    align-items: flex-start;  /* per far partire contenuti dall'alto */
+    padding: 20px;
+    display: flex;
+    flex-direction: column;  /* metti la form sotto (colonna) */
+  }
+
+  .form-container {
+    width: 90vw;
+    background-color: rgba(255, 255, 255, 0.95);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    margin-top: auto; /* spinge la form verso il basso se vuoi */
+  }
+}/* Mobile */
+@media (max-width: 767px) {
+  .background-container {
+    height: 100vh; /* tutto lo schermo */
+    background-position: center center;
+    background-size: cover;
+    justify-content: center;  /* centra contenuti orizzontalmente */
+    align-items: flex-start;  /* per far partire contenuti dall'alto */
+    padding: 20px;
+    display: flex;
+    flex-direction: column;  /* metti la form sotto (colonna) */
+  }
+
+  .form-container {
+    width: 90vw;
+    background-color: rgba(255, 255, 255, 0.95);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    margin-top: auto; /* spinge la form verso il basso se vuoi */
+  }
+}/* Mobile */
+@media (max-width: 767px) {
+  .background-container {
+    height: 100vh; /* tutto lo schermo */
+    background-position: center center;
+    background-size: cover;
+    justify-content: center;  /* centra contenuti orizzontalmente */
+    align-items: flex-start;  /* per far partire contenuti dall'alto */
+    padding: 20px;
+    display: flex;
+    flex-direction: column;  /* metti la form sotto (colonna) */
+  }
+
+  .form-container {
+    width: 90vw;
+    background-color: rgba(255, 255, 255, 0.95);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    margin-top: auto; /* spinge la form verso il basso se vuoi */
+  }
+}/* Mobile */
+@media (max-width: 767px) {
+  .background-container {
+    height: 100vh; /* tutto lo schermo */
+    background-position: center center;
+    background-size: cover;
+    justify-content: center;  /* centra contenuti orizzontalmente */
+    align-items: flex-start;  /* per far partire contenuti dall'alto */
+    padding: 20px;
+    display: flex;
+    flex-direction: column;  /* metti la form sotto (colonna) */
+  }
+
+  .form-container {
+    width: 90vw;
+    background-color: rgba(255, 255, 255, 0.95);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    margin-top: auto; /* spinge la form verso il basso se vuoi */
+  }
 }
 
 .background-container {

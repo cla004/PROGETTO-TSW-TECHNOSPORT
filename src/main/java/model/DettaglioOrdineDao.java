@@ -17,7 +17,7 @@ public class DettaglioOrdineDao{
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, d.getId_ordine().getId());
             stmt.setInt(2, d.getId_prodotto().getId_prodotto());
-            stmt.setInt(3, d.getQuantità());
+            stmt.setInt(3, d.getQuantita());
             stmt.setDouble(4, d.getPrezzo());
             stmt.executeUpdate();
         } catch (SQLException e) {
@@ -44,7 +44,7 @@ public class DettaglioOrdineDao{
                 prodotto.setId_prodotto(rs.getInt("prodotto_id"));
                 d.setId_prodotto(prodotto);
 
-                d.setQuantità(rs.getInt("quantita"));
+                d.setQuantita(rs.getInt("quantita"));
                 d.setPrezzo(rs.getDouble("prezzo_unitario"));
             }
         } catch (SQLException e) {
@@ -71,7 +71,7 @@ public class DettaglioOrdineDao{
                 prodotto.setId_prodotto(rs.getInt("prodotto_id"));
                 d.setId_prodotto(prodotto);
 
-                d.setQuantità(rs.getInt("quantita"));
+                d.setQuantita(rs.getInt("quantita"));
                 d.setPrezzo(rs.getDouble("prezzo_unitario"));
 
                 lista.add(d);
@@ -88,7 +88,7 @@ public class DettaglioOrdineDao{
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, d.getId_ordine().getId());
             stmt.setInt(2, d.getId_prodotto().getId_prodotto());
-            stmt.setInt(3, d.getQuantità());
+            stmt.setInt(3, d.getQuantita());
             stmt.setDouble(4, d.getPrezzo());
             stmt.setInt(5, d.getId());
             stmt.executeUpdate();

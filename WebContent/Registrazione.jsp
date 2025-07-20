@@ -2,6 +2,7 @@
 <html lang="it">
 <head>
     <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Registrazione</title>
     <!-- Collegamento al file CSS per lo stile della pagina -->
  <link rel="stylesheet" href="${pageContext.request.contextPath}/styles/Registrazione.css">

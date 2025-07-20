@@ -71,8 +71,8 @@ public class LoginServlet extends HttpServlet {
         session.setAttribute("loggedInUser", utente);
         session.setMaxInactiveInterval(30 * 60); // 30 minuti
 
-        // === Controllo se è admin (in base all'email) 
-        // Se è un admin viene indirizzato  nella dashboard dell'admin 
+        // === Controllo se e admin (in base all'email) 
+        // Se e un admin viene indirizzato nella dashboard dell'admin 
         if ("admin@calcioshop.it".equalsIgnoreCase(utente.getEmail())) {
             session.setAttribute("isAdmin", true);
             response.sendRedirect(request.getContextPath() + "/adminDashboard.jsp");

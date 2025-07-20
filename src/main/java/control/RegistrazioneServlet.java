@@ -12,8 +12,13 @@ import java.io.IOException;
 @WebServlet("/registrazione")
 public class RegistrazioneServlet extends HttpServlet {
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // Metodo GET per test - reindirizza alla pagina di registrazione
+        response.getWriter().write("<h1>Servlet Registrazione funziona!</h1><p>La servlet Ã¨ raggiungibile.</p>");
+    }
 
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
         String nome = request.getParameter("name");
         String email = request.getParameter("email");
         String password = request.getParameter("password");
@@ -43,9 +48,9 @@ public class RegistrazioneServlet extends HttpServlet {
 
             UtenteDao dao = new UtenteDao();
 
-            // Controllo che email non sia già registrata
+            // Controllo che email non sia giï¿½ registrata
             if (dao.emailEsiste(email)) {
-                request.setAttribute("errorEmail", "Email già registrata.");
+                request.setAttribute("errorEmail", "Email giï¿½ registrata.");
                 request.getRequestDispatcher("/Registrazione.jsp").forward(request, response);
                 return;
             }

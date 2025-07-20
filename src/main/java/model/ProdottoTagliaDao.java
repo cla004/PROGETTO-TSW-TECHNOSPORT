@@ -16,7 +16,7 @@ public class ProdottoTagliaDao {
 	      
 	        stmt.setInt(1, pt.getIdProdotto());        // prende l'id del prodotto da Prodotto_taglia
 	        stmt.setInt(2, pt.getid_taglia());         // prende l'id della taglia da Prodotto_taglia
-	        stmt.setDouble(3, pt.getquantità_disponibili());  // prende la quantità disponibile
+	        stmt.setDouble(3, pt.getQuantita_disponibili());  // prende la quantitï¿½ disponibile
 	        stmt.executeUpdate();
 	    } catch (SQLException e) {
 	        e.printStackTrace();
@@ -69,7 +69,7 @@ public class ProdottoTagliaDao {
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            stmt.setDouble(1, pt.getquantità_disponibili());
+            stmt.setDouble(1, pt.getQuantita_disponibili());
             stmt.setInt(2, pt.getIdProdotto());
             stmt.setInt(3, pt.getid_taglia());
             stmt.executeUpdate();

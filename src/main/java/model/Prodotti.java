@@ -6,20 +6,20 @@ public class Prodotti {
     private byte[] immagine; // BLOB
     private double prezzo;
     private String descrizione;
-    private String quantità_disponibili;
+    private String quantita_disponibili;
     private int id_categoria;
 
     public Prodotti() {
         // Costruttore di default
     }
 
-    public Prodotti(int id_prodotto, String nome, byte[] immagine, double prezzo, String descrizione, String quantità_disponibili, int id_categoria) {
+    public Prodotti(int id_prodotto, String nome, byte[] immagine, double prezzo, String descrizione, String quantita_disponibili, int id_categoria) {
         this.id_prodotto = id_prodotto;
         this.nome = nome;
         this.immagine = immagine;
         this.prezzo = prezzo;
         this.descrizione = descrizione;
-        this.quantità_disponibili = quantità_disponibili;
+        this.quantita_disponibili = quantita_disponibili;
         this.id_categoria = id_categoria;
     }
 
@@ -65,12 +65,12 @@ public class Prodotti {
         this.descrizione = descrizione;
     }
 
-    public String getQuantità_disponibili() {
-        return quantità_disponibili;
+    public String getQuantita_disponibili() {
+        return quantita_disponibili;
     }
 
-    public void setQuantità_disponibili(String quantità_disponibili) {
-        this.quantità_disponibili = quantità_disponibili;
+    public void setQuantita_disponibili(String quantita_disponibili) {
+        this.quantita_disponibili = quantita_disponibili;
     }
 
     public int getId_categoria() {

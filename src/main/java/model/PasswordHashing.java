@@ -1,14 +1,14 @@
 
 
 
-package model; // Package di utilità, contiene classi riutilizzabili
+package model; // Package di utilitï¿½, contiene classi riutilizzabili
 
 import java.nio.charset.StandardCharsets;            // Per specificare la codifica UTF-8
 import java.security.MessageDigest;                  // Classe per calcolare l'hash
 import java.security.NoSuchAlgorithmException;       // Eccezione se l'algoritmo non esiste
 
 /**
- * Classe di utilità per l'hashing delle password usando SHA-512.
+ * Classe di utilitï¿½ per l'hashing delle password usando SHA-512.
  */
 
 public class PasswordHashing{
@@ -48,7 +48,7 @@ public static boolean verify(String passwordInput, String storedHash) {
     String inputHash = toHash(passwordInput);
 
     // Confronta l'hash calcolato della password inserita con l'hash salvato nel database
-    // Se coincidono, la password è corretta e il metodo restituisce true
+    // Se coincidono, la password ï¿½ corretta e il metodo restituisce true
     // Altrimenti restituisce false
     return inputHash.equals(storedHash);
 }
