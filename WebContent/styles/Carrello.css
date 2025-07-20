@@ -1,0 +1,181 @@
+/* File: Homepage.css */
+
+/* Stile generale del corpo della pagina */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+/* Header e navigazione */
+header {
+    background-color: #333;
+    color: white;
+    padding: 1em;
+    text-align: center;
+}
+
+.logo {
+    font-size: 2em;
+    font-weight: bold;
+    color: white;
+}
+
+nav ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 1em 0 0 0;
+    text-align: center;
+}
+
+nav ul li {
+    display: inline;
+    margin: 0 10px;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+}
+
+nav ul li a:hover {
+    text-decoration: underline;
+}
+
+/* Container principale del carrello */
+.carrello-container {
+    background-color: white;
+    margin: 20px auto;
+    padding: 20px;
+    max-width: 800px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+}
+
+/* Titolo della sezione carrello */
+.carrello-container h1 {
+    color: #333;
+    font-size: 1.8em;
+}
+
+/* Messaggi di successo ed errore */
+.messaggio {
+    padding: 10px;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.successo {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.errore {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+/* Carrello vuoto */
+.empty-cart {
+    text-align: center;
+    padding: 20px;
+}
+
+.btn-continua {
+    display: inline-block;
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    margin-top: 15px;
+}
+
+.btn-continua:hover {
+    background-color: #0056b3;
+}
+
+/* Pulsanti */
+button {
+    font-size: 1em;
+    padding: 6px 12px;
+    margin: 5px;
+    cursor: pointer;
+}
+
+.btn-checkout {
+    background-color: #28a745;
+    color: white;
+    border: none;
+}
+
+.btn-svuota {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+}
+
+.btn-quantity {
+    background-color: #6c757d;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+}
+
+.btn-remove {
+    background-color: #ff4d4d;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+}
+
+/* Stile per ogni prodotto nel carrello */
+.carrello-item {
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #ddd;
+    padding: 15px 0;
+}
+
+.item-image {
+    width: 100px;
+    height: auto;
+    margin-right: 20px;
+}
+
+.item-info {
+    flex: 1;
+}
+
+.item-name {
+    font-weight: bold;
+    font-size: 1.2em;
+    margin-bottom: 5px;
+}
+
+.item-price {
+    color: #28a745;
+    font-weight: bold;
+}
+
+/* Controlli quantità */
+.quantity-controls {
+    text-align: center;
+}
+
+.quantity {
+    margin: 0 10px;
+    font-weight: bold;
+}
+
+/* Totale carrello */
+.totale-container {
+    margin-top: 20px;
+    font-size: 1.2em;
+    font-weight: bold;
+    text-align: right;
+}
+
+.totale {
+    color: #dc3545;
+}

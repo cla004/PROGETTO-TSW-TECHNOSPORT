@@ -11,11 +11,15 @@ import model.Utente;
 import java.io.IOException;
 
 @WebServlet("/login")
+//@WebServlet(  name="login",  value= "/login")
 public class LoginServlet extends HttpServlet {
 
-    public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.getRequestDispatcher("Login.jsp").forward(request, response);
-    }
+	 public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	        // Serve per effettuare il redirect dopo che l'utente si è loggato  e qundi può pagare
+	        String redirect = request.getParameter("redirect");
+	        request.setAttribute("redirect", redirect);
+	        request.getRequestDispatcher("Login.jsp").forward(request, response);
+	    }
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("application/json");
@@ -24,7 +28,7 @@ public class LoginServlet extends HttpServlet {
         UtenteDao utenteDao = new UtenteDao();
         String email = request.getParameter("email");
         String password = request.getParameter("password");
-
+        String redirect = request.getParameter("redirect"); // valore passato dal form
         boolean isAjax = "XMLHttpRequest".equals(request.getHeader("X-Requested-With"));
 
         // === Controllo AJAX: solo email ===
@@ -69,15 +73,21 @@ public class LoginServlet extends HttpServlet {
         // === Login riuscito ===
         HttpSession session = request.getSession();
         session.setAttribute("loggedInUser", utente);
-        session.setMaxInactiveInterval(30 * 60); // 30 minuti
-
-        // === Controllo se e admin (in base all'email) 
-        // Se e un admin viene indirizzato nella dashboard dell'admin 
+        session.setMaxInactiveInterval(30 * 60); // 30 minuti 
+        
+        // === Admin redirect ===
         if ("admin@calcioshop.it".equalsIgnoreCase(utente.getEmail())) {
             session.setAttribute("isAdmin", true);
             response.sendRedirect(request.getContextPath() + "/adminDashboard.jsp");
+            return;
+        }
+
+        session.setAttribute("isAdmin", false);
+
+        // === Redirect personalizzato ===
+        if (redirect != null && !redirect.isEmpty()) {
+            response.sendRedirect(request.getContextPath() + "/" + redirect);
         } else {
-            session.setAttribute("isAdmin", false);
             response.sendRedirect(request.getContextPath() + "/Homepage.jsp");
         }
     }

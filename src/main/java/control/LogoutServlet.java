@@ -9,7 +9,7 @@ import jakarta.servlet.http.HttpSession;
  
 import java.io.IOException;
  
-@WebServlet("/logout")
+@WebServlet(  name="logout",  value= "/logout") // value sarebbe l'url della servlet
 public class LogoutServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
  
@@ -27,6 +27,8 @@ public class LogoutServlet extends HttpServlet {
             session.invalidate();
         }
         // Redirect alla pagina di login con messaggio di conferma
-        response.sendRedirect("Login.jsp?logout=success");
+        
+        // Redirect alla pagina di homepage
+        response.sendRedirect(request.getContextPath() + "/Homepage.jsp");
     }
 }

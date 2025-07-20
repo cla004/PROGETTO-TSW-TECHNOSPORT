@@ -1,5 +1,9 @@
 package control;
 
+import model.*;
+
+
+
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -10,9 +14,10 @@ import model.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
-@WebServlet("/carrello")
+//@WebServlet(  name="carrello",  value= "/carrello") // value sarebbe l'url della servlet
 public class CarrelloServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -72,16 +77,18 @@ public class CarrelloServlet extends HttpServlet {
             } else if ("rimuovi".equals(action)) {
                 int prodottoId = Integer.parseInt(request.getParameter("prodottoId"));
 
-                prodottiCarrello.removeIf(item -> {
+                Iterator<Carrello> iterator = prodottiCarrello.iterator();
+                while (iterator.hasNext()) {
+                    Carrello item = iterator.next();
                     if (item.getProdotto().getId_prodotto() == prodottoId) {
                         if (item.getQuantita() > 1) {
                             item.setQuantita(item.getQuantita() - 1);
                         } else {
-                            return true;
+                            iterator.remove(); // rimuove l'elemento se la quantità è 1
                         }
+                        break; // uscita dopo aver trovato l'elemento
                     }
-                    return false;
-                });
+                }
 
                 session.setAttribute("successo", "Prodotto rimosso dal carrello!");
                 response.sendRedirect("carrello");

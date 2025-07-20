@@ -7,143 +7,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Il tuo Carrello - TecnoSport</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/styles/Homepage.css">
-    <style>
-        .carrello-container {
-            max-width: 1200px;
-            margin: 50px auto;
-            padding: 20px;
-            background: white;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        }
-        .carrello-item {
-            display: flex;
-            align-items: center;
-            padding: 20px;
-            border-bottom: 1px solid #eee;
-            gap: 20px;
-        }
-        .carrello-item:last-child {
-            border-bottom: none;
-        }
-        .item-image {
-            width: 100px;
-            height: 100px;
-            object-fit: cover;
-            border-radius: 8px;
-        }
-        .item-info {
-            flex: 1;
-        }
-        .item-name {
-            font-size: 1.2em;
-            font-weight: bold;
-            margin-bottom: 5px;
-        }
-        .item-price {
-            color: #e74c3c;
-            font-size: 1.1em;
-            font-weight: bold;
-        }
-        .quantity-controls {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-        .btn-quantity {
-            width: 40px;
-            height: 40px;
-            border: none;
-            background: #3498db;
-            color: white;
-            font-size: 1.2em;
-            font-weight: bold;
-            border-radius: 50%;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .btn-quantity:hover {
-            background: #2980b9;
-        }
-        .btn-remove {
-            background: #e74c3c;
-            color: white;
-            border: none;
-            padding: 8px 15px;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        .btn-remove:hover {
-            background: #c0392b;
-        }
-        .quantity {
-            font-size: 1.2em;
-            font-weight: bold;
-            min-width: 30px;
-            text-align: center;
-        }
-        .totale-container {
-            background: #f8f9fa;
-            padding: 20px;
-            border-radius: 8px;
-            margin-top: 20px;
-        }
-        .totale {
-            font-size: 1.5em;
-            font-weight: bold;
-            color: #2c3e50;
-            text-align: right;
-        }
-        .empty-cart {
-            text-align: center;
-            padding: 50px;
-            color: #666;
-        }
-        .messaggio {
-            padding: 15px;
-            margin-bottom: 20px;
-            border-radius: 5px;
-            font-weight: bold;
-        }
-        .successo {
-            background: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
-        }
-        .errore {
-            background: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
-        }
-        .btn-continua {
-            background: #28a745;
-            color: white;
-            padding: 15px 30px;
-            border: none;
-            border-radius: 5px;
-            font-size: 1.1em;
-            cursor: pointer;
-            margin-top: 20px;
-        }
-        .btn-continua:hover {
-            background: #218838;
-        }
-        .btn-svuota {
-            background: #dc3545;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            float: right;
-        }
-        .btn-svuota:hover {
-            background: #c82333;
-        }
-    </style>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/styles/Carrello.css">
 </head>
 <body>
 
@@ -161,9 +25,11 @@
     <h1>🛒 Il tuo Carrello</h1>
     
     <!-- Messaggi di successo/errore -->
-    <% String successo = (String) session.getAttribute("successo");
-       String errore = request.getParameter("errore");
-       if (successo != null) { %>
+    <% 
+        String successo = (String) session.getAttribute("successo");
+        String errore = request.getParameter("errore");
+        if (successo != null) { 
+    %>
         <div class="messaggio successo"><%= successo %></div>
         <% session.removeAttribute("successo"); %>
     <% } %>
@@ -194,6 +60,11 @@
     <%
         } else {
     %>
+
+        <!-- Pulsante procedi all’ordine -->
+        <form action="procediOrdine" method="post" style="margin-top: 20px; text-align: right;">
+            <button type="submit" class="btn-checkout">Procedi all'ordine</button>
+        </form>
         
         <!-- Pulsante svuota carrello -->
         <form action="carrello" method="post" style="display: inline;">

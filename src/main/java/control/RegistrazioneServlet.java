@@ -9,7 +9,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
 import java.io.IOException;
 
-@WebServlet("/registrazione")
+@WebServlet(  name="registrazione",  value= "/registrazione") // value sarebbe l'url della servlet
 public class RegistrazioneServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

@@ -3,7 +3,7 @@
     // Controllo se l'utente è loggato
     String username = (String) session.getAttribute("username");
     Boolean isAdmin = (Boolean) session.getAttribute("isAdmin");
-    boolean isLoggedIn = (username != null);
+    Object loggedInUser = session.getAttribute("loggedInUser");
 %>
 <!DOCTYPE html>
 <html lang="it">
@@ -29,16 +29,16 @@
         <li><a href="carrello.jsp">🛒 Carrello</a></li>
         
         <!-- Login/Registrazione/Logout sempre visibili -->
-        <% if (!isLoggedIn) { %>
+        <% if (loggedInUser==null) { %>
           <li><a href="Login.jsp">🔐 Login</a></li>
           <li><a href="Registrazione.jsp">📝 Registrati</a></li>
         <% } else { %>
-          <li><a href="LogoutServlet">🚪 Logout</a></li>
+          <li><a href="logout">🚪 Logout</a></li>
         <% } %>
         
         <!-- Messaggio di benvenuto quando sei loggato -->
-        <% if (isLoggedIn) { %>
-          <li><span style="color: #2ecc71; font-weight: bold;">👋 Benvenuto, <%= username %>!</span></li>
+        <% if (loggedInUser!=null) { %>
+          <li><span style="color: #2ecc71; font-weight: bold;">👋 Benvenuto, <%= ((model.Utente) loggedInUser).getNome() %>!</span></li>
           <% if (isAdmin != null && isAdmin) { %>
             <li><a href="adminDashboard.jsp">⚙️ Admin</a></li>
           <% } %>

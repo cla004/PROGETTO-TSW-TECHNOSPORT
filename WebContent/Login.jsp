@@ -31,6 +31,7 @@
 
         <input type="password" id="password" name="password" placeholder="Password" required>
         <span id="passwordError" class="error-message"></span>
+        <input type="hidden" name="redirect" value="${param.redirect}">
 
         <button type="submit">ENTRA NEL NEGOZIO</button>
       </form>
