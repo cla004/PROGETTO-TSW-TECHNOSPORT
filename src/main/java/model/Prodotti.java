@@ -3,7 +3,7 @@ package model;
 public class Prodotti {
     private int id_prodotto;
     private String nome;
-    private byte[] immagine; // BLOB
+    private String immagine; //url immagine 
     private double prezzo;
     private String descrizione;
     private String quantita_disponibili;
@@ -13,7 +13,7 @@ public class Prodotti {
         // Costruttore di default
     }
 
-    public Prodotti(int id_prodotto, String nome, byte[] immagine, double prezzo, String descrizione, String quantita_disponibili, int id_categoria) {
+    public Prodotti(int id_prodotto, String nome, String immagine, double prezzo, String descrizione, String quantita_disponibili, int id_categoria) {
         this.id_prodotto = id_prodotto;
         this.nome = nome;
         this.immagine = immagine;
@@ -41,11 +41,11 @@ public class Prodotti {
         this.nome = nome;
     }
 
-    public byte[] getImmagine() {
+    public String getImmagine() {
         return immagine;
     }
 
-    public void setImmagine(byte[] immagine) {
+    public void setImmagine(String immagine) {
         this.immagine = immagine;
     }
 

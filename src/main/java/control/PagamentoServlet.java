@@ -15,7 +15,7 @@ public class PagamentoServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        // Simula salvataggio dell’ordine (inserisci qui DB, mail, logica ecc.)
+        
         String nome = request.getParameter("nome");
         String numeroCarta = request.getParameter("numeroCarta");
         String scadenza = request.getParameter("scadenza");
@@ -26,7 +26,9 @@ public class PagamentoServlet extends HttpServlet {
 
         // Conferma
         request.setAttribute("messaggio", "Ordine confermato! Grazie per l'acquisto.");
-        request.getRequestDispatcher("/ConfermaOrdine.jsp").forward(request, response);
+        HttpSession session1 = request.getSession();
+        session1.setAttribute("ablePay", true);;
+        request.getRequestDispatcher("/carrello.jsp").forward(request, response);
     }
 }
 
