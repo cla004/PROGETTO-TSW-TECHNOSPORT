@@ -97,7 +97,7 @@
             </div>
 
             <a href="Homepage.jsp" class="btn-continua">Continua lo shopping</a>
-            <a href="Pagamento.jsp" class="btn-continua">Procedi all' ordine </a>
+            <a href="riepilogoOrdine.jsp" class="btn-continua">📋 Riepilogo Ordine</a>
 		  
     <%
         } else {

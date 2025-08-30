@@ -1,4 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page import="java.util.List" %>
+<%@ page import="model.Carrello" %>
+<%@ page import="model.Utente" %>
+<%
+    // Controllo se l'utente è loggato
+    model.Utente utenteLoggato = (model.Utente) session.getAttribute("loggedInUser");
+    if (utenteLoggato == null) {
+        // Se non è loggato, reindirizza al login
+        response.sendRedirect("Login.jsp?redirect=" + request.getRequestURL());
+        return;
+    }
+%>
 <!DOCTYPE html>
 <html lang="it">
 <head>
@@ -8,7 +20,19 @@
 </head>
 <body>
 
-<h1>Pagamento</h1>
+<header>
+    <div class="logo">TecnoSport</div>
+    <nav>
+        <ul>
+            <li><a href="Homepage.jsp">🏠 Homepage</a></li>
+            <li><a href="carrello?action=visualizza">🛒 Carrello</a></li>
+            <li><a href="riepilogoOrdine.jsp">📋 Riepilogo Ordine</a></li>
+        </ul>
+    </nav>
+</header>
+
+<div class="pagamento-container">
+    <h1>💳 Pagamento Sicuro</h1>
 
 <form  id="pagamentoForm" action="${pageContext.request.contextPath}/pagamento" method="post">
     <label>Nome intestatario:
@@ -57,3 +81,8 @@
         }, 10000);
     });
 </script>
+
+</div>
+
+</body>
+</html>

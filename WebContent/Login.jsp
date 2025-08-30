@@ -37,7 +37,13 @@
       </form>
 
       <div class="signup">
-        Non hai un account? <a href="Registrazione.jsp">Registrati</a>
+        <%-- Passa il parametro redirect anche alla registrazione --%>
+        <% String redirectParam = request.getParameter("redirect"); %>
+        <% if (redirectParam != null && !redirectParam.isEmpty()) { %>
+          Non hai un account? <a href="Registrazione.jsp?redirect=<%= redirectParam %>">Registrati</a>
+        <% } else { %>
+          Non hai un account? <a href="Registrazione.jsp">Registrati</a>
+        <% } %>
       </div>
     </div>
   </div>

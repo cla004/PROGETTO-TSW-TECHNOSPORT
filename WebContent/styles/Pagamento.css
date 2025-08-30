@@ -1,19 +1,92 @@
-/* File: Homepage.css (già esistente) */
+/* CSS per la pagina di pagamento - Versione migliorata */
 
 /* Stile generale */
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     margin: 0;
+    padding: 0;
+    min-height: 100vh;
+}
+
+/* Header */
+header {
+    background-color: #2c3e50;
+    color: white;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+nav li {
+    margin-left: 20px;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+}
+
+nav a:hover {
+    background-color: #34495e;
+}
+
+/* Container pagamento */
+.pagamento-container {
+    max-width: 500px;
+    margin: 20px auto;
     padding: 20px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+/* Informazioni utente */
+.utente-info {
+    background-color: #e8f5e8;
+    padding: 10px 15px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    text-align: center;
+    border: 1px solid #c3e6c3;
+}
+
+.utente-info p {
+    margin: 0;
+    color: #2c5530;
+}
+
+.utente-info a {
+    color: #dc3545;
+    text-decoration: none;
+    margin-left: 10px;
+}
+
+.utente-info a:hover {
+    text-decoration: underline;
 }
 
 /* Titolo principale */
 h1 {
     text-align: center;
-    color: #333;
+    color: #2c3e50;
     font-size: 1.8em;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
 }
 
 /* Stile del form */
@@ -59,4 +132,41 @@ button {
 
 button:hover {
     background-color: #218838;
+}
+
+/* Messaggi */
+#messaggioJS {
+    text-align: center;
+    font-weight: bold;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #d1ecf1;
+    border: 1px solid #bee5eb;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    .pagamento-container {
+        margin: 10px;
+        padding: 15px;
+    }
+    
+    form {
+        padding: 15px;
+        max-width: none;
+    }
+    
+    nav ul {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    header {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    nav li {
+        margin-left: 0;
+    }
 }

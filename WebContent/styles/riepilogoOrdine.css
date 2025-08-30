@@ -1,0 +1,224 @@
+/* CSS semplice per la pagina di riepilogo ordine */
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f5f5f5;
+}
+
+/* Header */
+header {
+    background-color: #2c3e50;
+    color: white;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+nav li {
+    margin-left: 20px;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+}
+
+nav a:hover {
+    background-color: #34495e;
+}
+
+/* Container principale */
+.riepilogo-container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+h1 {
+    color: #2c3e50;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+h2 {
+    color: #34495e;
+    border-bottom: 2px solid #3498db;
+    padding-bottom: 10px;
+}
+
+/* Dettagli ordine */
+.ordine-dettagli {
+    margin-bottom: 30px;
+}
+
+.prodotto-riepilogo {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 15px;
+    margin-bottom: 15px;
+    background-color: #f9f9f9;
+}
+
+.prodotto-info h3 {
+    color: #2c3e50;
+    margin: 0 0 10px 0;
+}
+
+.prodotto-info p {
+    color: #666;
+    margin: 0 0 10px 0;
+}
+
+.prodotto-prezzi {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.quantita {
+    background-color: #3498db;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 3px;
+    font-size: 14px;
+}
+
+.prezzo-unitario {
+    color: #666;
+    font-size: 14px;
+}
+
+.prezzo-totale {
+    font-weight: bold;
+    color: #27ae60;
+    font-size: 16px;
+}
+
+/* Totale finale */
+.totale-finale {
+    background-color: #ecf0f1;
+    padding: 20px;
+    border-radius: 5px;
+    margin-bottom: 30px;
+}
+
+.totale-riga {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.totale-principale {
+    font-size: 18px;
+    font-weight: bold;
+    color: #2c3e50;
+    border-top: 2px solid #3498db;
+    padding-top: 10px;
+    margin-bottom: 0;
+}
+
+/* Azioni ordine */
+.azioni-ordine {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+}
+
+.btn-torna, .btn-procedi {
+    padding: 12px 24px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    text-align: center;
+    flex: 1;
+    max-width: 200px;
+}
+
+.btn-torna {
+    background-color: #95a5a6;
+    color: white;
+}
+
+.btn-torna:hover {
+    background-color: #7f8c8d;
+}
+
+.btn-procedi {
+    background-color: #27ae60;
+    color: white;
+}
+
+.btn-procedi:hover {
+    background-color: #229954;
+}
+
+/* Carrello vuoto */
+.carrello-vuoto {
+    text-align: center;
+    padding: 40px 20px;
+}
+
+.carrello-vuoto h2 {
+    color: #e74c3c;
+    border: none;
+}
+
+.carrello-vuoto p {
+    color: #666;
+    margin-bottom: 20px;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    .riepilogo-container {
+        margin: 10px;
+        padding: 15px;
+    }
+    
+    .prodotto-prezzi {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .azioni-ordine {
+        flex-direction: column;
+    }
+    
+    .btn-torna, .btn-procedi {
+        max-width: none;
+        width: 100%;
+    }
+    
+    nav ul {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    header {
+        flex-direction: column;
+        text-align: center;
+    }
+}

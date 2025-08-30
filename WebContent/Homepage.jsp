@@ -2,7 +2,7 @@
 <%@ page import="java.util.List" %>
 <%@ page import="model.Categoria" %>
 <%@ page import="model.Prodotti" %>
-<%@ page import=model.CategoriaDao" %>
+<%@ page import="model.CategoriaDao"%>
 <%@ page import="model.ProdottiDao" %>
 
 
@@ -15,7 +15,11 @@
     CategoriaDao catDao = new CategoriaDao();
     ProdottiDao prodDao = new ProdottiDao();
     List<Categoria> categories = catDao.listaCategorie();
+    
+   
 %>
+
+
 
 <!DOCTYPE html>
 <html lang="it">
@@ -57,12 +61,14 @@
 </header>
 
 <!-- === HERO === -->
+
 <section class="hero">
   <h1>Scopri tutto per la tua stagione sportiva 2025</h1>
   <p>Più di 100 prodotti in offerta tra maglie, scarpe e accessori</p>
 </section>
 
 <%
+// da qui in poi non va
     // Loop dinamico su categorie e prodotti
     for (Categoria c : categories) {
         List<Prodotti> prodotti = prodDao.findByCategoriaId(c.getid_categoria());
@@ -74,6 +80,8 @@
         for (Prodotti p : prodotti) {
     %>
     <div class="card">
+    
+    <%= "DEBUG URL: " + request.getContextPath() + "/" + p.getImmagine() %><br>
       <img src="<%= request.getContextPath() + "/" + p.getImmagine() %>" alt="<%= p.getNome() %>">
       <h3><%= p.getNome() %></h3>
       <p><strong>€<%= p.getPrezzo()%></strong></p>
