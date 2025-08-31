@@ -1,0 +1,284 @@
+/* CSS semplice per la pagina I miei Ordini */
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f5f5f5;
+}
+
+/* Header */
+header {
+    background-color: #2c3e50;
+    color: white;
+    padding: 15px;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+    display: inline-block;
+}
+
+nav {
+    float: right;
+}
+
+nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+nav li {
+    display: inline-block;
+    margin-left: 15px;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+}
+
+nav a:hover {
+    background-color: #34495e;
+}
+
+nav a.active {
+    background-color: #3498db;
+}
+
+/* Container principale */
+.ordini-container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+}
+
+h1 {
+    color: #2c3e50;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+/* Informazioni utente */
+.utente-info {
+    background-color: #3498db;
+    color: white;
+    padding: 15px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.utente-info p {
+    margin: 5px 0;
+}
+
+/* Lista ordini */
+.ordini-lista {
+    margin-top: 20px;
+}
+
+.ordine-card {
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+/* Header dell'ordine */
+.ordine-header {
+    border-bottom: 2px solid #eee;
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+}
+
+.ordine-numero {
+    float: left;
+}
+
+.ordine-numero h3 {
+    color: #2c3e50;
+    margin: 0;
+}
+
+.data-ordine {
+    color: #666;
+    font-size: 14px;
+}
+
+.ordine-stato {
+    float: right;
+}
+
+/* Badge stato ordine */
+.stato-badge {
+    padding: 5px 10px;
+    border-radius: 15px;
+    font-size: 12px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.stato-confermato {
+    background-color: #2ecc71;
+    color: white;
+}
+
+.stato-spedito {
+    background-color: #3498db;
+    color: white;
+}
+
+.stato-consegnato {
+    background-color: #27ae60;
+    color: white;
+}
+
+.stato-in-elaborazione {
+    background-color: #f39c12;
+    color: white;
+}
+
+.stato-annullato {
+    background-color: #e74c3c;
+    color: white;
+}
+
+/* Dettagli ordine */
+.ordine-dettagli {
+    clear: both;
+    margin-top: 15px;
+}
+
+.ordine-info p {
+    margin: 8px 0;
+    color: #333;
+}
+
+.prezzo-totale {
+    color: #27ae60;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+/* Prodotti nell'ordine */
+.prodotti-ordine {
+    background-color: #f9f9f9;
+    padding: 15px;
+    border-radius: 5px;
+    margin-top: 15px;
+}
+
+.prodotti-ordine h4 {
+    color: #2c3e50;
+    margin-top: 0;
+}
+
+.prodotto-dettaglio {
+    padding: 8px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+.prodotto-dettaglio:last-child {
+    border-bottom: none;
+}
+
+.prodotto-nome {
+    font-weight: bold;
+    color: #2c3e50;
+}
+
+.prodotto-quantita {
+    color: #666;
+    font-size: 14px;
+    margin-left: 20px;
+}
+
+.prodotto-prezzo {
+    color: #27ae60;
+    font-weight: bold;
+    float: right;
+}
+
+/* Stato vuoto */
+.nessun-ordine {
+    text-align: center;
+    padding: 50px;
+    background-color: white;
+    border-radius: 5px;
+}
+
+.icona-vuoto {
+    font-size: 60px;
+    margin-bottom: 20px;
+}
+
+.nessun-ordine h2 {
+    color: #666;
+    margin-bottom: 10px;
+}
+
+.nessun-ordine p {
+    color: #999;
+    margin-bottom: 20px;
+}
+
+.btn-continua {
+    background-color: #3498db;
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.btn-continua:hover {
+    background-color: #2980b9;
+}
+
+/* Pulizia float */
+.ordine-header:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.prodotto-dettaglio:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+/* Responsive base per mobile */
+@media (max-width: 600px) {
+    .ordini-container {
+        margin: 10px;
+        padding: 15px;
+    }
+    
+    nav {
+        float: none;
+        text-align: center;
+        margin-top: 10px;
+    }
+    
+    .ordine-numero, .ordine-stato {
+        float: none;
+        text-align: center;
+    }
+    
+    .ordine-stato {
+        margin-top: 10px;
+    }
+    
+    .prodotto-prezzo {
+        float: none;
+        display: block;
+        margin-top: 5px;
+    }
+}

@@ -47,6 +47,7 @@
         <li><a href="Login.jsp">🔐 Login</a></li>
         <li><a href="Registrazione.jsp">📝 Registrati</a></li>
       <% } else { %>
+        <li><a href="mieiOrdini.jsp">📋 I miei Ordini</a></li>
         <li><a href="logout">🚪 Logout</a></li>
       <% } %>
 
