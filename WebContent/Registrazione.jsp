@@ -76,10 +76,17 @@
                     }
                 %>
                 <% if (redirectParam != null && !redirectParam.isEmpty()) { %>
-                  Hai già un account? <a href="Login.jsp?redirect=<%= redirectParam %>" style="color: #007bff; text-decoration: none;">Accedi</a>
+                  Hai gi&agrave; un account? <a href="Login.jsp?redirect=<%= redirectParam %>" style="color: #007bff; text-decoration: none;">Accedi</a>
                 <% } else { %>
-                  Hai già un account? <a href="Login.jsp" style="color: #007bff; text-decoration: none;">Accedi</a>
+                  Hai gi&agrave; un account? <a href="Login.jsp" style="color: #007bff; text-decoration: none;">Accedi</a>
                 <% } %>
+            </div>
+            
+            <!-- Link per tornare alla homepage -->
+            <div class="homepage-link">
+                <a href="Homepage.jsp">
+                  &#127968; Torna alla Homepage
+                </a>
             </div>
         </form>
     </div>

@@ -45,6 +45,13 @@
           Non hai un account? <a href="Registrazione.jsp">Registrati</a>
         <% } %>
       </div>
+      
+      <!-- Link per tornare alla homepage -->
+      <div class="homepage-link">
+        <a href="Homepage.jsp">
+          &#127968; Torna alla Homepage
+        </a>
+      </div>
     </div>
   </div>
 

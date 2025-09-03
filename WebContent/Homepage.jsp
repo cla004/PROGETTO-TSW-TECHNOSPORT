@@ -35,12 +35,14 @@
   <div class="logo">TecnoSport</div>
   <nav>
     <ul>
-      <li><a href="#maglie">Maglie</a></li>
-      <li><a href="#scarpe">Scarpe</a></li>
-      <li><a href="#tute">Tute</a></li>
-      <li><a href="#accessori">Accessori</a></li>
-      <li><a href="#nazionali">Nazionali</a></li>
-      <li><a href="#allenamento">Allenamento</a></li>
+      <%
+        // Generazione dinamica dei link di navigazione dalle categorie
+        for (Categoria navCat : categories) {
+      %>
+      <li><a href="#<%= navCat.getnome_recensione() %>"><%= navCat.getnome_recensione().substring(0,1).toUpperCase() + navCat.getnome_recensione().substring(1) %></a></li>
+      <%
+        }
+      %>
       <li><a href="carrello.jsp">🛒 Carrello</a></li>
 
       <% if (loggedInUser == null) { %>
@@ -82,7 +84,7 @@
     %>
     <div class="card">
     
-    <%= "DEBUG URL: " + request.getContextPath() + "/" + p.getImmagine() %><br>
+
       <img src="<%= request.getContextPath() + "/" + p.getImmagine() %>" alt="<%= p.getNome() %>">
       <h3><%= p.getNome() %></h3>
       <p><strong>€<%= p.getPrezzo()%></strong></p>

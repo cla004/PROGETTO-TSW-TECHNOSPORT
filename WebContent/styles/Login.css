@@ -104,6 +104,30 @@ button:hover {
   text-decoration: none;
 }
 
+/* Stile per il link homepage */
+.homepage-link {
+  text-align: center;
+  margin-top: 30px;
+  padding: 15px 0;
+  border-top: 1px solid #e0e0e0;
+}
+
+.homepage-link a {
+  display: inline-block;
+  padding: 12px 25px;
+  background-color: #f8f9fa;
+  color: #009688;
+  text-decoration: none;
+  border-radius: 25px;
+  font-weight: bold;
+  border: 2px solid #009688;
+}
+
+.homepage-link a:hover {
+  background-color: #009688;
+  color: white;
+}
+
 /* --- MEDIA QUERIES --- */
 
 /* Tablet */

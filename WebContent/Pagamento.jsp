@@ -34,26 +34,70 @@
 <div class="pagamento-container">
     <h1>💳 Pagamento Sicuro</h1>
 
-<form  id="pagamentoForm" action="${pageContext.request.contextPath}/pagamento" method="post">
-    <label>Nome intestatario:
-        <input type="text" name="nome" required>
-    </label><br><br>
-
-  <label>Numero carta:
-    <input type="text" name="numeroCarta" required pattern="[0-9]{16}" maxlength="16">
-</label><br><br>
-   <label>Scadenza (MM/AA):
-    <input type="text" name="scadenza" required pattern="[0-9]{2}/[0-9]{2}" placeholder="MM/AA" title="Inserisci la data nel formato MM/AA">
-</label><br><br>
-  <label>CVV:
-    <input type="text" name="cvv" required pattern="[0-9]{3}" maxlength="3" placeholder="123" title="Inserisci un codice CVV di 3 cifre">
-</label><br><br>
-    <label>Indirizzo di spedizione:
-        <input type="text" name="indirizzoSpedizione" required>
-    </label><br><br>
-
-    <button type="submit">Conferma Ordine</button>
-</form>
+    <form id="pagamentoForm" action="${pageContext.request.contextPath}/pagamento" method="post">
+        
+        <!-- Sezione Modalità di Pagamento -->
+        <div class="payment-section">
+            <h3>Modalità di pagamento</h3>
+            
+            <!-- Campo Numero Carta -->
+            <div class="card-number-container">
+                <label for="numeroCarta">Dati della carta</label>
+                <div class="card-input-wrapper">
+                    <input type="text" id="numeroCarta" name="numeroCarta" 
+                           placeholder="1234 1234 1234 1234" 
+                           required pattern="[0-9\s]{19}" 
+                           maxlength="19">
+                    <div class="card-icons">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Visa_Inc._logo.svg/2560px-Visa_Inc._logo.svg.png" alt="Visa" class="card-icon">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Mastercard-logo.svg/1280px-Mastercard-logo.svg.png" alt="Mastercard" class="card-icon">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/American_Express_logo_%282018%29.svg/1200px-American_Express_logo_%282018%29.svg.png" alt="American Express" class="card-icon">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/40/JCB_logo.svg/1280px-JCB_logo.svg.png" alt="JCB" class="card-icon">
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Scadenza e CVV in riga -->
+            <div class="card-details-row">
+                <div class="expiry-field">
+                    <label for="scadenza">MM / AA</label>
+                    <input type="text" id="scadenza" name="scadenza" 
+                           placeholder="MM/AA" 
+                           required pattern="[0-9]{2}/[0-9]{2}" 
+                           maxlength="5">
+                </div>
+                <div class="cvv-field">
+                    <label for="cvv">CVC</label>
+                    <input type="text" id="cvv" name="cvv" 
+                           placeholder="123" 
+                           required pattern="[0-9]{3,4}" 
+                           maxlength="4">
+                    <span class="cvv-icon">?</span>
+                </div>
+            </div>
+            
+            <!-- Nome Titolare -->
+            <div class="cardholder-field">
+                <label for="nome">Nome del titolare della carta</label>
+                <input type="text" id="nome" name="nome" 
+                       placeholder="Nome e cognome" 
+                       required>
+            </div>
+        </div>
+        
+        <!-- Sezione Indirizzo di Spedizione -->
+        <div class="shipping-section">
+            <h3>📦 Indirizzo di spedizione</h3>
+            <div class="address-field">
+                <label for="indirizzoSpedizione">Indirizzo completo</label>
+                <textarea id="indirizzoSpedizione" name="indirizzoSpedizione" 
+                         placeholder="Via, numero civico, città, CAP, provincia" 
+                         required rows="3"></textarea>
+            </div>
+        </div>
+        
+        <button type="submit" class="pay-button">💳 Conferma Ordine</button>
+    </form>
 
 <%-- Messaggio dal server --%>
 <% 

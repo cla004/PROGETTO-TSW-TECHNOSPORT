@@ -96,7 +96,7 @@ aside {
 
 .card img {
   width: 100%;
-  height: auto;
+  height: 200px; /* Altezza fissa per tutte le immagini */
   border-radius: 8px;
 }
 
