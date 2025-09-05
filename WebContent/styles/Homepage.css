@@ -108,6 +108,99 @@ footer {
   color: white;
 }
 
+/* === SELEZIONE TAGLIE === */
+.taglia-selector {
+  margin: 10px 0;
+}
+
+.taglia-selector p {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.taglia-buttons {
+  margin-bottom: 10px;
+}
+
+.taglia-btn {
+  background: #f0f0f0;
+  border: 2px solid #ccc;
+  padding: 8px 12px;
+  margin: 3px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.taglia-btn:hover {
+  background: #e0e0e0;
+}
+
+.taglia-btn.selected {
+  background: #0a3d62;
+  color: white;
+  border-color: #0a3d62;
+}
+
+.taglia-btn.esaurita {
+  background: #ddd;
+  color: #999;
+  cursor: not-allowed;
+}
+
+.quantita-box {
+  margin: 10px 0;
+  text-align: center;
+}
+
+.quantita-btn {
+  background: #0a3d62;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  margin: 0 5px;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.quantita-input {
+  width: 50px;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  text-align: center;
+  margin: 0 5px;
+}
+
+.btn-aggiungi-carrello {
+  background: #28a745;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  margin-top: 10px;
+}
+
+.btn-aggiungi-carrello:hover {
+  background: #218838;
+}
+
+.btn-aggiungi-carrello:disabled {
+  background: #6c757d;
+  cursor: not-allowed;
+}
+
+.no-taglie {
+  background: #dc3545;
+  color: white;
+  padding: 10px;
+  border-radius: 5px;
+  text-align: center;
+  margin: 10px 0;
+}
+
 /* === TABLET: max 1000px === */
 @media screen and (max-width: 1000px) {
   section {

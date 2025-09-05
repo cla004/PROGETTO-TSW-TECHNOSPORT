@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.util.List" %>
-<%@ page import="model.Carrello" %>
+<%@ page import="model.CartItem" %>
 <!DOCTYPE html>
 <html lang="it">
 <head>
@@ -37,14 +37,14 @@
     <% } %>
 
     <%
-        List<Carrello> prodottiCarrello = (List<Carrello>) session.getAttribute("carrelloSessione");
+        List<CartItem> prodottiCarrello = (List<CartItem>) session.getAttribute("carrelloSessione");
         double totale = 0.0;
         int numeroArticoli = 0;
 
         if (prodottiCarrello != null && !prodottiCarrello.isEmpty()) {
-            for (Carrello item : prodottiCarrello) {
-                totale += item.getProdotto().getPrezzo() * item.getQuantita();
-                numeroArticoli += item.getQuantita();
+            for (CartItem item : prodottiCarrello) {
+                totale += item.getProdotto().getPrezzo() * item.getQuantity();
+                numeroArticoli += item.getQuantity();
             }
     %>
             <!-- Pulsante svuota carrello -->
@@ -54,9 +54,9 @@
             </form>
 
             <%-- Lista prodotti --%>
-            <% for (Carrello item : prodottiCarrello) { %>
+            <% for (CartItem item : prodottiCarrello) { %>
                 <div class="carrello-item">
-                    <img src="images/prodotto.jpg" alt="<%= item.getProdotto().getNome() %>" class="item-image" />
+                    <img src="<%= request.getContextPath() + "/" + item.getProdotto().getImmagine() %>" alt="<%= item.getProdotto().getNome() %>" class="item-image" />
 
                     <div class="item-info">
                         <h3><%= item.getProdotto().getNome() %></h3>
@@ -72,7 +72,7 @@
                             <button type="submit" class="btn-quantity">-</button>
                         </form>
 
-                        <span class="quantity"><%= item.getQuantita() %></span>
+                        <span class="quantity"><%= item.getQuantity() %></span>
 
                         <!-- Aggiungi 1 -->
                         <form action="carrello" method="post" style="display: inline;">

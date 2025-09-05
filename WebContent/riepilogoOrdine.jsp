@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.util.List" %>
-<%@ page import="model.Carrello" %>
+<%@ page import="model.CartItem" %>
 <%@ page import="model.Utente" %>
 <!DOCTYPE html>
 <html lang="it">
@@ -25,30 +25,30 @@
     <h1>📋 Riepilogo del tuo Ordine</h1>
 
     <%
-        List<Carrello> prodottiCarrello = (List<Carrello>) session.getAttribute("carrelloSessione");
+        List<CartItem> prodottiCarrello = (List<CartItem>) session.getAttribute("carrelloSessione");
         double totale = 0.0;
         int numeroArticoli = 0;
 
         if (prodottiCarrello != null && !prodottiCarrello.isEmpty()) {
-            for (Carrello item : prodottiCarrello) {
-                totale += item.getProdotto().getPrezzo() * item.getQuantita();
-                numeroArticoli += item.getQuantita();
+            for (CartItem item : prodottiCarrello) {
+                totale += item.getProdotto().getPrezzo() * item.getQuantity();
+                numeroArticoli += item.getQuantity();
             }
     %>
             
             <div class="ordine-dettagli">
                 <h2>Prodotti nel tuo ordine:</h2>
                 
-                <% for (Carrello item : prodottiCarrello) { %>
+                <% for (CartItem item : prodottiCarrello) { %>
                     <div class="prodotto-riepilogo">
                         <div class="prodotto-info">
                             <h3><%= item.getProdotto().getNome() %></h3>
                             <p><%= item.getProdotto().getDescrizione() %></p>
                         </div>
                         <div class="prodotto-prezzi">
-                            <span class="quantita">Quantità: <%= item.getQuantita() %></span>
+                            <span class="quantita">Quantità: <%= item.getQuantity() %></span>
                             <span class="prezzo-unitario">€ <%= String.format("%.2f", item.getProdotto().getPrezzo()) %> cad.</span>
-                            <span class="prezzo-totale">€ <%= String.format("%.2f", item.getProdotto().getPrezzo() * item.getQuantita()) %></span>
+                            <span class="prezzo-totale">€ <%= String.format("%.2f", item.getProdotto().getPrezzo() * item.getQuantity()) %></span>
                         </div>
                     </div>
                 <% } %>

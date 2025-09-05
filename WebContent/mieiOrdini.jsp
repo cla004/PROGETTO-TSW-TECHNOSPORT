@@ -70,8 +70,8 @@
                             <div class="ordine-numero">
                                 <h3>Ordine #<%= ordine.getId() %></h3>
                                 <span class="data-ordine">
-                                    <% if (ordine.getData() != null) { %>
-                                        <%= dateFormat.format(ordine.getData()) %>
+                                    <% if (ordine.getDataOrdine() != null) { %>
+                                        <%= dateFormat.format(ordine.getDataOrdine()) %>
                                     <% } else { %>
                                         Data non disponibile
                                     <% } %>
@@ -94,7 +94,7 @@
                                 List<DettaglioOrdine> dettagli = null;
                                 try {
                                     if (dettaglioDao != null) {
-                                        dettagli = dettaglioDao.getDettagliByOrdineId(ordine.getId());
+                                        dettagli = dettaglioDao.findByOrderIdCompleto(ordine.getId());
                                     }
                                 } catch (SQLException e) {
                                     dettagli = new java.util.ArrayList<DettaglioOrdine>();
@@ -106,8 +106,8 @@
                                     <h4>Prodotti ordinati:</h4>
                                     <% for (DettaglioOrdine dettaglio : dettagli) { %>
                                         <div class="prodotto-dettaglio">
-                                            <span class="prodotto-nome"><%= dettaglio. getNomeProdotto() %></span>
-                                            <span class="prodotto-quantita">Quantità: <%= dettaglio.getQuantita() %></span>
+                                            <span class="prodotto-nome"><%= dettaglio.getNomeProdotto() %></span>
+                                            <span class="prodotto-quantita">Quantità: <%= dettaglio.getQuantity() %></span>
                                             <span class="prodotto-prezzo">€ <%= String.format("%.2f", dettaglio.getPrezzoUnitario()) %></span>
                                         </div>
                                     <% } %>

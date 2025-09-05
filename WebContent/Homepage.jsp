@@ -4,6 +4,10 @@
 <%@ page import="model.Prodotti" %>
 <%@ page import="model.CategoriaDao"%>
 <%@ page import="model.ProdottiDao" %>
+<%@ page import="model.Taglia" %>
+<%@ page import="model.TagliaDao" %>
+<%@ page import="model.Prodotto_taglia" %>
+<%@ page import="model.ProdottoTagliaDao" %>
 
 
 <%
@@ -83,18 +87,60 @@
         for (Prodotti p : prodotti) {
     %>
     <div class="card">
-    
-
       <img src="<%= request.getContextPath() + "/" + p.getImmagine() %>" alt="<%= p.getNome() %>">
       <h3><%= p.getNome() %></h3>
       <p><strong>€<%= p.getPrezzo()%></strong></p>
-      <form action="carrello" method="post">
-        <input type="hidden" name="action" value="aggiungi">
-        <input type="hidden" name="prodottoId" value="<%= p.getId_prodotto() %>">
-        <button type="submit" style="background: #28a745; color: white; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer;">
-          🛒 Aggiungi al carrello
-        </button>
-      </form>
+      
+      <%
+          // Recupero le taglie disponibili per questo prodotto
+          ProdottoTagliaDao ptDao = new ProdottoTagliaDao();
+          TagliaDao tagliaDao = new TagliaDao();
+          List<Prodotto_taglia> taglieDisponibili = ptDao.getTaglieDisponibiliPerProdotto(p.getId_prodotto());
+          
+          // DEBUG: Stampa info per capire il problema
+          System.out.println("DEBUG - Prodotto ID: " + p.getId_prodotto() + ", Nome: " + p.getNome());
+          System.out.println("DEBUG - Taglie trovate: " + taglieDisponibili.size());
+          for(Prodotto_taglia pt : taglieDisponibili) {
+              System.out.println("  - Taglia ID: " + pt.getid_taglia() + ", Quantità: " + pt.getQuantita_disponibili());
+          }
+      %>
+      
+      <% if (taglieDisponibili.isEmpty()) { %>
+        <div class="no-taglie">
+          ❌ Prodotto non disponibile
+        </div>
+      <% } else { %>
+        <form action="carrello" method="post" onsubmit="return controllaForm(<%= p.getId_prodotto() %>)">
+          <input type="hidden" name="action" value="aggiungi">
+          <input type="hidden" name="prodottoId" value="<%= p.getId_prodotto() %>">
+          <input type="hidden" name="tagliaId" id="taglia-<%= p.getId_prodotto() %>" value="">
+          
+          <div class="taglia-selector" id="taglia-selector-<%= p.getId_prodotto() %>">
+            <p>Taglia:</p>
+            <div class="taglia-buttons">
+              <% for (Prodotto_taglia pt : taglieDisponibili) {
+                   Taglia taglia = tagliaDao.cercaTagliaById(pt.getid_taglia());
+              %>
+                <button type="button" class="taglia-btn" data-prodotto="<%= p.getId_prodotto() %>" 
+                        onclick="selezionaTaglia(<%= p.getId_prodotto() %>, <%= pt.getid_taglia() %>, this)">
+                  <%= taglia.getEtichetta() %> (<%= (int)pt.getQuantita_disponibili() %>)
+                </button>
+              <% } %>
+            </div>
+          </div>
+          
+          <div class="quantita-box">
+            <button type="button" class="quantita-btn" onclick="diminuisciQuantita(<%= p.getId_prodotto() %>)">-</button>
+            <input type="number" name="quantita" id="quantita-<%= p.getId_prodotto() %>" 
+                   value="1" min="1" class="quantita-input" readonly>
+            <button type="button" class="quantita-btn" onclick="aumentaQuantita(<%= p.getId_prodotto() %>)">+</button>
+          </div>
+          
+          <button type="submit" class="btn-aggiungi-carrello" id="add-btn-<%= p.getId_prodotto() %>" disabled>
+            🛒 Aggiungi al carrello
+          </button>
+        </form>
+      <% } %>
     </div>
     <%
         } // fine prodotti
@@ -107,5 +153,6 @@
 
 <jsp:include page="footer.jsp" />
 
+<script src="${pageContext.request.contextPath}/Script/TagliaSelector.js"></script>
 </body>
 </html>
