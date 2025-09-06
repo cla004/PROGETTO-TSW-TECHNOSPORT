@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.util.List" %>
 <%@ page import="model.CartItem" %>
+<%@ page import="model.TagliaDao" %>
+<%@ page import="model.Taglia" %>
 <!DOCTYPE html>
 <html lang="it">
 <head>
@@ -61,6 +63,12 @@
                     <div class="item-info">
                         <h3><%= item.getProdotto().getNome() %></h3>
                         <p>Descrizione: <%= item.getProdotto().getDescrizione() %></p>
+                        <%
+                            TagliaDao tagliaDao = new TagliaDao();
+                            Taglia taglia = tagliaDao.cercaTagliaById(item.getTagliaId());
+                            String nomeTaglia = (taglia != null) ? taglia.getEtichetta() : "N/A";
+                        %>
+                        <p><strong>Taglia:</strong> <%= nomeTaglia %></p>
                         <p>Prezzo unitario: € <%= String.format("%.2f", item.getProdotto().getPrezzo()) %></p>
                     </div>
 
@@ -69,6 +77,7 @@
                         <form action="carrello" method="post" style="display: inline;">
                             <input type="hidden" name="action" value="rimuovi" />
                             <input type="hidden" name="prodottoId" value="<%= item.getProdotto().getId_prodotto() %>" />
+                            <input type="hidden" name="tagliaId" value="<%= item.getTagliaId() %>" />
                             <button type="submit" class="btn-quantity">-</button>
                         </form>
 
@@ -78,6 +87,8 @@
                         <form action="carrello" method="post" style="display: inline;">
                             <input type="hidden" name="action" value="aggiungi" />
                             <input type="hidden" name="prodottoId" value="<%= item.getProdotto().getId_prodotto() %>" />
+                            <input type="hidden" name="tagliaId" value="<%= item.getTagliaId() %>" />
+                            <input type="hidden" name="quantita" value="1" />
                             <button type="submit" class="btn-quantity">+</button>
                         </form>
 
@@ -85,6 +96,7 @@
                         <form action="carrello" method="post" style="display: inline;">
                             <input type="hidden" name="action" value="elimina" />
                             <input type="hidden" name="prodottoId" value="<%= item.getProdotto().getId_prodotto() %>" />
+                            <input type="hidden" name="tagliaId" value="<%= item.getTagliaId() %>" />
                             <button type="submit" class="btn-remove">❌ Elimina</button>
                         </form>
                     </div>
@@ -97,7 +109,7 @@
             </div>
 
             <a href="Homepage.jsp" class="btn-continua">Continua lo shopping</a>
-            <a href="riepilogoOrdine.jsp" class="btn-continua">📋 Riepilogo Ordine</a>
+            <a href="checkout" class="btn-continua">📋 Procedi all'Ordine</a>
 		  
     <%
         } else {

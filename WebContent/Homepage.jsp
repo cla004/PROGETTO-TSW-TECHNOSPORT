@@ -75,7 +75,6 @@
 </section>
 
 <%
-// da qui in poi non va
     // Loop dinamico su categorie e prodotti
     for (Categoria c : categories) {
         List<Prodotti> prodotti = prodDao.findByCategoriaId(c.getid_categoria());
@@ -96,13 +95,6 @@
           ProdottoTagliaDao ptDao = new ProdottoTagliaDao();
           TagliaDao tagliaDao = new TagliaDao();
           List<Prodotto_taglia> taglieDisponibili = ptDao.getTaglieDisponibiliPerProdotto(p.getId_prodotto());
-          
-          // DEBUG: Stampa info per capire il problema
-          System.out.println("DEBUG - Prodotto ID: " + p.getId_prodotto() + ", Nome: " + p.getNome());
-          System.out.println("DEBUG - Taglie trovate: " + taglieDisponibili.size());
-          for(Prodotto_taglia pt : taglieDisponibili) {
-              System.out.println("  - Taglia ID: " + pt.getid_taglia() + ", Quantità: " + pt.getQuantita_disponibili());
-          }
       %>
       
       <% if (taglieDisponibili.isEmpty()) { %>

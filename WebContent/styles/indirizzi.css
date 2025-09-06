@@ -1,0 +1,192 @@
+/* CSS BASILARE PER INDIRIZZI */
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f0f0f0;
+}
+
+header {
+    background-color: white;
+    padding: 20px;
+    border-bottom: 2px solid #ddd;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+    color: #0a3d62;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+}
+
+nav li {
+    display: inline;
+    margin-right: 20px;
+}
+
+nav a {
+    text-decoration: none;
+    color: #0a3d62;
+    font-weight: bold;
+}
+
+nav a:hover {
+    color: #007bff;
+}
+
+.container {
+    width: 90%;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+h1 {
+    text-align: center;
+    color: #0a3d62;
+    font-size: 28px;
+}
+
+/* MESSAGGI */
+.messaggio {
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+}
+
+.messaggio.successo {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid green;
+}
+
+.messaggio.errore {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid red;
+}
+
+/* BOTTONI */
+.btn-aggiungi {
+    background-color: #28a745;
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.btn-aggiungi:hover {
+    background-color: #218838;
+}
+
+.azioni-top {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+/* CARD INDIRIZZI */
+.indirizzi-grid {
+    margin-bottom: 30px;
+}
+
+.indirizzo-card {
+    background-color: white;
+    border: 1px solid #ddd;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+}
+
+.indirizzo-info h3 {
+    color: #0a3d62;
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.indirizzo-info p {
+    margin: 5px 0;
+}
+
+.indirizzo-azioni {
+    margin-top: 15px;
+    border-top: 1px solid #eee;
+    padding-top: 15px;
+}
+
+.btn-modifica {
+    background-color: #007bff;
+    color: white;
+    padding: 8px 15px;
+    text-decoration: none;
+    border-radius: 3px;
+    margin-right: 10px;
+}
+
+.btn-modifica:hover {
+    background-color: #0056b3;
+}
+
+.btn-elimina {
+    background-color: #dc3545;
+    color: white;
+    padding: 8px 15px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.btn-elimina:hover {
+    background-color: #c82333;
+}
+
+/* NESSUN INDIRIZZO */
+.nessun-indirizzo {
+    text-align: center;
+    background-color: white;
+    padding: 50px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-bottom: 30px;
+}
+
+.nessun-indirizzo h2 {
+    color: #666;
+}
+
+.btn-aggiungi-grande {
+    background-color: #28a745;
+    color: white;
+    padding: 15px 30px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.btn-aggiungi-grande:hover {
+    background-color: #218838;
+}
+
+/* NAVIGAZIONE */
+.navigazione {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.btn-navigazione {
+    background-color: #6c757d;
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    margin: 0 10px;
+}
+
+.btn-navigazione:hover {
+    background-color: #5a6268;
+}
