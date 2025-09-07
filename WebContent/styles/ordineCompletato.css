@@ -1,0 +1,76 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    margin: 0;
+    padding: 20px;
+}
+
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+    background: white;
+    padding: 40px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.icona-successo {
+    font-size: 60px;
+    margin-bottom: 20px;
+}
+
+.titolo {
+    color: #28a745;
+    font-size: 28px;
+    margin-bottom: 20px;
+}
+
+.messaggio {
+    font-size: 18px;
+    color: #333;
+    margin-bottom: 30px;
+    line-height: 1.5;
+}
+
+.dettagli {
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-radius: 5px;
+    margin: 20px 0;
+}
+
+.dettagli h3 {
+    color: #495057;
+    margin-bottom: 15px;
+}
+
+.info {
+    margin-bottom: 10px;
+    padding: 5px 0;
+}
+
+.pulsanti {
+    margin-top: 30px;
+}
+
+.btn {
+    background-color: #007bff;
+    color: white;
+    padding: 12px 25px;
+    text-decoration: none;
+    border-radius: 5px;
+    margin: 0 10px;
+    font-weight: bold;
+}
+
+.btn:hover {
+    background-color: #0056b3;
+}
+
+.btn-secondario {
+    background-color: #6c757d;
+}
+
+.btn-secondario:hover {
+    background-color: #545b62;
+}
