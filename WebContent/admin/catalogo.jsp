@@ -1,3 +1,4 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.util.*, model.Prodotti, model.ProdottiDao" %>
 <%
     Boolean isAdmin = (Boolean) session.getAttribute("isAdmin");
@@ -16,9 +17,10 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Gestione Catalogo</title>
-    
-      <link rel="stylesheet" href="${pageContext.request.contextPath}/styles/adminCatalogo.css" />
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/styles/admin.css" />
 </head>
 <body>
     <h1>Gestione Catalogo Prodotti</h1>
@@ -48,8 +50,8 @@
             <td><%= p.getPrezzo() %>€</td>
             <td><%= nomeCategoria %></td>
             <td>
-                <a href="adminEditProdotto.jsp?id=<%= p.getId_prodotto() %>">✏️ Modifica</a> |
-                <a href="AdminCancellaProdottoServlet?id=<%= p.getId_prodotto() %>" onclick="return confirm('Confermi la cancellazione?')">❌ Elimina</a>
+                <a href="adminEditProdotto.jsp?id=<%= p.getId_prodotto() %>" class="btn">Modifica</a>
+                <a href="AdminCancellaProdottoServlet?id=<%= p.getId_prodotto() %>" class="btn btn-danger">Elimina</a>
             </td>
         </tr>
         <%

@@ -60,7 +60,7 @@
       <% if (loggedInUser != null) { %>
         <li><span style="color: #2ecc71; font-weight: bold;">👋 Benvenuto, <%= ((model.Utente) loggedInUser).getNome() %>!</span></li>
         <% if (isAdmin != null && isAdmin) { %>
-          <li><a href="adminDashboard.jsp">⚙️ Admin</a></li>
+          <li><a href="admin/dashboard.jsp">⚙️ Admin</a></li>
         <% } %>
       <% } %>
     </ul>

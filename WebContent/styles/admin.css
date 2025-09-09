@@ -1,0 +1,301 @@
+/* CSS Admin - Solo comandi base */
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f0f0f0;
+}
+
+/* Header */
+.header {
+    background-color: #333;
+    color: white;
+    padding: 20px;
+}
+
+.header-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.homepage-btn {
+    background-color: #1976d2;
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.homepage-btn:hover {
+    background-color: #0d47a1;
+}
+
+.header h1 {
+    margin: 0;
+    flex: 1;
+    text-align: center;
+}
+
+/* Container principale */
+.container {
+    width: 90%;
+    margin: 20px auto;
+}
+
+/* Box di benvenuto */
+.welcome {
+    background-color: white;
+    padding: 20px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+}
+
+.welcome h2 {
+    margin-top: 0;
+    color: #333;
+}
+
+/* Card per le sezioni */
+.card {
+    background-color: white;
+    padding: 20px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    width: 45%;
+    float: left;
+    margin-right: 5%;
+}
+
+.card:nth-child(even) {
+    margin-right: 0;
+}
+
+.card h3 {
+    margin-top: 0;
+    color: #333;
+}
+
+.card p {
+    color: #666;
+}
+
+.card a {
+    color: #0066cc;
+    text-decoration: none;
+    display: block;
+    padding: 5px 0;
+}
+
+.card a:hover {
+    text-decoration: underline;
+}
+
+/* Statistiche */
+.stat-box {
+    background-color: white;
+    padding: 20px;
+    text-align: center;
+    border: 1px solid #ccc;
+    width: 20%;
+    float: left;
+    margin-right: 5%;
+    margin-bottom: 20px;
+}
+
+.stat-box:last-child {
+    margin-right: 0;
+}
+
+.stat-number {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+}
+
+.stat-label {
+    font-size: 12px;
+    color: #666;
+    margin-top: 5px;
+}
+
+/* Tabelle */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+    margin-top: 20px;
+}
+
+table th, table td {
+    padding: 10px;
+    border: 1px solid #ccc;
+    text-align: left;
+}
+
+table th {
+    background-color: #f0f0f0;
+    font-weight: bold;
+}
+
+/* Pulsanti */
+.btn {
+    background-color: #0066cc;
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    border: none;
+    margin: 5px;
+}
+
+.btn:hover {
+    background-color: #0052a3;
+}
+
+.btn-danger {
+    background-color: #cc0000;
+}
+
+.btn-danger:hover {
+    background-color: #990000;
+}
+
+.btn-success {
+    background-color: #009900;
+}
+
+.btn-success:hover {
+    background-color: #006600;
+}
+
+/* Messaggi di errore e successo */
+.error-message {
+    background-color: #ffcccc;
+    color: #cc0000;
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid #ff9999;
+}
+
+.success-message {
+    background-color: #ccffcc;
+    color: #009900;
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid #99ff99;
+}
+
+/* Form */
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.form-group input, .form-group select, .form-group textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+}
+
+/* Logout */
+.logout-btn {
+    background-color: #d32f2f;
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.logout-btn:hover {
+    background-color: #c62828;
+}
+
+/* Dashboard button */
+.dashboard-btn {
+    background-color: #1976d2;
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    font-size: 14px;
+    float: right;
+    margin-right: 15px;
+}
+
+.dashboard-btn:hover {
+    background-color: #1565c0;
+}
+
+/* Dashboard button verde */
+.dashboard-btn-green {
+    background-color: #388e3c;
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.dashboard-btn-green:hover {
+    background-color: #2e7d32;
+}
+
+/* Tutti gli ordini button */
+.all-orders-btn {
+    background-color: #ff9800;
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.all-orders-btn:hover {
+    background-color: #f57c00;
+}
+
+/* Tutti gli utenti button */
+.users-btn {
+    background-color: #9c27b0;
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.users-btn:hover {
+    background-color: #7b1fa2;
+}
+
+
+/* Header buttons container */
+.header-buttons {
+    float: right;
+    margin-top: 10px;
+}
+
+.header-buttons a {
+    margin-left: 10px;
+    display: inline-block;
+}
+
+/* Clear float */
+.clear {
+    clear: both;
+}
