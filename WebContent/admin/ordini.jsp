@@ -53,6 +53,21 @@
             </div>
         <% } %>
         
+        <!-- Messaggi di successo/errore per aggiornamenti -->
+        <% String aggiornato = request.getParameter("aggiornato"); %>
+        <% if ("success".equals(aggiornato)) { %>
+            <div class="success-message">
+                ✅ Ordine aggiornato con successo! Lo stato è stato avanzato al livello successivo.
+            </div>
+        <% } %>
+        
+        <% String erroreParam = request.getParameter("errore"); %>
+        <% if ("update_failed".equals(erroreParam)) { %>
+            <div class="error-message">
+                ❌ Errore nell'aggiornamento dell'ordine. Riprova.
+            </div>
+        <% } %>
+        
         <% if (ordini.isEmpty()) { %>
             <div class="welcome">
                 <p>Nessun ordine trovato nel sistema.</p>
@@ -81,17 +96,65 @@
                             <% 
                                 String stato = ordine.getStato();
                                 String colorClass = "";
-                                if ("COMPLETATO".equals(stato)) colorClass = "success";
-                                else if ("ANNULLATO".equals(stato)) colorClass = "danger";
-                                else colorClass = "primary";
+                                String iconaStato = "";
+                                
+                                switch(stato) {
+                                    case "PAGATO":
+                                        colorClass = "warning";
+                                        iconaStato = "💳";
+                                        break;
+                                    case "IN_LAVORAZIONE":
+                                        colorClass = "primary";
+                                        iconaStato = "⚙️";
+                                        break;
+                                    case "SPEDITO":
+                                        colorClass = "info";
+                                        iconaStato = "🚚";
+                                        break;
+                                    case "CONSEGNATO":
+                                        colorClass = "success";
+                                        iconaStato = "✅";
+                                        break;
+                                    case "ANNULLATO":
+                                        colorClass = "danger";
+                                        iconaStato = "❌";
+                                        break;
+                                    default:
+                                        colorClass = "primary";
+                                        iconaStato = "🔄";
+                                }
                             %>
-                            <span class="status <%= colorClass %>"><%= stato %></span>
+                            <span class="status <%= colorClass %>"><%= iconaStato %> <%= stato %></span>
                         </td>
-                        <td>
-                            <a href="dettaglio-ordine.jsp?id=<%= ordine.getId() %>" class="btn">Dettagli</a>
-                            <% if (!"ANNULLATO".equals(stato)) { %>
-                                <a href="${pageContext.request.contextPath}/admin/ordini?action=aggiorna&id=<%= ordine.getId() %>" class="btn btn-success">Aggiorna</a>
-                            <% } %>
+                        <td class="actions-cell">
+                            <div class="action-buttons">
+                                <a href="dettaglio-ordine.jsp?id=<%= ordine.getId() %>" class="btn btn-detail">Dettagli</a>
+                                
+                                <% 
+                                    // Mostra controlli di aggiornamento solo se l'ordine può essere modificato
+                                    boolean puoAggiornare = !"CONSEGNATO".equals(stato) && !"ANNULLATO".equals(stato);
+                                    if (puoAggiornare) {
+                                %>
+                                    <!-- Form per aggiornamento stato -->
+                                    <form method="post" action="${pageContext.request.contextPath}/admin/ordini" class="stato-form">
+                                        <input type="hidden" name="action" value="aggiorna">
+                                        <input type="hidden" name="id" value="<%= ordine.getId() %>">
+                                        
+                                        <select name="stato" class="stato-select" onchange="this.form.submit()" title="Seleziona nuovo stato">
+                                            <option value="" class="placeholder-option">Cambia Stato</option>
+                                            <option value="PAGATO" <%= "PAGATO".equals(stato) ? "disabled selected" : "" %>>💳 Pagato</option>
+                                            <option value="IN_LAVORAZIONE" <%= "IN_LAVORAZIONE".equals(stato) ? "disabled selected" : "" %>>⚙️ In Lavorazione</option>
+                                            <option value="SPEDITO" <%= "SPEDITO".equals(stato) ? "disabled selected" : "" %>>🚚 Spedito</option>
+                                            <option value="CONSEGNATO" <%= "CONSEGNATO".equals(stato) ? "disabled selected" : "" %>>✅ Consegnato</option>
+                                        </select>
+                                    </form>
+                                    
+                                <% } else if ("CONSEGNATO".equals(stato)) { %>
+                                    <div class="stato-finale stato-completato">✓ Ordine Completato</div>
+                                <% } else if ("ANNULLATO".equals(stato)) { %>
+                                    <div class="stato-finale stato-annullato">❌ Ordine Annullato</div>
+                                <% } %>
+                            </div>
                         </td>
                     </tr>
                     <% } %>
@@ -101,6 +164,25 @@
             <div class="clear"></div>
             <p><strong>Totale ordini:</strong> <%= ordini.size() %></p>
         <% } %>
+        
+        <div class="card">
+            <h3>Gestione Stati Ordini</h3>
+            <p>Usa il <strong>dropdown "Cambia Stato"</strong> per impostare direttamente lo stato desiderato per ogni ordine.</p>
+            
+            <p><strong>Stati Disponibili:</strong><br>
+                💳 <strong>PAGATO</strong> → 
+                ⚙️ <strong>IN_LAVORAZIONE</strong> → 
+                🚚 <strong>SPEDITO</strong> → 
+                ✅ <strong>CONSEGNATO</strong>
+            </p>
+            
+            <p><strong>Come funziona:</strong></p>
+            <ul>
+                <li>Seleziona lo stato dal dropdown per aggiornare immediatamente l'ordine</li>
+                <li>Puoi impostare qualsiasi stato (non devi seguire una sequenza)</li>
+                <li>Gli ordini <strong>CONSEGNATI</strong> e <strong>ANNULLATI</strong> non possono essere modificati</li>
+            </ul>
+        </div>
         
         <div class="card">
             <h3>Filtra Ordini</h3>
@@ -121,6 +203,105 @@
         .status.success { background: #ccffcc; color: #009900; }
         .status.danger { background: #ffcccc; color: #cc0000; }
         .status.primary { background: #cce6ff; color: #0066cc; }
+        .status.warning { background: #fff3cd; color: #856404; }
+        .status.info { background: #d1ecf1; color: #0c5460; }
+        
+        /* Layout celle azioni */
+        .actions-cell {
+            min-width: 180px;
+            vertical-align: top;
+        }
+        
+        .action-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        
+        /* Pulsante dettagli */
+        .btn-detail {
+            background-color: #17a2b8;
+            color: white;
+            padding: 6px 12px;
+            text-decoration: none;
+            border-radius: 4px;
+            font-size: 13px;
+            text-align: center;
+            display: inline-block;
+        }
+        
+        .btn-detail:hover {
+            background-color: #138496;
+            color: white;
+            text-decoration: none;
+        }
+        
+        /* Form e dropdown per stato */
+        .stato-form {
+            margin: 0;
+        }
+        
+        .stato-select {
+            padding: 8px 12px;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 500;
+            background-color: white;
+            cursor: pointer;
+            width: 160px;
+            min-height: 36px;
+            transition: all 0.3s ease;
+            outline: none;
+        }
+        
+        .stato-select:hover {
+            border-color: #007bff;
+            box-shadow: 0 2px 4px rgba(0,123,255,0.2);
+        }
+        
+        .stato-select:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 0 3px rgba(0,123,255,0.1);
+        }
+        
+        .stato-select option {
+            padding: 8px 12px;
+            font-size: 13px;
+        }
+        
+        .stato-select option:disabled {
+            color: #666;
+            font-style: italic;
+            background-color: #f8f9fa;
+        }
+        
+        .placeholder-option {
+            color: #6c757d;
+            font-style: italic;
+        }
+        
+        /* Stati finali */
+        .stato-finale {
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 500;
+            text-align: center;
+            width: 160px;
+        }
+        
+        .stato-completato {
+            background-color: #d4edda;
+            color: #155724;
+            border: 2px solid #c3e6cb;
+        }
+        
+        .stato-annullato {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 2px solid #f5c6cb;
+        }
     </style>
 </body>
 </html>

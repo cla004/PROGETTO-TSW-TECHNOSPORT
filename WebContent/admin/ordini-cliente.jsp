@@ -142,8 +142,11 @@
                         double totaleSpeso = 0;
                         int ordiniCompletati = 0;
                         for (Ordine o : ordiniCliente) {
-                            if ("COMPLETATO".equals(o.getStato())) {
+                            String s = o.getStato();
+                            if (!"ANNULLATO".equals(s)) {
                                 totaleSpeso += o.getTotale();
+                            }
+                            if ("CONSEGNATO".equals(s)) {
                                 ordiniCompletati++;
                             }
                         }
@@ -155,13 +158,57 @@
                     </div>
                     <div class="stat-box">
                         <div class="stat-number"><%= ordiniCompletati %></div>
-                        <div class="stat-label">Ordini Completati</div>
+                        <div class="stat-label">Ordini Consegnati</div>
                     </div>
                     <div class="stat-box">
                         <div class="stat-number"><%= df.format(totaleSpeso) %> €</div>
                         <div class="stat-label">Totale Speso</div>
                     </div>
                     <div class="clear"></div>
+                    
+                    <!-- Sezione informativa statistiche -->
+                    <div class="info-statistiche">
+                        <h4>📊 Spiegazione Statistiche</h4>
+                        
+                        <div class="info-grid">
+                            <div class="info-item">
+                                <span class="info-icon">📋</span>
+                                <div class="info-content">
+                                    <strong>Ordini Totali</strong>
+                                    <p>Tutti gli ordini effettuati dal cliente, indipendentemente dallo stato</p>
+                                </div>
+                            </div>
+                            
+                            <div class="info-item">
+                                <span class="info-icon">✅</span>
+                                <div class="info-content">
+                                    <strong>Ordini Consegnati</strong>
+                                    <p>Solo gli ordini con stato "CONSEGNATO" (completamente evasi e ricevuti dal cliente)</p>
+                                </div>
+                            </div>
+                            
+                            <div class="info-item">
+                                <span class="info-icon">💰</span>
+                                <div class="info-content">
+                                    <strong>Totale Speso</strong>
+                                    <p>Somma dell'importo di tutti gli ordini validi (esclusi solo quelli annullati)</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="flusso-stati">
+                            <strong>Flusso degli stati:</strong>
+                            <div class="stati-flow">
+                                <span class="stato-step">💳 Pagato</span>
+                                <span class="arrow">→</span>
+                                <span class="stato-step">⚙️ In Lavorazione</span>
+                                <span class="arrow">→</span>
+                                <span class="stato-step">🚚 Spedito</span>
+                                <span class="arrow">→</span>
+                                <span class="stato-step">✅ Consegnato</span>
+                            </div>
+                        </div>
+                    </div>
                     
                     <table>
                         <thead>
@@ -181,13 +228,37 @@
                                 <td><%= df.format(ordine.getTotale()) %> €</td>
                                 <td>
                                     <% 
-                                        String stato = ordine.getStato();
-                                        String colorClass = "";
-                                        if ("COMPLETATO".equals(stato)) colorClass = "success";
-                                        else if ("ANNULLATO".equals(stato)) colorClass = "danger";
-                                        else colorClass = "primary";
+                                    String stato = ordine.getStato();
+                                    String colorClass = "";
+                                    String iconaStato = "";
+                                    
+                                    switch(stato) {
+                                        case "PAGATO":
+                                            colorClass = "warning";
+                                            iconaStato = "💳";
+                                            break;
+                                        case "IN_LAVORAZIONE":
+                                            colorClass = "primary";
+                                            iconaStato = "⚙️";
+                                            break;
+                                        case "SPEDITO":
+                                            colorClass = "info";
+                                            iconaStato = "🚚";
+                                            break;
+                                        case "CONSEGNATO":
+                                            colorClass = "success";
+                                            iconaStato = "✅";
+                                            break;
+                                        case "ANNULLATO":
+                                            colorClass = "danger";
+                                            iconaStato = "❌";
+                                            break;
+                                        default:
+                                            colorClass = "primary";
+                                            iconaStato = "🔄";
+                                    }
                                     %>
-                                    <span class="status <%= colorClass %>"><%= stato %></span>
+                                    <span class="status <%= colorClass %>"><%= iconaStato %> <%= stato %></span>
                                 </td>
                                 <td>
                                     <a href="dettaglio-ordine.jsp?id=<%= ordine.getId() %>" class="btn">Dettagli</a>
@@ -247,6 +318,123 @@
         .status.success { background: #ccffcc; color: #009900; }
         .status.danger { background: #ffcccc; color: #cc0000; }
         .status.primary { background: #cce6ff; color: #0066cc; }
+        .status.warning { background: #fff3cd; color: #856404; }
+        .status.info { background: #d1ecf1; color: #0c5460; }
+        
+        /* Sezione informativa statistiche */
+        .info-statistiche {
+            background-color: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .info-statistiche h4 {
+            color: #495057;
+            margin: 0 0 15px 0;
+            font-size: 16px;
+            text-align: center;
+        }
+        
+        .info-grid {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .info-item {
+            flex: 1;
+            min-width: 200px;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 12px;
+            background-color: white;
+            border-radius: 6px;
+            border: 1px solid #dee2e6;
+        }
+        
+        .info-icon {
+            font-size: 20px;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+        
+        .info-content {
+            flex: 1;
+        }
+        
+        .info-content strong {
+            display: block;
+            color: #343a40;
+            font-size: 14px;
+            margin-bottom: 4px;
+        }
+        
+        .info-content p {
+            margin: 0;
+            color: #6c757d;
+            font-size: 13px;
+            line-height: 1.4;
+        }
+        
+        .flusso-stati {
+            background-color: white;
+            padding: 15px;
+            border-radius: 6px;
+            border: 1px solid #dee2e6;
+            text-align: center;
+        }
+        
+        .flusso-stati strong {
+            display: block;
+            color: #495057;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+        
+        .stati-flow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        
+        .stato-step {
+            background-color: #e9ecef;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+            color: #495057;
+            white-space: nowrap;
+        }
+        
+        .arrow {
+            color: #6c757d;
+            font-weight: bold;
+            margin: 0 5px;
+        }
+        
+        /* Responsive per schermi piccoli */
+        @media (max-width: 768px) {
+            .info-grid {
+                flex-direction: column;
+            }
+            
+            .stati-flow {
+                flex-direction: column;
+                gap: 5px;
+            }
+            
+            .arrow {
+                transform: rotate(90deg);
+                margin: 5px 0;
+            }
+        }
     </style>
 </body>
 </html>
