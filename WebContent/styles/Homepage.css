@@ -207,6 +207,20 @@ footer {
   margin: 10px 0;
 }
 
+.btn-vedi-prodotto {
+  background: #0a3d62;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  cursor: pointer;
+  width: 100%;
+  margin-top: 10px;
+}
+
+.btn-vedi-prodotto:hover {
+  background: #083048;
+}
+
 /* === TABLET: max 1000px === */
 @media screen and (max-width: 1000px) {
   section {

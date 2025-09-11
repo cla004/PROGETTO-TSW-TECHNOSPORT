@@ -153,5 +153,84 @@ public class UtenteDao {
 
         return utente;
     }
+    
+    // METODI PER STATISTICHE ADMIN
+    
+    /**
+     * Conta il numero totale di utenti registrati
+     */
+    public int contaUtenti() {
+        String sql = "SELECT COUNT(*) as totale FROM users";
+        
+        try (Connection conn = DBConnection.getConnection();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+            
+            if (rs.next()) {
+                return rs.getInt("totale");
+            }
+            
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        
+        return 0;
+    }
+    
+    /**
+     * Conta utenti registrati oggi
+     */
+    public int contaUtentiOggi() {
+        String sql = "SELECT COUNT(*) as totale FROM users WHERE DATE(created_at) = CURDATE()";
+        
+        try (Connection conn = DBConnection.getConnection();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+            
+            if (rs.next()) {
+                return rs.getInt("totale");
+            }
+            
+        } catch (SQLException e) {
+            // Se la colonna created_at non esiste, restituisci 0
+            e.printStackTrace();
+        }
+        
+        return 0;
+    }
+    
+    /**
+     * Recupera utenti con paginazione usando LIMIT e OFFSET
+     * @param limit Numero massimo di utenti per pagina
+     * @param offset Numero di utenti da saltare (page * limit)
+     * @return Lista utenti della pagina richiesta
+     */
+    public List<Utente> getUtentiConPaginazione(int limit, int offset) {
+        String sql = "SELECT * FROM users LIMIT ? OFFSET ?";
+        List<Utente> lista = new ArrayList<>();
+        
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            
+            stmt.setInt(1, limit);
+            stmt.setInt(2, offset);
+            
+            ResultSet rs = stmt.executeQuery();
+            
+            while (rs.next()) {
+                Utente utente = new Utente();
+                utente.setId(rs.getInt("id"));
+                utente.setNome(rs.getString("name"));
+                utente.setEmail(rs.getString("email"));
+                utente.setPassword(rs.getString("password"));
+                lista.add(utente);
+            }
+            
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        
+        return lista;
+    }
 
 }

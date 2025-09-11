@@ -25,7 +25,7 @@ public class HomepageServlet extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        List<Prodotti> prodotti = prodottoDAO.listaProdotti();  // Metodo che restituisce tutti i peodotti 
+        List<Prodotti> prodotti = prodottoDAO.listaProdotti();  // Metodo che restituisce tutti i prodotti 
 
         request.setAttribute("prodotti", prodotti);
 

@@ -1,22 +1,22 @@
 package model;
 
+import java.sql.Timestamp;
+
+/**
+ * Classe che rappresenta il carrello principale dell'utente (tabella cart)
+ */
 public class Carrello {
     private int id;
-    private int quantita;
-    private Utente id_utente;    
-    private Prodotti prodotto; 
-
-    public Carrello() {
-    	
-    	
-    }
-
+    private int userId;
+    private Timestamp createdAt;
     
-    public Carrello(int id, int quantita, Utente id_utente, Prodotti prodotto) {
+    public Carrello() {
+    }
+    
+    public Carrello(int id, int userId, Timestamp createdAt) {
         this.id = id;
-        this.quantita = quantita;
-        this.id_utente = id_utente;
-        this.prodotto = prodotto;
+        this.userId = userId;
+        this.createdAt = createdAt;
     }
 
     // Getter e Setter
@@ -28,28 +28,19 @@ public class Carrello {
         this.id = id;
     }
 
-    public int getQuantita() {
-        return quantita;
+    public int getUserId() {
+        return userId;
     }
 
-    public void setQuantita(int quantita) {
-        this.quantita = quantita;
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
-    public Utente getUtente() {
-        return id_utente;
+    public Timestamp getCreatedAt() {
+        return createdAt;
     }
 
-    public void setUtente(Utente id_utente) {
-    	this.id_utente=id_utente;
-      
-    }
-
-    public Prodotti getProdotto() {
-        return prodotto;
-    }
-
-    public void setProdotto(Prodotti prodotto) {
-        this.prodotto=prodotto;
+    public void setCreatedAt(Timestamp createdAt) {
+        this.createdAt = createdAt;
     }
 }

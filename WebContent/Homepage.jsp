@@ -97,42 +97,29 @@
           List<Prodotto_taglia> taglieDisponibili = ptDao.getTaglieDisponibiliPerProdotto(p.getId_prodotto());
       %>
       
-      <% if (taglieDisponibili.isEmpty()) { %>
-        <div class="no-taglie">
-          ❌ Prodotto non disponibile
-        </div>
-      <% } else { %>
-        <form action="carrello" method="post" onsubmit="return controllaForm(<%= p.getId_prodotto() %>)">
-          <input type="hidden" name="action" value="aggiungi">
-          <input type="hidden" name="prodottoId" value="<%= p.getId_prodotto() %>">
-          <input type="hidden" name="tagliaId" id="taglia-<%= p.getId_prodotto() %>" value="">
-          
-          <div class="taglia-selector" id="taglia-selector-<%= p.getId_prodotto() %>">
-            <p>Taglia:</p>
-            <div class="taglia-buttons">
-              <% for (Prodotto_taglia pt : taglieDisponibili) {
-                   Taglia taglia = tagliaDao.cercaTagliaById(pt.getid_taglia());
-              %>
-                <button type="button" class="taglia-btn" data-prodotto="<%= p.getId_prodotto() %>" 
-                        onclick="selezionaTaglia(<%= p.getId_prodotto() %>, <%= pt.getid_taglia() %>, this)">
-                  <%= taglia.getEtichetta() %> (<%= (int)pt.getQuantita_disponibili() %>)
-                </button>
-              <% } %>
-            </div>
+      <div class="product-actions">
+        <% if (taglieDisponibili.isEmpty()) { %>
+          <div class="no-taglie">
+            ❌ Prodotto non disponibile
           </div>
-          
-          <div class="quantita-box">
-            <button type="button" class="quantita-btn" onclick="diminuisciQuantita(<%= p.getId_prodotto() %>)">-</button>
-            <input type="number" name="quantita" id="quantita-<%= p.getId_prodotto() %>" 
-                   value="1" min="1" class="quantita-input" readonly>
-            <button type="button" class="quantita-btn" onclick="aumentaQuantita(<%= p.getId_prodotto() %>)">+</button>
+        <% } else { %>
+          <div class="taglie-preview">
+            <p><strong>Taglie disponibili:</strong> 
+            <% for (int i = 0; i < Math.min(taglieDisponibili.size(), 3); i++) {
+                 Prodotto_taglia pt = taglieDisponibili.get(i);
+                 Taglia taglia = tagliaDao.cercaTagliaById(pt.getid_taglia());
+            %>
+              <span class="taglia-preview"><%= taglia.getEtichetta() %></span><% if (i < Math.min(taglieDisponibili.size(), 3) - 1) { %>, <% } %>
+            <% } %>
+            <% if (taglieDisponibili.size() > 3) { %>...<% } %>
+            </p>
           </div>
-          
-          <button type="submit" class="btn-aggiungi-carrello" id="add-btn-<%= p.getId_prodotto() %>" disabled>
-            🛒 Aggiungi al carrello
-          </button>
-        </form>
-      <% } %>
+        <% } %>
+        
+        <button type="button" class="btn-vedi-prodotto" onclick="location.href='product.jsp?id=<%= p.getId_prodotto() %>'">
+          👁️ Vedi Prodotto
+        </button>
+      </div>
     </div>
     <%
         } // fine prodotti

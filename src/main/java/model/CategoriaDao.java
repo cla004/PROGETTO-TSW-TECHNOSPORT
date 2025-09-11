@@ -8,7 +8,7 @@ import model.Categoria;
 
 public class CategoriaDao {
     public void inserisciCategoria(Categoria c) {
-        String sql = "INSERT INTO categorie (nome) VALUES (?)";
+        String sql = "INSERT INTO categories (nome) VALUES (?)";
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, c.getnome_recensione());
@@ -34,14 +34,14 @@ public class CategoriaDao {
 
     public List<Categoria> listaCategorie() {
         List<Categoria> lista = new ArrayList<>();
-        String sql = "SELECT * FROM categorie";
+        String sql = "SELECT * FROM categories";
         try (Connection conn = DBConnection.getConnection();
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
             while (rs.next()) {
                 Categoria c = new Categoria();
                 c.setId_categoria(rs.getInt("id"));
-                c.setnome_recensione(rs.getString("nome"));
+                c.setnome_recensione(rs.getString("name"));
                 lista.add(c);
             }
         } catch (SQLException e) { e.printStackTrace(); }
@@ -49,7 +49,7 @@ public class CategoriaDao {
     }
 
     public void aggiornaCategoria(Categoria c) {
-        String sql = "UPDATE categorie SET nome = ? WHERE id = ?";
+        String sql = "UPDATE categories SET nome = ? WHERE id = ?";
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, c.getnome_recensione());
@@ -59,7 +59,7 @@ public class CategoriaDao {
     }
 
     public void eliminaCategoria(int id) {
-        String sql = "DELETE FROM categorie WHERE id = ?";
+        String sql = "DELETE FROM categories WHERE id = ?";
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, id);

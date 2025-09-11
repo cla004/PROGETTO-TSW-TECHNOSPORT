@@ -4,7 +4,7 @@ import java.sql.*;
 import java.util.*;
 import model.Taglia;
 
-public class TagliaDAO {
+public class TagliaDao {
     public void inserisciTaglia(Taglia t) {
         String sql = "INSERT INTO taglie (nome) VALUES (?)";
         try (Connection conn = DBConnection.getConnection();
@@ -66,4 +66,42 @@ public class TagliaDAO {
             e.printStackTrace();
         }
     }
+    
+    /**
+     * Ottiene le taglie disponibili per una specifica categoria
+     * Ad esempio: scarpe -> taglie numeriche (36, 37, 38, ecc.)
+     *            abbigliamento -> taglie alfabetiche (S, M, L, XL)
+     */
+    public List<Taglia> getTagliePerCategoria(int categoriaId) {
+        List<Taglia> lista = new ArrayList<>();
+        // Query che filtra le taglie in base alla categoria
+        // Assumendo che ci sia una logica di associazione categoria-tipo taglia
+        String sql = "SELECT DISTINCT t.* FROM taglie t " +
+                    "INNER JOIN prodotto_taglia pt ON t.id = pt.taglia_id " +
+                    "INNER JOIN products p ON pt.prodotto_id = p.id " +
+                    "WHERE p.category_id = ? " +
+                    "ORDER BY t.nome";
+        
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, categoriaId);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                Taglia t = new Taglia();
+                t.setid_taglia(rs.getInt("id"));
+                t.setEtichetta(rs.getString("nome"));
+                lista.add(t);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        
+        // Se non ci sono taglie specifiche per la categoria, restituisce tutte le taglie
+        if (lista.isEmpty()) {
+            return listaTaglie();
+        }
+        
+        return lista;
+    }
+    
 }

@@ -33,9 +33,9 @@ public class ProcediOrdine extends HttpServlet {
         }
 
         try {
-            // Recuperare i dettagli del carrello
-            CarrelloDao carrelloDao = new CarrelloDao(DBConnection.getConnection());
-            List<Carrello> carrelloItems = carrelloDao.findByUser((Utente) utente);
+            // Recuperare i dettagli del carrello dalla sessione
+            @SuppressWarnings("unchecked")
+            List<CartItem> carrelloItems = (List<CartItem>) session.getAttribute("carrelloSessione");
 
             // Verificare che il carrello non sia vuoto
             if (carrelloItems == null || carrelloItems.isEmpty()) {
@@ -46,23 +46,23 @@ public class ProcediOrdine extends HttpServlet {
 
             // Creare un nuovo ordine
             Ordine ordine = new Ordine();
-            ordine.setUser_Id((Utente) utente);
+            ordine.setUtente((Utente) utente);
             ordine.setTotale(calcolaTotale(carrelloItems));
             ordine.setStato("In elaborazione");
-            ordine.setData(new java.util.Date());
+            ordine.setDataOrdine(new java.sql.Timestamp(System.currentTimeMillis()));
 
             // Salvare ordine nel database
-            OrdineDao ordineDao = new OrdineDao(DBConnection.getConnection());
+            OrdineDao ordineDao = new OrdineDao();
             ordineDao.inserisciOrdine(ordine);
 
             // Salvare dettagli dell'ordine nel database
             DettaglioOrdineDao dettaglioOrdineDao = new DettaglioOrdineDao();
-            for (Carrello item : carrelloItems) {
+            for (CartItem item : carrelloItems) {
                 DettaglioOrdine dettaglio = new DettaglioOrdine();
-                dettaglio.setId_ordine(ordine);
-                dettaglio.setId_prodotto(item.getProdotto());
-                dettaglio.setQuantita(item.getQuantita());
-                dettaglio.setPrezzo(item.getProdotto().getPrezzo());
+                dettaglio.setOrdine(ordine);
+                dettaglio.setProdotto(item.getProdotto());
+                dettaglio.setQuantity(item.getQuantity());
+                dettaglio.setPrice(item.getProdotto().getPrezzo());
                 dettaglioOrdineDao.inserisciDettaglio(dettaglio);
             }
 
@@ -86,10 +86,10 @@ public class ProcediOrdine extends HttpServlet {
      * @param carrelloItems Lista degli elementi del carrello
      * @return Il totale dell'ordine
      */
-    private double calcolaTotale(List<Carrello> carrelloItems) {
+    private double calcolaTotale(List<CartItem> carrelloItems) {
         double totale = 0.0;
-        for (Carrello item : carrelloItems) {
-            totale += item.getProdotto().getPrezzo() * item.getQuantita();
+        for (CartItem item : carrelloItems) {
+            totale += item.getProdotto().getPrezzo() * item.getQuantity();
         }
         return totale;
     }

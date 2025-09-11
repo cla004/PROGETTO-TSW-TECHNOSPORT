@@ -1,76 +1,131 @@
-
 package model;
 
+/**
+ * Classe che rappresenta un elemento dell'ordine (tabella order_items)
+ */
 public class DettaglioOrdine {
     private int id;
-    private Ordine Id_ordine;
-    private Prodotti id_prodotto;
-    private int quantita;
-    private double prezzo;
+    private int orderId;
+    private int productId;
+    private int quantity;
+    private double price;
+    private int tagliaId;
+    
+    // Oggetti collegati per convenience
+    private Ordine ordine;
+    private Prodotti prodotto;
+    private Taglia taglia;
     
     public DettaglioOrdine() {
-    	
-    	//Costruttore senza argomenti 
     }
     
-    public DettaglioOrdine(int id , Ordine Id_ordine , Prodotti id_prodotto, int quantita,double prezzo) {
-    	this.id = id;
-        this.Id_ordine = Id_ordine;
-        this.id_prodotto = id_prodotto;
-        this.quantita = quantita;
-        this.prezzo = prezzo;
+    public DettaglioOrdine(int id, int orderId, int productId, int quantity, double price, int tagliaId) {
+        this.id = id;
+        this.orderId = orderId;
+        this.productId = productId;
+        this.quantity = quantity;
+        this.price = price;
+        this.tagliaId = tagliaId;
     }
 
-    public int getId() { 
-    	
-    	return id; 
-    	
-    	}
-    public void setId(int id) { 
-    	
-    	this.id = id; 
-    	
-    	}
-
-    public Ordine getId_ordine() {
-    	
-    	return Id_ordine; 
-    	
-    	}
-    public void setId_ordine(Ordine Id_ordine) {
-    	
-    	this.Id_ordine = Id_ordine;
-    	
-    	}
-
-    public Prodotti getId_prodotto() { 
-    	
-    	return id_prodotto; 
-    	
-    	}
-    public void setId_prodotto(Prodotti id_prodotto) {
-        this.id_prodotto = id_prodotto;
+    // Getter e Setter
+    public int getId() {
+        return id;
+    }
+    
+    public void setId(int id) {
+        this.id = id;
     }
 
+    public int getOrderId() {
+        return orderId;
+    }
+    
+    public void setOrderId(int orderId) {
+        this.orderId = orderId;
+    }
 
-    public int getQuantita() {
-    	
-    	return quantita;
-    	
-    	}
-    public void setQuantita(int quantita) {
-    	
-    	this.quantita = quantita; 
-    	
-    	}
+    public int getProductId() {
+        return productId;
+    }
+    
+    public void setProductId(int productId) {
+        this.productId = productId;
+    }
 
-    public double getPrezzo() {
-    	
-    	return prezzo;
-    	
-    	}
-    public void setPrezzo(double prezzo) {
-        this.prezzo = prezzo;
+    public int getQuantity() {
+        return quantity;
+    }
+    
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+    
+    public void setPrice(double price) {
+        this.price = price;
+    }
+    
+    public int getTagliaId() {
+        return tagliaId;
+    }
+    
+    public void setTagliaId(int tagliaId) {
+        this.tagliaId = tagliaId;
+    }
+    
+    // Metodi convenience per oggetti collegati
+    public Ordine getOrdine() {
+        return ordine;
+    }
+    
+    public void setOrdine(Ordine ordine) {
+        this.ordine = ordine;
+        if (ordine != null) {
+            this.orderId = ordine.getId();
+        }
+    }
+
+    public Prodotti getProdotto() {
+        return prodotto;
+    }
+    
+    public void setProdotto(Prodotti prodotto) {
+        this.prodotto = prodotto;
+        if (prodotto != null) {
+            this.productId = prodotto.getId_prodotto();
+        }
+    }
+
+    public Taglia getTaglia() {
+        return taglia;
+    }
+    
+    public void setTaglia(Taglia taglia) {
+        this.taglia = taglia;
+        if (taglia != null) {
+            this.tagliaId = taglia.getid_taglia();
+        }
+    }
+    
+    // Metodi di utilità per la JSP
+    public String getNomeProdotto() {
+        return prodotto != null ? prodotto.getNome() : "Prodotto non disponibile";
+    }
+    
+    public String getNomeTaglia() {
+        return taglia != null ? taglia.getEtichetta() : "Taglia non disponibile";
+    }
+    
+    public double getPrezzoUnitario() {
+        return price;
+    }
+    
+    public double getTotaleRiga() {
+        return price * quantity;
     }
 
 }

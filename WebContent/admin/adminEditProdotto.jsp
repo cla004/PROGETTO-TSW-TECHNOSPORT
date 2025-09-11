@@ -10,13 +10,35 @@
     
     Utente admin = (Utente) session.getAttribute("loggedInUser");
     
+    // Ottengo l'ID del prodotto da modificare
+    String idStr = request.getParameter("id");
+    if (idStr == null || idStr.trim().isEmpty()) {
+        response.sendRedirect("catalogo.jsp");
+        return;
+    }
+    
+    int prodottoId = Integer.parseInt(idStr);
+    
+    // Carico il prodotto dal database
+    ProdottiDao prodottiDao = new ProdottiDao();
+    Prodotti prodotto = prodottiDao.cercaProdottoById(prodottoId);
+    
+    if (prodotto == null) {
+        request.setAttribute("errore", "Prodotto non trovato");
+        response.sendRedirect("catalogo.jsp");
+        return;
+    }
+    
     // Caricamento categorie dal database
     List<Categoria> categorie = new ArrayList<>();
     String erroreCategorie = null;
 
-    // Caricamento taglie dal database (tutte)
+    // Caricamento taglie dal database
     List<Taglia> tutteLeTaglie = new ArrayList<>();
     String erroreTaglie = null;
+    
+    // Caricamento associazioni prodotto-taglia
+    List<Prodotto_taglia> taglieAssociate = new ArrayList<>();
     
     try {
         CategoriaDao categoriaDao = new CategoriaDao();
@@ -24,6 +46,10 @@
         
         TagliaDao tagliaDao = new TagliaDao();
         tutteLeTaglie = tagliaDao.listaTaglie();
+        
+        ProdottoTagliaDao ptDao = new ProdottoTagliaDao();
+        taglieAssociate = ptDao.getTaglieDisponibiliPerProdotto(prodottoId);
+        
     } catch (Exception e) {
         if (erroreCategorie == null) erroreCategorie = "Errore nel caricamento delle categorie: " + e.getMessage();
         erroreTaglie = "Errore nel caricamento delle taglie: " + e.getMessage();
@@ -34,21 +60,22 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>Aggiungi Prodotto - Admin TecnoSport</title>
+    <title>Modifica Prodotto - Admin TecnoSport</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/styles/admin.css">
 </head>
 <body>
     <div class="header">
-        <h1>Aggiungi Nuovo Prodotto</h1>
-        <a href="dashboard.jsp" class="dashboard-btn">📦 Torna alla Dashboard</a>
+        <h1>Modifica Prodotto</h1>
+        <a href="catalogo.jsp" class="dashboard-btn">📦 Torna al Catalogo</a>
+        <a href="dashboard.jsp" class="dashboard-btn">🏠 Dashboard</a>
         <a href="${pageContext.request.contextPath}/LogoutServlet" class="logout-btn">🚪 Logout</a>
         <div class="clear"></div>
     </div>
     
     <div class="container">
         <div class="welcome">
-            <h2>Inserisci i dati del nuovo prodotto</h2>
-            <p>Compila tutti i campi obbligatori per aggiungere il prodotto al catalogo.</p>
+            <h2>Modifica: <%= prodotto.getNome() %></h2>
+            <p>Aggiorna i dati del prodotto. I campi contrassegnati con * sono obbligatori.</p>
         </div>
         
         <% String errore = (String) request.getAttribute("errore"); %>
@@ -66,26 +93,27 @@
         <% } %>
         
         <form method="post" action="${pageContext.request.contextPath}/admin/prodotti" enctype="multipart/form-data">
-            <input type="hidden" name="action" value="aggiungi">
+            <input type="hidden" name="action" value="modifica">
+            <input type="hidden" name="id" value="<%= prodotto.getId_prodotto() %>">
             
             <div class="form-group">
                 <label for="nome">Nome Prodotto *</label>
                 <input type="text" id="nome" name="nome" required 
                        placeholder="Es: Scarpe da calcio Nike" 
-                       value="<%= request.getParameter("nome") != null ? request.getParameter("nome") : "" %>">
+                       value="<%= prodotto.getNome() %>">
             </div>
             
             <div class="form-group">
                 <label for="descrizione">Descrizione</label>
                 <textarea id="descrizione" name="descrizione" rows="4" 
-                          placeholder="Descrizione dettagliata del prodotto..."><%= request.getParameter("descrizione") != null ? request.getParameter("descrizione") : "" %></textarea>
+                          placeholder="Descrizione dettagliata del prodotto..."><%= prodotto.getDescrizione() != null ? prodotto.getDescrizione() : "" %></textarea>
             </div>
             
             <div class="form-group">
                 <label for="prezzo">Prezzo (€) *</label>
                 <input type="number" id="prezzo" name="prezzo" step="0.01" min="0" required 
                        placeholder="Es: 99.99"
-                       value="<%= request.getParameter("prezzo") != null ? request.getParameter("prezzo") : "" %>">
+                       value="<%= prodotto.getPrezzo() %>">
             </div>
             
             <div class="form-group">
@@ -96,94 +124,78 @@
                     </div>
                 <% } %>
                 <select id="categoria" name="categoria" required>
-                    <option value="" data-catname="">Seleziona categoria</option>
+                    <option value="">Seleziona categoria</option>
                     <% for (Categoria cat : categorie) { %>
-                        <option value="<%= cat.getid_categoria() %>" data-catname="<%= cat.getnome_recensione() %>">
+                        <option value="<%= cat.getid_categoria() %>" 
+                                <%= (cat.getid_categoria() == prodotto.getId_categoria()) ? "selected" : "" %>>
                             <%= cat.getnome_recensione() %>
                         </option>
-                    <% } %>
-                    <% if (categorie.isEmpty()) { %>
-                        <option value="" disabled>Nessuna categoria disponibile</option>
                     <% } %>
                 </select>
             </div>
             
             <div class="form-group">
                 <label for="immagine">Immagine Prodotto</label>
+                <% if (prodotto.getImmagine() != null && !prodotto.getImmagine().isEmpty()) { %>
+                    <div style="margin-bottom: 10px;">
+                        <small>Immagine attuale:</small><br>
+                        <img src="${pageContext.request.contextPath}/<%= prodotto.getImmagine() %>" 
+                             alt="<%= prodotto.getNome() %>" style="max-width: 200px; max-height: 200px;">
+                    </div>
+                <% } %>
                 <input type="file" id="immagine" name="immagine" accept="image/*">
-                <small>Formati supportati: JPG, PNG, GIF (max 5MB)</small>
+                <small>Formati supportati: JPG, PNG, GIF (max 5MB). Lascia vuoto per mantenere l'immagine attuale.</small>
             </div>
             
             <div class="form-group">
-                <label for="taglia">Taglia *</label>
-                <% if (erroreTaglie != null) { %>
-                    <div class="error-message"><%= erroreTaglie %></div>
-                <% } %>
-                <select id="taglia" name="tagliaId" required>
-                    <option value="">Seleziona taglia</option>
-                    <% for (Taglia t : tutteLeTaglie) { %>
-                        <option value="<%= t.getid_taglia() %>"><%= t.getEtichetta() %></option>
-                    <% } %>
-                </select>
-            </div>
-
-            <div class="form-group">
                 <label for="stock">Stock Totale Prodotto *</label>
                 <input type="number" id="stock" name="stock" min="1" required 
-                       placeholder="Es: 100" onchange="validaQuantitaTaglia()"
-                       value="<%= request.getParameter("stock") != null ? request.getParameter("stock") : "" %>">
+                       placeholder="Es: 100"
+                       value="<%= prodotto.getQuantita_disponibili() %>">
                 <small>Numero totale di pezzi di questo prodotto</small>
             </div>
             
             <div class="form-group">
-                <label for="quantitaTaglia">Quantità per questa Taglia *</label>
-                <input type="number" id="quantitaTaglia" name="quantitaTaglia" min="1" required 
-                       placeholder="Es: 30" onchange="validaQuantitaTaglia()"
-                       value="<%= request.getParameter("quantitaTaglia") != null ? request.getParameter("quantitaTaglia") : "" %>">
-                <small>Quanti pezzi di questa specifica taglia (non può superare lo stock totale)</small>
-                <div id="erroreTaglia" style="color: red; display: none;"></div>
+                <label>Taglie Associate</label>
+                <% if (taglieAssociate.isEmpty()) { %>
+                    <p style="color: #666;">Nessuna taglia associata a questo prodotto.</p>
+                <% } else { %>
+                    <div class="taglie-associate">
+                        <% 
+                        TagliaDao tagliaDao = new TagliaDao();
+                        for (Prodotto_taglia pt : taglieAssociate) { 
+                            Taglia taglia = tagliaDao.cercaTagliaById(pt.getid_taglia());
+                        %>
+                            <div class="taglia-item">
+                                <strong><%= taglia.getEtichetta() %></strong>: 
+                                <%= (int)pt.getQuantita_disponibili() %> pezzi disponibili
+                            </div>
+                        <% } %>
+                    </div>
+                <% } %>
+                <small>Le associazioni taglia-quantità vanno gestite separatamente.</small>
             </div>
             
-            <button type="submit" class="btn btn-success">Aggiungi Prodotto</button>
-            <a href="catalogo.jsp" class="btn">Annulla</a>
+            <button type="submit" class="btn btn-success">💾 Salva Modifiche</button>
+            <a href="catalogo.jsp" class="btn">❌ Annulla</a>
         </form>
     </div>
 
-<script>
-function validaQuantitaTaglia() {
-    var stockTotale = document.getElementById('stock').value;
-    var quantitaTaglia = document.getElementById('quantitaTaglia').value;
-    var erroreDiv = document.getElementById('erroreTaglia');
-    
-    if (stockTotale && quantitaTaglia) {
-        var stock = parseInt(stockTotale);
-        var quantita = parseInt(quantitaTaglia);
-        
-        if (quantita > stock) {
-            erroreDiv.textContent = 'La quantità per questa taglia non può superare lo stock totale (' + stock + ')';
-            erroreDiv.style.display = 'block';
-            document.getElementById('quantitaTaglia').style.borderColor = 'red';
-            return false;
-        } else {
-            erroreDiv.style.display = 'none';
-            document.getElementById('quantitaTaglia').style.borderColor = '';
-            return true;
-        }
-    }
-    return true;
+<style>
+.taglie-associate {
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 4px;
+    background-color: #f9f9f9;
 }
-
-// Validazione prima del submit
-document.addEventListener('DOMContentLoaded', function() {
-    var form = document.querySelector('form');
-    form.addEventListener('submit', function(e) {
-        if (!validaQuantitaTaglia()) {
-            e.preventDefault();
-            return false;
-        }
-    });
-});
-</script>
+.taglia-item {
+    padding: 5px 0;
+    border-bottom: 1px solid #eee;
+}
+.taglia-item:last-child {
+    border-bottom: none;
+}
+</style>
 
 </body>
 </html>

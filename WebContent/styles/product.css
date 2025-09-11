@@ -1,0 +1,175 @@
+/* CSS basico per pagina prodotto */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-color: #f5f5f5;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: white;
+    padding: 20px;
+    border: 1px solid #ddd;
+}
+
+.back-button {
+    background: #0a3d62;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    margin-bottom: 20px;
+}
+
+.back-button:hover {
+    background: #083048;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.product-info {
+    margin-bottom: 30px;
+}
+
+.product-image img {
+    max-width: 300px;
+    height: auto;
+    border: 1px solid #ccc;
+    display: block;
+    margin: 0 auto 20px auto;
+}
+
+.price {
+    font-size: 24px;
+    color: red;
+    font-weight: bold;
+    margin: 10px 0;
+}
+
+.description {
+    color: #666;
+    margin: 15px 0;
+    line-height: 1.4;
+}
+
+.stock-info {
+    background-color: #f0f0f0;
+    padding: 10px;
+    margin: 15px 0;
+    border: 1px solid #ddd;
+}
+
+.stock-available {
+    color: green;
+    font-weight: bold;
+}
+
+.stock-low {
+    color: orange;
+    font-weight: bold;
+}
+
+.stock-out {
+    color: red;
+    font-weight: bold;
+}
+
+.add-to-cart-section {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border: 1px solid #ccc;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.size-selector {
+    margin: 10px 0;
+}
+
+.size-button {
+    display: inline-block;
+    padding: 10px 15px;
+    margin: 5px;
+    border: 2px solid #ccc;
+    background-color: white;
+    cursor: pointer;
+    text-align: center;
+}
+
+.size-button:hover {
+    border-color: blue;
+}
+
+.size-button.selected {
+    border-color: blue;
+    background-color: lightblue;
+}
+
+.size-button.disabled {
+    background-color: #f5f5f5;
+    color: #999;
+    cursor: not-allowed;
+}
+
+.quantity-selector {
+    margin: 15px 0;
+}
+
+.quantity-btn {
+    width: 30px;
+    height: 30px;
+    border: 1px solid #ccc;
+    background-color: white;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.quantity-btn:hover {
+    background-color: #f0f0f0;
+}
+
+.quantity-input {
+    width: 50px;
+    text-align: center;
+    padding: 5px;
+    border: 1px solid #ccc;
+    margin: 0 5px;
+}
+
+.add-to-cart-btn {
+    width: 100%;
+    padding: 15px;
+    background-color: green;
+    color: white;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.add-to-cart-btn:hover {
+    background-color: darkgreen;
+}
+
+.add-to-cart-btn:disabled {
+    background-color: gray;
+    cursor: not-allowed;
+}
+
+.size-stock-info {
+    font-size: 12px;
+    color: #666;
+    margin-top: 3px;
+}

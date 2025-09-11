@@ -25,6 +25,12 @@ public class RegistrazioneServlet extends HttpServlet {
         String confirmPassword = request.getParameter("confirm-password");
 
         try {
+            // Conserva il parametro redirect anche in caso di errore
+            String redirectParam = request.getParameter("redirect");
+            if (redirectParam != null && !redirectParam.isEmpty()) {
+                request.setAttribute("redirectParam", redirectParam);
+            }
+            
             // Validazione email con regex semplice usando matches()
             if (email == null || !email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$")) {
                 request.setAttribute("errorEmail", "Email non valida");
@@ -66,7 +72,12 @@ public class RegistrazioneServlet extends HttpServlet {
             dao.inserisciUtente(utente);
 
             // Reindirizza al login dopo registrazione avvenuta con successo
-            response.sendRedirect("Login.jsp");
+            // Se c'è un parametro redirect, lo passa al login
+            if (redirectParam != null && !redirectParam.isEmpty()) {
+                response.sendRedirect("Login.jsp?redirect=" + java.net.URLEncoder.encode(redirectParam, "UTF-8"));
+            } else {
+                response.sendRedirect("Login.jsp");
+            }
 
         } catch (Exception e) {
             throw new ServletException(e);

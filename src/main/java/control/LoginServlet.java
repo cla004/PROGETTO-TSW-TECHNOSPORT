@@ -73,12 +73,16 @@ public class LoginServlet extends HttpServlet {
         // === Login riuscito ===
         HttpSession session = request.getSession();
         session.setAttribute("loggedInUser", utente);
-        session.setMaxInactiveInterval(30 * 60); // 30 minuti 
+        session.setMaxInactiveInterval(30 * 60); // 30 minuti
+        
+        // Pulisce eventuali messaggi di errore dalla sessione
+        session.removeAttribute("errore");
+        session.removeAttribute("loginError");
         
         // === Admin redirect ===
         if ("admin@calcioshop.it".equalsIgnoreCase(utente.getEmail())) {
             session.setAttribute("isAdmin", true);
-            response.sendRedirect(request.getContextPath() + "/adminDashboard.jsp");
+            response.sendRedirect(request.getContextPath() + "/admin/dashboard.jsp");
             return;
         }
 
