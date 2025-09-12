@@ -407,6 +407,7 @@ public class CheckoutServlet extends HttpServlet {
                 dettaglio.setQuantity(item.getQuantity());
                 dettaglio.setPrice(prodotto.getPrezzo());
                 dettaglio.setTagliaId(item.getTagliaId());
+                dettaglio.setNomeProdottoSalvato(prodotto.getNome()); // Salva il nome per preservarlo
                 dettaglioDao.inserisciDettaglio(dettaglio);
             }
         }

@@ -219,6 +219,81 @@ public class ProdottiDao {
         return lista;
     }
     
+    // METODI PER RIUTILIZZO ID
+    
+    /**
+     * Trova il primo ID disponibile (più basso) tra quelli cancellati
+     * Se non ci sono "buchi", restituisce il prossimo ID dopo l'ultimo
+     */
+    public int trovaProximoIdDisponibile() {
+        String sql = "SELECT id FROM products ORDER BY id";
+        
+        try (Connection conn = DBConnection.getConnection();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+            
+            int expectedId = 1; // Inizia da 1
+            
+            while (rs.next()) {
+                int actualId = rs.getInt("id");
+                
+                // Se c'è un "buco", quello è il prossimo ID disponibile
+                if (actualId != expectedId) {
+                    return expectedId;
+                }
+                expectedId++;
+            }
+            
+            // Se non ci sono buchi, restituisce il prossimo ID consecutivo
+            return expectedId;
+            
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        
+        return 1; // Fallback se tutto fallisce
+    }
+    
+    /**
+     * NUOVO METODO: Inserisce un prodotto con ID specificato manualmente
+     * Permette di riutilizzare gli ID cancellati
+     */
+    public int inserisciProdottoConIdSpecifico(Prodotti p, int idDesiderato) {
+        String sql = "INSERT INTO products (id, name, description, price, category_id, immagine, stock) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            
+            stmt.setInt(1, idDesiderato);  // ID specificato manualmente
+            stmt.setString(2, p.getNome());
+            stmt.setString(3, p.getDescrizione());
+            stmt.setDouble(4, p.getPrezzo());
+            stmt.setInt(5, p.getId_categoria());
+            stmt.setString(6, p.getImmagine());
+            stmt.setInt(7, Integer.parseInt(p.getQuantita_disponibili()));
+            
+            stmt.executeUpdate();
+            return idDesiderato; // Restituisce l'ID che abbiamo usato
+            
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        
+        return 0; // Errore nell'inserimento
+    }
+    
+    /**
+     * METODO PRINCIPALE: Inserisce un prodotto riutilizzando ID cancellati
+     * Combina trovaProximoIdDisponibile() + inserisciProdottoConIdSpecifico()
+     */
+    public int inserisciProdottoRiutilizzandoId(Prodotti p) {
+        // 1. Trova il primo ID disponibile
+        int idDisponibile = trovaProximoIdDisponibile();
+        
+        // 2. Inserisce con quell'ID specifico
+        return inserisciProdottoConIdSpecifico(p, idDisponibile);
+    }
+    
     // METODI PER STATISTICHE ADMIN
     
     /**

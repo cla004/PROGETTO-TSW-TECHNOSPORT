@@ -181,4 +181,18 @@ public class CartItemDao {
         }
         return null;
     }
+    
+    /**
+     * Rimuove un prodotto specifico da tutti i carrelli attivi
+     * Utilizzato prima di cancellare un prodotto per evitare riferimenti orfani
+     */
+    public void rimuoviProdottoDaTuttiICarrelli(int prodottoId) throws SQLException {
+        String sql = "DELETE FROM cart_items WHERE product_id = ?";
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, prodottoId);
+            int righeEliminate = stmt.executeUpdate();
+            System.out.println("Rimosso prodotto ID " + prodottoId + " da " + righeEliminate + " carrelli");
+        }
+    }
 }

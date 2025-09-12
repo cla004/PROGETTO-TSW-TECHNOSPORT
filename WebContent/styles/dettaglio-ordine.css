@@ -1,0 +1,168 @@
+/* CSS basilare per dettaglio-ordine.jsp */
+
+/* Pulsante indietro */
+.back-btn {
+    background-color: #999999;
+    color: white;
+    padding: 8px 16px;
+    text-decoration: none;
+    border-radius: 4px;
+    font-size: 14px;
+    margin-right: 10px;
+}
+
+/* Card informazioni */
+.info-card {
+    background-color: white;
+    border: 1px solid #cccccc;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 20px 0;
+}
+
+.info-card h2 {
+    color: #333333;
+    margin: 0 0 15px 0;
+    border-bottom: 2px solid #007bff;
+    padding-bottom: 8px;
+}
+
+/* Griglia informazioni */
+.info-grid {
+    width: 100%;
+}
+
+.info-item {
+    padding: 10px;
+    background-color: #f8f9fa;
+    border-radius: 4px;
+    margin-bottom: 10px;
+}
+
+/* Stati colorati */
+.status {
+    padding: 5px 10px;
+    border-radius: 3px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.status.success { 
+    background-color: #ccffcc; 
+    color: #009900; 
+}
+
+.status.danger { 
+    background-color: #ffcccc; 
+    color: #cc0000; 
+}
+
+.status.primary { 
+    background-color: #cce6ff; 
+    color: #0066cc; 
+}
+
+.status.warning { 
+    background-color: #fff3cd; 
+    color: #856404; 
+}
+
+.status.info { 
+    background-color: #d1ecf1; 
+    color: #0c5460; 
+}
+
+/* Prezzo evidenziato */
+.price-highlight {
+    color: #28a745;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+/* Tabella prodotti */
+.prodotti-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+.prodotti-table th,
+.prodotti-table td {
+    padding: 12px;
+    text-align: left;
+    border: 1px solid #cccccc;
+}
+
+.prodotti-table th {
+    background-color: #f8f9fa;
+    font-weight: bold;
+}
+
+.prodotto-nome {
+    max-width: 300px;
+}
+
+.prodotto-cancellato {
+    color: #dc3545;
+    font-style: italic;
+}
+
+.quantita, .prezzo {
+    text-align: center;
+}
+
+.totale-riga {
+    font-weight: bold;
+}
+
+.totale-finale {
+    background-color: #e9ecef;
+    font-weight: bold;
+}
+
+.totale-finale td {
+    border-top: 2px solid #007bff;
+}
+
+/* Pulsanti piccoli */
+.btn-small {
+    background-color: #17a2b8;
+    color: white;
+    padding: 4px 8px;
+    text-decoration: none;
+    border-radius: 3px;
+    font-size: 12px;
+    margin-right: 5px;
+}
+
+/* Contenitore pulsanti */
+.action-buttons {
+    margin-top: 15px;
+}
+
+.action-buttons .btn {
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+
+/* Clear fix */
+.clear { 
+    clear: both; 
+}
+
+/* Responsive per telefoni */
+@media screen and (max-width: 600px) {
+    .info-card {
+        padding: 15px;
+        margin: 10px 0;
+    }
+    
+    .prodotti-table {
+        font-size: 14px;
+    }
+    
+    .prodotti-table th,
+    .prodotti-table td {
+        padding: 8px;
+    }
+}

@@ -10,6 +10,7 @@ public class DettaglioOrdine {
     private int quantity;
     private double price;
     private int tagliaId;
+    private String nomeProdotto; // Nome del prodotto salvato al momento dell'ordine
     
     // Oggetti collegati per convenience
     private Ordine ordine;
@@ -26,6 +27,11 @@ public class DettaglioOrdine {
         this.quantity = quantity;
         this.price = price;
         this.tagliaId = tagliaId;
+    }
+    
+    public DettaglioOrdine(int id, int orderId, int productId, int quantity, double price, int tagliaId, String nomeProdotto) {
+        this(id, orderId, productId, quantity, price, tagliaId);
+        this.nomeProdotto = nomeProdotto;
     }
 
     // Getter e Setter
@@ -77,6 +83,14 @@ public class DettaglioOrdine {
         this.tagliaId = tagliaId;
     }
     
+    public String getNomeProdottoSalvato() {
+        return nomeProdotto;
+    }
+    
+    public void setNomeProdottoSalvato(String nomeProdotto) {
+        this.nomeProdotto = nomeProdotto;
+    }
+    
     // Metodi convenience per oggetti collegati
     public Ordine getOrdine() {
         return ordine;
@@ -113,7 +127,16 @@ public class DettaglioOrdine {
     
     // Metodi di utilità per la JSP
     public String getNomeProdotto() {
-        return prodotto != null ? prodotto.getNome() : "Prodotto non disponibile";
+        // Prima prova con il nome salvato nell'ordine (sempre disponibile)
+        if (nomeProdotto != null && !nomeProdotto.trim().isEmpty()) {
+            return nomeProdotto;
+        }
+        // Se non disponibile, prova dal prodotto collegato (potrebbe essere null se cancellato)
+        if (prodotto != null) {
+            return prodotto.getNome();
+        }
+        // Fallback se tutto il resto fallisce
+        return "Prodotto non disponibile";
     }
     
     public String getNomeTaglia() {

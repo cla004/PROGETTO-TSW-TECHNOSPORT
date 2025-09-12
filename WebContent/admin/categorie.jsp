@@ -132,7 +132,7 @@
             <h3>Informazioni</h3>
             <p>• Le categorie sono utilizzate per organizzare i prodotti nel catalogo</p>
             <p>• Non puoi eliminare una categoria che ha prodotti associati</p>
-            <p>• Prima di eliminare una categoria, sposta tutti i suoi prodotti in altre categorie</p>
+       
         </div>
         <div class="clear"></div>
     </div>

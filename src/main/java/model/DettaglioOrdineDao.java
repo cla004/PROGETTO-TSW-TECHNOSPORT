@@ -8,7 +8,7 @@ public class DettaglioOrdineDao {
 
     // Inserisce un nuovo dettaglio ordine
     public void inserisciDettaglio(DettaglioOrdine dettaglio) throws SQLException {
-        String sql = "INSERT INTO order_items (order_id, product_id, quantity, price, taglia_id) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO order_items (order_id, product_id, quantity, price, taglia_id, nome_prodotto) VALUES (?, ?, ?, ?, ?, ?)";
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             
@@ -17,6 +17,7 @@ public class DettaglioOrdineDao {
             stmt.setInt(3, dettaglio.getQuantity());
             stmt.setDouble(4, dettaglio.getPrice());
             stmt.setInt(5, dettaglio.getTagliaId());
+            stmt.setString(6, dettaglio.getNomeProdottoSalvato());
             stmt.executeUpdate();
             
             try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
@@ -29,7 +30,7 @@ public class DettaglioOrdineDao {
 
     // Trova un dettaglio ordine per id
     public DettaglioOrdine findById(int id) throws SQLException {
-        String sql = "SELECT id, order_id, product_id, quantity, price, taglia_id FROM order_items WHERE id = ?";
+        String sql = "SELECT id, order_id, product_id, quantity, price, taglia_id, nome_prodotto FROM order_items WHERE id = ?";
         
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -44,6 +45,7 @@ public class DettaglioOrdineDao {
                     dettaglio.setQuantity(rs.getInt("quantity"));
                     dettaglio.setPrice(rs.getDouble("price"));
                     dettaglio.setTagliaId(rs.getInt("taglia_id"));
+                    dettaglio.setNomeProdottoSalvato(rs.getString("nome_prodotto"));
                     return dettaglio;
                 }
             }
@@ -54,7 +56,7 @@ public class DettaglioOrdineDao {
     // Trova tutti gli order_items di un ordine specifico
     public List<DettaglioOrdine> findByOrderId(int orderId) throws SQLException {
         List<DettaglioOrdine> dettagli = new ArrayList<>();
-        String sql = "SELECT id, order_id, product_id, quantity, price, taglia_id FROM order_items WHERE order_id = ?";
+        String sql = "SELECT id, order_id, product_id, quantity, price, taglia_id, nome_prodotto FROM order_items WHERE order_id = ?";
         
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -69,6 +71,7 @@ public class DettaglioOrdineDao {
                     dettaglio.setQuantity(rs.getInt("quantity"));
                     dettaglio.setPrice(rs.getDouble("price"));
                     dettaglio.setTagliaId(rs.getInt("taglia_id"));
+                    dettaglio.setNomeProdottoSalvato(rs.getString("nome_prodotto"));
                     dettagli.add(dettaglio);
                 }
             }
@@ -80,10 +83,11 @@ public class DettaglioOrdineDao {
     public List<DettaglioOrdine> findByOrderIdCompleto(int orderId) throws SQLException {
         List<DettaglioOrdine> dettagli = new ArrayList<>();
         String sql = "SELECT oi.id, oi.order_id, oi.product_id, oi.quantity, oi.price, oi.taglia_id, " +
+                     "oi.nome_prodotto, " +
                      "p.name, p.immagine, p.description, " +
                      "t.nome as taglia_nome " +
                      "FROM order_items oi " +
-                     "JOIN products p ON oi.product_id = p.id " +
+                     "LEFT JOIN products p ON oi.product_id = p.id " +  // LEFT JOIN per gestire prodotti cancellati
                      "LEFT JOIN taglie t ON oi.taglia_id = t.id " +
                      "WHERE oi.order_id = ?";
         
@@ -100,14 +104,18 @@ public class DettaglioOrdineDao {
                     dettaglio.setQuantity(rs.getInt("quantity"));
                     dettaglio.setPrice(rs.getDouble("price"));
                     dettaglio.setTagliaId(rs.getInt("taglia_id"));
+                    dettaglio.setNomeProdottoSalvato(rs.getString("nome_prodotto"));
                     
-                    // Crea oggetto prodotto collegato
-                    Prodotti prodotto = new Prodotti();
-                    prodotto.setId_prodotto(rs.getInt("product_id"));
-                    prodotto.setNome(rs.getString("name"));
-                    prodotto.setImmagine(rs.getString("immagine"));
-                    prodotto.setDescrizione(rs.getString("description"));
-                    dettaglio.setProdotto(prodotto);
+                    // Crea oggetto prodotto collegato (solo se esiste ancora nel DB)
+                    String productName = rs.getString("name");
+                    if (productName != null) {
+                        Prodotti prodotto = new Prodotti();
+                        prodotto.setId_prodotto(rs.getInt("product_id"));
+                        prodotto.setNome(productName);
+                        prodotto.setImmagine(rs.getString("immagine"));
+                        prodotto.setDescrizione(rs.getString("description"));
+                        dettaglio.setProdotto(prodotto);
+                    }
                     
                     // Crea oggetto taglia collegato (se presente)
                     if (rs.getInt("taglia_id") != 0) {

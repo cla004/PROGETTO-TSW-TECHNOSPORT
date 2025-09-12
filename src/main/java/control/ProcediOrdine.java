@@ -63,6 +63,7 @@ public class ProcediOrdine extends HttpServlet {
                 dettaglio.setProdotto(item.getProdotto());
                 dettaglio.setQuantity(item.getQuantity());
                 dettaglio.setPrice(item.getProdotto().getPrezzo());
+                dettaglio.setNomeProdottoSalvato(item.getProdotto().getNome()); // Preserva il nome
                 dettaglioOrdineDao.inserisciDettaglio(dettaglio);
             }
 

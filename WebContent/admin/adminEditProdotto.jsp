@@ -48,7 +48,7 @@
         tutteLeTaglie = tagliaDao.listaTaglie();
         
         ProdottoTagliaDao ptDao = new ProdottoTagliaDao();
-        taglieAssociate = ptDao.getTaglieDisponibiliPerProdotto(prodottoId);
+        taglieAssociate = ptDao.getTutteLeTagliePerProdotto(prodottoId);
         
     } catch (Exception e) {
         if (erroreCategorie == null) erroreCategorie = "Errore nel caricamento delle categorie: " + e.getMessage();
@@ -62,6 +62,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Modifica Prodotto - Admin TecnoSport</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/styles/admin.css">
+    <script src="${pageContext.request.contextPath}/Script/stock-calculator.js"></script>
 </head>
 <body>
     <div class="header">
@@ -156,24 +157,75 @@
             </div>
             
             <div class="form-group">
-                <label>Taglie Associate</label>
+                <label>📏 Gestione Taglie e Stock</label>
+                
                 <% if (taglieAssociate.isEmpty()) { %>
                     <p style="color: #666;">Nessuna taglia associata a questo prodotto.</p>
                 <% } else { %>
-                    <div class="taglie-associate">
-                        <% 
+                    <%
+                        // Calcola stock totale attualmente distribuito nelle taglie
+                        int stockDistribuito = 0;
                         TagliaDao tagliaDao = new TagliaDao();
-                        for (Prodotto_taglia pt : taglieAssociate) { 
-                            Taglia taglia = tagliaDao.cercaTagliaById(pt.getid_taglia());
-                        %>
-                            <div class="taglia-item">
-                                <strong><%= taglia.getEtichetta() %></strong>: 
-                                <%= (int)pt.getQuantita_disponibili() %> pezzi disponibili
+                        for (Prodotto_taglia pt : taglieAssociate) {
+                            stockDistribuito += (int)pt.getQuantita_disponibili();
+                        }
+                        int stockTotale = Integer.parseInt(prodotto.getQuantita_disponibili());
+                        int stockDisponibile = stockTotale - stockDistribuito;
+                    %>
+                    
+                    <div class="stock-info">
+                        <div class="stock-summary-simple">
+                            <p><strong>Stock totale:</strong> <span id="stock-totale"><%= stockTotale %></span></p>
+                            <p><strong>Già distribuiti:</strong> <span id="stock-distribuito"><%= stockDistribuito %></span></p>
+                            <p id="stock-disponibile-line" class="<%= stockDisponibile < 0 ? "stock-error" : "stock-available" %>">
+                                <strong>Ancora disponibili:</strong> <span id="stock-disponibile"><%= stockDisponibile %></span>
+                            </p>
+                        </div>
+                        
+                        <% if (stockDisponibile < 0) { %>
+                            <div class="error-message">
+                                ⚠️ ATTENZIONE: Hai distribuito più stock di quello disponibile! (<%= Math.abs(stockDisponibile) %> in eccesso)
                             </div>
                         <% } %>
                     </div>
+                    
+                    <div class="taglie-modificabili">
+                        <h4>Modifica Quantità per Taglia:</h4>
+                        <% for (Prodotto_taglia pt : taglieAssociate) { 
+                            Taglia taglia = tagliaDao.cercaTagliaById(pt.getid_taglia());
+                            int quantitaAttuale = (int)pt.getQuantita_disponibili();
+                            int massimoConsentito = stockDisponibile + quantitaAttuale;
+                        %>
+                            <div class="taglia-edit-item">
+                                <div class="taglia-info">
+                                    <label for="taglia_<%= pt.getid_taglia() %>">📏 <%= taglia.getEtichetta() %></label>
+                                    <small>Attuale: <%= quantitaAttuale %> | Massimo: <%= massimoConsentito %></small>
+                                </div>
+                                <div class="taglia-input">
+                                    <input type="number" 
+                                           id="taglia_<%= pt.getid_taglia() %>" 
+                                           name="taglia_<%= pt.getid_taglia() %>" 
+                                           value="<%= quantitaAttuale %>" 
+                                           min="0" 
+                                           data-taglia-id="<%= pt.getid_taglia() %>"
+                                           data-quantita-originale="<%= quantitaAttuale %>"
+                                           class="taglia-quantity-input">
+                                    <span class="stock-range">0 - <%= massimoConsentito %></span>
+                                </div>
+                            </div>
+                        <% } %>
+                    </div>
+                    
+                    <div class="stock-validation-info">
+                        <h4>💡 Come funziona il controllo stock:</h4>
+                        <ul>
+                            <li><strong>Stock Totale:</strong> Quantità totale del prodotto nel magazzino</li>
+                            <li><strong>Stock Distribuito:</strong> Somma di tutte le quantità assegnate alle taglie</li>
+                            <li><strong>Stock Disponibile:</strong> Differenza tra totale e distribuito (può essere riassegnato)</li>
+                            <li><strong>Massimo per Taglia:</strong> Stock disponibile + quantità attuale della taglia</li>
+                        </ul>
+                    </div>
                 <% } %>
-                <small>Le associazioni taglia-quantità vanno gestite separatamente.</small>
             </div>
             
             <button type="submit" class="btn btn-success">💾 Salva Modifiche</button>
@@ -194,6 +246,23 @@
 }
 .taglia-item:last-child {
     border-bottom: none;
+}
+.stock-summary-simple {
+    background-color: #f8f9fa;
+    padding: 15px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    border: 1px solid #dee2e6;
+}
+.stock-summary-simple p {
+    margin: 8px 0;
+    font-size: 16px;
+}
+.stock-available {
+    color: #28a745;
+}
+.stock-error {
+    color: #dc3545;
 }
 </style>
 

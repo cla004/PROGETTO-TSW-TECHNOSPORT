@@ -36,6 +36,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Aggiungi Prodotto - Admin TecnoSport</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/styles/admin.css">
+    <script src="${pageContext.request.contextPath}/Script/taglie-distributor.js"></script>
 </head>
 <body>
     <div class="header">
@@ -66,7 +67,7 @@
         <% } %>
         
         <form method="post" action="${pageContext.request.contextPath}/admin/prodotti" enctype="multipart/form-data">
-            <input type="hidden" name="action" value="aggiungi">
+            <input type="hidden" name="action" value="aggiungi_nuovo">
             
             <div class="form-group">
                 <label for="nome">Nome Prodotto *</label>
@@ -114,76 +115,171 @@
                 <small>Formati supportati: JPG, PNG, GIF (max 5MB)</small>
             </div>
             
+            <!-- NUOVA SEZIONE: Distribuzione Taglie -->
             <div class="form-group">
-                <label for="taglia">Taglia *</label>
+                <h3>📏 Distribuzione Taglie</h3>
+                <p>Seleziona le taglie disponibili per questo prodotto e distribuisci lo stock totale tra esse.</p>
+                
+                <div class="form-group">
+                    <label for="stock">Stock Totale Prodotto *</label>
+                    <input type="number" id="stock" name="stock" min="1" required 
+                           placeholder="Es: 100"
+                           value="<%= request.getParameter("stock") != null ? request.getParameter("stock") : "" %>">
+                    <small>Numero totale di pezzi di questo prodotto da distribuire tra le taglie</small>
+                </div>
+                
+                <!-- Riepilogo Stock in tempo reale -->
+                <div class="stock-summary">
+                    <div class="stock-info-box">
+                        <p><strong>Stock totale:</strong> <span id="stock-totale-display">0</span></p>
+                        <p><strong>Già distribuito:</strong> <span id="stock-distribuito-display">0</span></p>
+                        <p id="stock-rimasto-line" class="stock-available">
+                            <strong>Stock rimasto da distribuire:</strong> <span id="stock-rimasto-display">0</span>
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- Messaggio di errore dinamico -->
+                <div id="errore-distribuzione" class="error-message" style="display: none;"></div>
+            
+                <!-- Lista Taglie -->
                 <% if (erroreTaglie != null) { %>
                     <div class="error-message"><%= erroreTaglie %></div>
                 <% } %>
-                <select id="taglia" name="tagliaId" required>
-                    <option value="">Seleziona taglia</option>
+                
+                <div class="taglie-distribution">
                     <% for (Taglia t : tutteLeTaglie) { %>
-                        <option value="<%= t.getid_taglia() %>"><%= t.getEtichetta() %></option>
+                        <div class="taglia-row">
+                            <div class="taglia-checkbox-container">
+                                <input type="checkbox" 
+                                       id="checkbox_<%= t.getid_taglia() %>" 
+                                       name="taglie_selezionate" 
+                                       value="<%= t.getid_taglia() %>"
+                                       class="taglia-checkbox">
+                                <label for="checkbox_<%= t.getid_taglia() %>">📏 <%= t.getEtichetta() %></label>
+                            </div>
+                            <div class="taglia-quantity-container">
+                                <label for="quantita_<%= t.getid_taglia() %>">Quantità:</label>
+                                <input type="number" 
+                                       id="quantita_<%= t.getid_taglia() %>" 
+                                       name="quantita_<%= t.getid_taglia() %>"
+                                       min="0" 
+                                       placeholder="0"
+                                       class="taglia-quantity-input">
+                                <small id="max_<%= t.getid_taglia() %>" class="max-label">(Max: 0)</small>
+                            </div>
+                        </div>
                     <% } %>
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label for="stock">Stock Totale Prodotto *</label>
-                <input type="number" id="stock" name="stock" min="1" required 
-                       placeholder="Es: 100" onchange="validaQuantitaTaglia()"
-                       value="<%= request.getParameter("stock") != null ? request.getParameter("stock") : "" %>">
-                <small>Numero totale di pezzi di questo prodotto</small>
+                </div>
             </div>
             
-            <div class="form-group">
-                <label for="quantitaTaglia">Quantità per questa Taglia *</label>
-                <input type="number" id="quantitaTaglia" name="quantitaTaglia" min="1" required 
-                       placeholder="Es: 30" onchange="validaQuantitaTaglia()"
-                       value="<%= request.getParameter("quantitaTaglia") != null ? request.getParameter("quantitaTaglia") : "" %>">
-                <small>Quanti pezzi di questa specifica taglia (non può superare lo stock totale)</small>
-                <div id="erroreTaglia" style="color: red; display: none;"></div>
+            <div class="form-actions">
+                <button type="submit" class="btn btn-success">🎯 Aggiungi Prodotto con Taglie</button>
+                <a href="catalogo.jsp" class="btn">❌ Annulla</a>
             </div>
-            
-            <button type="submit" class="btn btn-success">Aggiungi Prodotto</button>
-            <a href="catalogo.jsp" class="btn">Annulla</a>
         </form>
     </div>
 
-<script>
-function validaQuantitaTaglia() {
-    var stockTotale = document.getElementById('stock').value;
-    var quantitaTaglia = document.getElementById('quantitaTaglia').value;
-    var erroreDiv = document.getElementById('erroreTaglia');
-    
-    if (stockTotale && quantitaTaglia) {
-        var stock = parseInt(stockTotale);
-        var quantita = parseInt(quantitaTaglia);
-        
-        if (quantita > stock) {
-            erroreDiv.textContent = 'La quantità per questa taglia non può superare lo stock totale (' + stock + ')';
-            erroreDiv.style.display = 'block';
-            document.getElementById('quantitaTaglia').style.borderColor = 'red';
-            return false;
-        } else {
-            erroreDiv.style.display = 'none';
-            document.getElementById('quantitaTaglia').style.borderColor = '';
-            return true;
-        }
-    }
-    return true;
+<style>
+/* Stili per il nuovo sistema di distribuzione taglie */
+.stock-summary {
+    background: #ffffff;
+    border: 2px solid #007bff;
+    border-radius: 8px;
+    padding: 15px;
+    margin: 15px 0;
 }
 
-// Validazione prima del submit
-document.addEventListener('DOMContentLoaded', function() {
-    var form = document.querySelector('form');
-    form.addEventListener('submit', function(e) {
-        if (!validaQuantitaTaglia()) {
-            e.preventDefault();
-            return false;
-        }
-    });
-});
-</script>
+.stock-info-box p {
+    margin: 5px 0;
+    font-size: 16px;
+}
+
+.stock-available {
+    color: #28a745;
+}
+
+.stock-error {
+    color: #dc3545;
+    font-weight: bold;
+}
+
+.stock-perfect {
+    color: #007bff;
+    font-weight: bold;
+}
+
+.taglie-distribution {
+    display: grid;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.taglia-row {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    align-items: center;
+    gap: 20px;
+    background: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 5px;
+    padding: 15px;
+}
+
+.taglia-checkbox-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.taglia-checkbox {
+    transform: scale(1.2);
+}
+
+.taglia-checkbox-container label {
+    font-weight: bold;
+    color: #343a40;
+}
+
+.taglia-quantity-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.taglia-quantity-container label {
+    min-width: 70px;
+}
+
+.taglia-quantity-input {
+    width: 80px;
+    padding: 5px;
+    border: 1px solid #ced4da;
+    border-radius: 3px;
+    text-align: center;
+}
+
+.taglia-quantity-input:disabled {
+    background-color: #f5f5f5;
+    color: #6c757d;
+}
+
+.max-label {
+    color: #6c757d;
+    font-size: 12px;
+}
+
+.form-actions {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.form-actions .btn {
+    margin: 0 10px;
+    padding: 12px 25px;
+    font-size: 16px;
+}
+</style>
 
 </body>
 </html>

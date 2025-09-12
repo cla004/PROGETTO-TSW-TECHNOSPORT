@@ -11,6 +11,7 @@ import jakarta.servlet.http.HttpSession;
 
 import model.ProdottiDao;
 import model.ProdottoTagliaDao;
+import model.CartItemDao;
 
 @WebServlet("/admin/AdminCancellaProdottoServlet")
 public class AdminCancellaProdottoServlet extends HttpServlet {
@@ -40,11 +41,20 @@ public class AdminCancellaProdottoServlet extends HttpServlet {
         try {
             int prodottoId = Integer.parseInt(idStr);
             
-            // Prima elimina le associazioni prodotto-taglia
+            // 1. Prima rimuovi il prodotto da tutti i carrelli attivi
+            CartItemDao cartDao = new CartItemDao();
+            try {
+                cartDao.rimuoviProdottoDaTuttiICarrelli(prodottoId);
+            } catch (Exception cartException) {
+                System.err.println("Errore nella rimozione del prodotto dai carrelli: " + cartException.getMessage());
+                // Continua comunque con la cancellazione
+            }
+            
+            // 2. Elimina le associazioni prodotto-taglia
             ProdottoTagliaDao ptDao = new ProdottoTagliaDao();
             ptDao.eliminaByProdottoId(prodottoId);
             
-            // Poi elimina il prodotto
+            // 3. Infine elimina il prodotto
             ProdottiDao prodottiDao = new ProdottiDao();
             prodottiDao.eliminaProdotto(prodottoId);
             

@@ -1,0 +1,238 @@
+/* CSS basilare per dettaglio-utente.jsp */
+
+/* Pulsante indietro */
+.back-btn {
+    background-color: #999999;
+    color: white;
+    padding: 8px 16px;
+    text-decoration: none;
+    border-radius: 4px;
+    font-size: 14px;
+    margin-right: 10px;
+}
+
+/* Griglia statistiche */
+.stats-grid {
+    width: 100%;
+    margin-bottom: 30px;
+}
+
+.stat-card {
+    background-color: white;
+    border: 1px solid #cccccc;
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+    margin: 10px;
+    float: left;
+    width: 22%;
+    min-width: 200px;
+}
+
+.stat-number {
+    font-size: 28px;
+    font-weight: bold;
+    color: #007bff;
+    margin-bottom: 5px;
+}
+
+.stat-label {
+    font-size: 14px;
+    color: #666666;
+}
+
+/* Card informazioni */
+.info-card {
+    background-color: white;
+    border: 1px solid #cccccc;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 20px 0;
+    clear: both;
+}
+
+.info-card h2 {
+    color: #333333;
+    margin: 0 0 15px 0;
+    border-bottom: 2px solid #007bff;
+    padding-bottom: 8px;
+}
+
+/* Griglia informazioni */
+.info-grid {
+    width: 100%;
+}
+
+.info-item {
+    padding: 10px;
+    background-color: #f8f9fa;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    float: left;
+    width: 48%;
+    margin-right: 2%;
+}
+
+.info-item:nth-child(even) {
+    margin-right: 0;
+}
+
+/* Griglia indirizzi */
+.indirizzi-grid {
+    width: 100%;
+}
+
+.indirizzo-card {
+    background-color: #f8f9fa;
+    border: 1px solid #cccccc;
+    border-radius: 6px;
+    padding: 15px;
+    margin: 10px;
+    float: left;
+    width: 45%;
+    min-width: 300px;
+    position: relative;
+}
+
+.badge-predefinito {
+    position: absolute;
+    top: -8px;
+    right: 10px;
+    background-color: #28a745;
+    color: white;
+    padding: 3px 8px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: bold;
+}
+
+.indirizzo-info {
+    line-height: 1.4;
+}
+
+/* Tabella ordini */
+.ordini-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+.ordini-table th,
+.ordini-table td {
+    padding: 12px;
+    text-align: left;
+    border: 1px solid #cccccc;
+}
+
+.ordini-table th {
+    background-color: #f8f9fa;
+    font-weight: bold;
+}
+
+/* Stati colorati */
+.status {
+    padding: 4px 8px;
+    border-radius: 3px;
+    font-size: 11px;
+    font-weight: bold;
+}
+
+.status.success { 
+    background-color: #ccffcc; 
+    color: #009900; 
+}
+
+.status.danger { 
+    background-color: #ffcccc; 
+    color: #cc0000; 
+}
+
+.status.primary { 
+    background-color: #cce6ff; 
+    color: #0066cc; 
+}
+
+.status.warning { 
+    background-color: #fff3cd; 
+    color: #856404; 
+}
+
+.status.info { 
+    background-color: #d1ecf1; 
+    color: #0c5460; 
+}
+
+/* Pulsanti piccoli */
+.btn-small {
+    background-color: #17a2b8;
+    color: white;
+    padding: 4px 8px;
+    text-decoration: none;
+    border-radius: 3px;
+    font-size: 12px;
+    margin-right: 5px;
+}
+
+/* Contenitore pulsanti */
+.action-buttons {
+    margin-top: 15px;
+}
+
+.action-buttons .btn {
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+
+/* Clear fix */
+.clear { 
+    clear: both; 
+}
+
+/* Responsive per tablet */
+@media screen and (max-width: 800px) {
+    .stat-card {
+        width: 48%;
+        float: left;
+    }
+    
+    .indirizzo-card {
+        width: 100%;
+        float: none;
+        margin: 10px 0;
+    }
+    
+    .info-item {
+        width: 100%;
+        float: none;
+        margin-right: 0;
+    }
+}
+
+/* Responsive per telefoni */
+@media screen and (max-width: 600px) {
+    .stat-card {
+        width: 100%;
+        float: none;
+        margin: 10px 0;
+    }
+    
+    .info-card {
+        padding: 15px;
+        margin: 10px 0;
+    }
+    
+    .ordini-table {
+        font-size: 14px;
+    }
+    
+    .ordini-table th,
+    .ordini-table td {
+        padding: 8px;
+    }
+    
+    .action-buttons .btn {
+        display: block;
+        margin: 5px 0;
+        text-align: center;
+    }
+}

@@ -112,6 +112,30 @@ public class ProdottoTagliaDao {
         return taglie;
     }
     
+    /**
+     * Metodo per ottenere TUTTE le taglie associate a un prodotto (anche quelle con quantità 0)
+     * Utilizzato per la modifica admin
+     */
+    public List<Prodotto_taglia> getTutteLeTagliePerProdotto(int id_prodotto) {
+        List<Prodotto_taglia> taglie = new ArrayList<>();
+        String sql = "SELECT * FROM prodotto_taglia WHERE prodotto_id = ?";
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, id_prodotto);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                Prodotto_taglia pt = new Prodotto_taglia(
+                        rs.getInt("prodotto_id"),
+                        rs.getInt("taglia_id"),
+                        rs.getDouble("quantita_disponibile"));
+                taglie.add(pt);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return taglie;
+    }
+    
     // Metodo per decrementare la quantità disponibile
     public boolean decrementaQuantita(int id_prodotto, int id_taglia, int quantitaDaDecrementare) {
         String sql = "UPDATE prodotto_taglia SET quantita_disponibile = quantita_disponibile - ? " +
