@@ -137,13 +137,15 @@ h2 {
 }
 
 .form-row {
-    margin-bottom: 20px;
+    margin-bottom: 30px;
+    overflow: hidden;
 }
 
 .form-group {
-    display: inline-block;
-    width: 48%;
-    margin-right: 2%;
+    float: left;
+    width: 45%;
+    margin-right: 10%;
+    height: 120px;
 }
 
 .form-group:last-child {
@@ -159,10 +161,11 @@ h2 {
 
 .form-group input, .form-group select {
     width: 100%;
-    padding: 10px;
+    padding: 12px;
     border: 1px solid #ddd;
-    border-radius: 3px;
+    border-radius: 5px;
     font-size: 14px;
+    box-sizing: border-box;
 }
 
 .form-group input:focus, .form-group select:focus {
@@ -321,4 +324,38 @@ h2 {
 .totale-sezione {
     background-color: #f0f8ff;
     border: 2px solid #007bff;
+}
+
+/* STILI PER MESSAGGI DI ERRORE NEI FORM */
+.error-message {
+    color: red;
+    font-size: 14px;
+    margin-top: 5px;
+    min-height: 20px;
+    display: block;
+}
+
+/* Messaggi di errore - ALTEZZA FISSA per non spostare layout */
+#errorCarta, #errorScadenza {
+    color: red;
+    font-size: 13px;
+    margin-top: 8px;
+    height: 40px;
+    display: block;
+}
+
+
+/* Mobile - campi uno sotto l'altro */
+@media screen and (max-width: 768px) {
+    .form-group {
+        float: none;
+        width: 100%;
+        margin-right: 0;
+        margin-bottom: 20px;
+        height: auto;
+    }
+    
+    #errorCarta, #errorScadenza {
+        height: 25px;
+    }
 }

@@ -10,6 +10,7 @@
 <html lang="it">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Riepilogo Ordine - TecnoSport</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/styles/checkout.css">
 </head>

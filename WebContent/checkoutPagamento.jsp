@@ -72,7 +72,7 @@
     <div class="sezione">
         <h2>➕ Aggiungi Nuovo Metodo di Pagamento</h2>
         <div class="nuovo-indirizzo-form">
-            <form method="post" action="checkout">
+            <form method="post" id="formCheckout" action="checkout">
                 <input type="hidden" name="action" value="salva-pagamento">
 
                 <div class="form-row">
@@ -97,11 +97,13 @@
                         <label for="numeroCarta">Numero Carta *</label>
                         <input type="text" id="numeroCarta" name="numeroCarta" required 
                                placeholder="1234 5678 9012 3456" maxlength="19">
+                      <div id="errorCarta" style="color:red; font-size:14px; margin-top:5px;"></div>
                     </div>
                     <div class="form-group">
                         <label for="scadenza">Scadenza *</label>
                         <input type="text" id="scadenza" name="scadenza" required 
-                               placeholder="MM/YYYY" pattern="[0-9]{2}/[0-9]{4}" maxlength="7">
+                               placeholder="MM/YY" maxlength="5">
+                             <div id="errorScadenza" style="color:red; font-size:14px; margin-top:5px;"></div>
                     </div>
                 </div>
 
@@ -134,25 +136,7 @@
 
 <jsp:include page="footer.jsp" />
 
-<script>
-// Script basilare per formattazione numero carta
-document.getElementById('numeroCarta').addEventListener('input', function (e) {
-    let value = e.target.value.replace(/\s+/g, '').replace(/[^0-9]/gi, '');
-    let formattedValue = value.match(/.{1,4}/g)?.join(' ') || value;
-    if (formattedValue.length <= 19) {
-        this.value = formattedValue;
-    }
-});
+<!-- Script per validazione e formattazione -->
+<script src="${pageContext.request.contextPath}/Script/Pagamento.js"></script>
 
-// Script per formattazione scadenza
-document.getElementById('scadenza').addEventListener('input', function (e) {
-    let value = e.target.value.replace(/\D/g, '');
-    if (value.length >= 2) {
-        value = value.substring(0, 2) + '/' + value.substring(2, 6);
-    }
-    this.value = value;
-});
-</script>
-
-</body>
 </html>

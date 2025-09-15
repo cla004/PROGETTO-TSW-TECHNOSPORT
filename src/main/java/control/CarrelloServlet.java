@@ -14,7 +14,7 @@ public class CarrelloServlet extends HttpServlet {
         String action = request.getParameter("action");
         HttpSession session = request.getSession();
 
-        // Ottieni carrello (sessione per ora, DB come backup)
+        // Codice per ottenere il Carrello 
         List<CartItem> prodottiCarrello = (List<CartItem>) session.getAttribute("carrelloSessione");
         if (prodottiCarrello == null) {
             prodottiCarrello = new ArrayList<>();
@@ -261,6 +261,7 @@ public class CarrelloServlet extends HttpServlet {
                 carrello.setUserId(userId);
                 carrello.setCreatedAt(new java.sql.Timestamp(System.currentTimeMillis()));
                 carrelloDao.createCart(carrello);
+                
             }
             
             CartItemDao cartDao = new CartItemDao();
@@ -338,7 +339,10 @@ public class CarrelloServlet extends HttpServlet {
                     CarrelloDao carrelloDao = new CarrelloDao();
                     Carrello carrello = carrelloDao.findByUserId(utente.getId());
                     if (carrello == null) {
+                    	
                         System.out.println("DEBUG: Carrello non trovato, ne creo uno nuovo");
+                        // STAMPA DI DEBUG 
+                        System.out.println("DEBUG [PRIMO_PRODOTTO] Prima createCart: carrello id= " + (carrello != null ? carrello.getId() : "null") + " (utente " + utente.getId() + ")");
                         // Crea carrello se non esiste
                         carrello = new Carrello();
                         carrello.setUserId(utente.getId());

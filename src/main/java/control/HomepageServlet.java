@@ -21,7 +21,7 @@ public class HomepageServlet extends HttpServlet {
 
     @Override
     public void init() {
-        prodottoDAO = new ProdottiDao();  // Assumendo che il costruttore sia senza parametri o gestisca la connessione internamente
+        prodottoDAO = new ProdottiDao();  
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
